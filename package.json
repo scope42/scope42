@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "npm run gen && next dev",
+    "build": "npm run gen && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "gen": "json2ts -i \"schemas/*.json\" -o schemas/"
   },
   "dependencies": {
     "antd": "^4.16.3",
@@ -18,6 +19,7 @@
     "@types/react": "17.0.11",
     "eslint": "7.29.0",
     "eslint-config-next": "11.0.0",
+    "json-schema-to-typescript": "^10.1.4",
     "typescript": "4.3.4"
   }
 }
