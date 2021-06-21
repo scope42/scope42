@@ -4,12 +4,18 @@ import type { AppProps } from "next/app"
 import { Layout, Menu } from "antd"
 import Link from 'next/link'
 import { useRouter } from "next/router"
+import Head from 'next/head'
 
 const { Header, Content, Footer } = Layout
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter()
   return (
+    <>
+    <Head>
+      <title>scope42</title>
+      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    </Head>
     <Layout className="layout" style={{ minHeight: '100%' }}>
       <Header>
         <div className="logo" />
@@ -25,6 +31,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         TODO
       </Footer>
     </Layout>
+    </>
   )
 }
 export default MyApp
