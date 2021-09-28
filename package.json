@@ -11,14 +11,21 @@
     "@oclif/command": "^1.8.0",
     "@oclif/config": "^1.17.0",
     "@oclif/plugin-help": "^3.2.3",
-    "tslib": "^1.14.1"
+    "execa": "^5.1.1",
+    "get-port": "^5.1.1",
+    "listr": "^0.14.3",
+    "open": "^8.2.1",
+    "tslib": "^1.14.1",
+    "wait-on": "^6.0.0"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.26.0",
     "@oclif/test": "^1.2.8",
     "@types/chai": "^4.2.22",
+    "@types/listr": "^0.14.4",
     "@types/mocha": "^5.2.7",
     "@types/node": "^10.17.60",
+    "@types/wait-on": "^5.3.1",
     "chai": "^4.3.4",
     "eslint": "^5.16.0",
     "eslint-config-oclif": "^3.1.0",
