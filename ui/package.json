@@ -1,6 +1,6 @@
 {
-  "name": "scope42",
-  "version": "0.1.0",
+  "name": "@scope42/ui",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
     "dev": "npm run gen && next dev",

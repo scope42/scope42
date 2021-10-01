@@ -22,7 +22,7 @@ export default class Run extends Command {
   async run() {
     const { args } = this.parse(Run)
 
-    const workspace = args.workspace ?? process.cwd()
+    const workspace = args.workspace ? resolve(args.workspace) : process.cwd()
     this.log(`Running scope42 in workspace: ${workspace}`)
 
     const basePath = dirname(require.resolve('../../package.json'))
@@ -34,12 +34,22 @@ export default class Run extends Command {
         task: () => new Promise(resolve => setTimeout(resolve, 1000)),
       },
       {
+        title: 'Start CMS',
+        task: async (ctx, task) => {
+          ctx.cmsPort = await getPort()
+          execa('npx', ['netlify-cms-proxy-server'], { cwd: basePath, env: { PORT: `${ctx.cmsPort}`, GIT_REPO_DIRECTORY: workspace } }).catch(error => task.report(error))
+          task.output = ctx.cmsPort
+          return waitOn({ resources: [`http://localhost:${ctx.cmsPort}`], validateStatus: status => status === 404 })
+        },
+      },
+      {
         title: 'Start UI',
         task: async (ctx, task) => {
           const port = await getPort()
-          execa('npm', ['start', '--', '-p', `${port}`], { cwd: uiPath }).catch(error => task.report(error))
+          // We use "dev" here so that we have access to env variables and data is reloaded
+          execa('npm', ['run', 'dev', '--', '-p', `${port}`], { cwd: uiPath, env: { WORKSPACE: workspace } }).catch(error => task.report(error))
           ctx.uiUrl = `http://localhost:${port}`
-          return waitOn({ resources: [`http://localhost:${port}`] })
+          return waitOn({ resources: [ctx.uiUrl] })
         },
       },
       {

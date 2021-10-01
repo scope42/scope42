@@ -1,0 +1,51 @@
+backend:
+  name: git-gateway
+
+# when using the default proxy server port
+local_backend: true
+
+media_folder: "images/uploads"
+
+collections:
+  - name: "blog" # Used in routes, e.g., /admin/collections/blog
+    label: "Blog" # Used in the UI
+    folder: "_posts/blog" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
+    fields: # The fields for each document, usually in front matter
+      - {label: "Layout", name: "layout", widget: "hidden", default: "blog"}
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
+      - {label: "Featured Image", name: "thumbnail", widget: "image"}
+      - {label: "Rating (scale of 1-5)", name: "rating", widget: "number"}
+      - {label: "Body", name: "body", widget: "markdown"}
+  - name: "issues"
+    label: "Issues"
+    label_singular: "Issue"
+    folder: "_posts/issues"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Cause", name: "cause", widget: "relation", collection: "issues", value_field: "{{slug}}", display_fields: ["title"], search_fields: ["title"], required: false }
+      - { label: "Body", name: "body", widget: "markdown" }
+  - name: "risks"
+    label: "Risks"
+    label_singular: "Risk"
+    folder: "_posts/risks"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Body", name: "body", widget: "markdown" }
+  - name: "improvements"
+    label: "Improvements"
+    label_singular: "Improvement"
+    folder: "_posts/improvements"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Solves", name: "solves", widget: "relation", collection: "issues", value_field: "{{slug}}", display_fields: ["title"], search_fields: ["title"], multiple: true }
+
