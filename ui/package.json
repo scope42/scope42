@@ -7,19 +7,21 @@
     "build": "npm run gen && next build",
     "start": "next start",
     "lint": "next lint",
-    "gen": "json2ts -i \"schemas/*.json\" -o schemas/"
+    "gen": "netlify-ts ../cms/config.yml data/types.d.ts"
   },
   "dependencies": {
     "antd": "^4.16.3",
+    "js-yaml": "^4.1.0",
     "next": "11.0.0",
     "react": "17.0.2",
     "react-dom": "17.0.2"
   },
   "devDependencies": {
+    "@types/js-yaml": "^4.0.3",
     "@types/react": "17.0.11",
     "eslint": "7.29.0",
     "eslint-config-next": "11.0.0",
-    "json-schema-to-typescript": "^10.1.4",
+    "netlify-ts": "^1.1.0",
     "typescript": "4.3.4"
   }
 }
