@@ -3,9 +3,9 @@ import fs from 'fs'
 import { resolve } from 'path'
 import yaml from 'js-yaml'
 
-export type Issue = issues & { id: string }
-export type Risk = risks & { id: string }
-export type Improvement = improvements & { id: string }
+export type Issue = issues & { id: string; body: string }
+export type Risk = risks & { id: string; body: string }
+export type Improvement = improvements & { id: string; body: string }
 
 export class NotFoundError extends Error {}
 
@@ -32,4 +32,8 @@ function loadFiles(collection: string): any[] {
 
 export function loadIssues(): Issue[] {
   return loadFiles('issues')
+}
+
+export function loadIssue(id: string): Issue {
+  return loadFile('issues', id)
 }
