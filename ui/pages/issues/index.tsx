@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import { Issue } from '../../data'
+import { EntityId, Issue } from '../../data'
 import { Table } from 'antd'
 import  Link  from 'next/link'
 import { useStore } from '../../data/store'
@@ -9,20 +9,21 @@ const columns = [
     title: 'Title',
     dataIndex: 'title',
     key: 'title',
-    render: (title: string, issue: Issue) => <Link href={`/issues/${issue.id}`}>{title}</Link>,
+    render: (title: string, issue: Issue & {id: EntityId}) => <Link href={`/issues/${issue.id}`}>{title}</Link>,
   },
   {
     title: 'Id',
     dataIndex: 'id',
-    key: 'age',
+    key: 'id',
   },
 ]
 
 export default function IssuesPage() {
   const issues = useStore(state => state.issues)
+  const dataSource = Object.keys(issues).map(id => ({ ...issues[id], id }))
   return (
     <div>
-      <Table dataSource={issues} columns={columns} />
+      <Table dataSource={dataSource} columns={columns} />
     </div>
   )
 }

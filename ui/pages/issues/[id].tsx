@@ -4,10 +4,11 @@ import { PageHeader, Tag, Row, Descriptions, Badge } from 'antd'
 import { useRouter } from 'next/router'
 import { useStore } from '../../data/store'
 import { StopOutlined } from '@ant-design/icons'
+import { IssueLink } from '../../components/EntityLink'
 
 const IssuePage = () => {
   const router = useRouter()
-  const issue = useStore(state => state.issues.find(i => i.id === router.query.id))
+  const issue = useStore(state => state.issues[String(router.query.id)])
   if (!issue) {
     return <>404</>
   }
@@ -28,7 +29,7 @@ const IssuePage = () => {
             <Tag>Frontend</Tag>
           </Descriptions.Item>
           <Descriptions.Item label="Cause">
-            {issue.cause ? issue.cause : <Tag color="red"><StopOutlined /> Root Cause</Tag>}
+            {issue.cause ? <IssueLink id={issue.cause} /> : <Tag color="red"><StopOutlined /> Root Cause</Tag>}
           </Descriptions.Item>
         </Descriptions>
       </Row>

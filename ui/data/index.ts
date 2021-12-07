@@ -3,9 +3,10 @@ import fs from 'fs'
 import { resolve } from 'path'
 import yaml from 'js-yaml'
 
-export type Issue = issues & { id: string; body: string }
-export type Risk = risks & { id: string; body: string }
-export type Improvement = improvements & { id: string; body: string }
+export type EntityId = string
+export type Issue = issues & { body: string }
+export type Risk = risks & { body: string }
+export type Improvement = improvements & { body: string }
 
 export class NotFoundError extends Error {}
 
