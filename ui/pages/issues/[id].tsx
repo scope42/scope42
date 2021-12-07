@@ -1,10 +1,17 @@
 /* eslint-disable unicorn/filename-case */
-import { GetStaticPaths, GetStaticProps } from 'next'
-import { Issue, loadIssue } from '../../data'
 import ReactMarkdown from 'react-markdown/react-markdown.min'
 import { PageHeader, Tag, Row, Descriptions, Badge } from 'antd'
+import { useRouter } from 'next/router'
+import { useStore } from '../../data/store'
+import { StopOutlined } from '@ant-design/icons'
 
-const IssuePage = ({ issue }: { issue: Issue }) => {
+const IssuePage = () => {
+  const router = useRouter()
+  const issue = useStore(state => state.issues.find(i => i.id === router.query.id))
+  if (!issue) {
+    return <>404</>
+  }
+
   return <>
     <PageHeader
       onBack={() => window.history.back()}
@@ -20,6 +27,9 @@ const IssuePage = ({ issue }: { issue: Issue }) => {
           <Descriptions.Item label="Tags">
             <Tag>Frontend</Tag>
           </Descriptions.Item>
+          <Descriptions.Item label="Cause">
+            {issue.cause ? issue.cause : <Tag color="red"><StopOutlined /> Root Cause</Tag>}
+          </Descriptions.Item>
         </Descriptions>
       </Row>
     </PageHeader>
@@ -28,11 +38,3 @@ const IssuePage = ({ issue }: { issue: Issue }) => {
 }
 
 export default IssuePage
-
-export const getStaticProps: GetStaticProps = async context => {
-  return { props: { issue: loadIssue(`${context.params?.id}`) } }
-}
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  return { paths: [{ params: { id: '2021-09-10-test-issue' } }], fallback: false }
-}

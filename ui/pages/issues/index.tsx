@@ -1,7 +1,8 @@
 /* eslint-disable react/display-name */
-import { Issue, loadIssues } from '../../data'
+import { Issue } from '../../data'
 import { Table } from 'antd'
 import  Link  from 'next/link'
+import { useStore } from '../../data/store'
 
 const columns = [
   {
@@ -17,14 +18,11 @@ const columns = [
   },
 ]
 
-export default function Issues({ issues }: {issues: Issue[]}) {
+export default function IssuesPage() {
+  const issues = useStore(state => state.issues)
   return (
     <div>
       <Table dataSource={issues} columns={columns} />
     </div>
   )
-}
-
-export function getStaticProps() {
-  return { props: { issues: loadIssues() } }
 }
