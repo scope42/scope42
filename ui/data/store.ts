@@ -23,6 +23,9 @@ export const useStore = create<AppState>(set => ({
     im1: { title: 'Improvement 1', body: 'Das ist ein Test', solves: [] },
     im2: { title: 'Improvement 2', body: 'Das ist ein Test', solves: ['is1'] },
     im3: { title: 'Improvement 3', body: 'Das ist ein Test', solves: ['is2', 'is3'] },
+    im4: { title: 'Improvement 4', body: 'Das ist ein Test', solves: ['is2'] },
+    im5: { title: 'Improvement 5', body: 'Das ist ein Test', solves: ['is2'] },
+    im6: { title: 'Improvement 6', body: 'Das ist ein Test', solves: ['is2'] },
   },
   updateIssue: (id, issue) => set(produce(state => {
     state.issues[id] = issue

@@ -2,5 +2,5 @@
 const withTM = require('next-transpile-modules')(['react-markdown']);
 
 module.exports = withTM({
-  reactStrictMode: true,
+  reactStrictMode: false, // react-cytoscapejs doesn't work otherwise...
 })

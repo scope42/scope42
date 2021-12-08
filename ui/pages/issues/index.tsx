@@ -23,7 +23,7 @@ export default function IssuesPage() {
   const dataSource = Object.keys(issues).map(id => ({ ...issues[id], id }))
   return (
     <div>
-      <Table dataSource={dataSource} columns={columns} />
+      <Table dataSource={dataSource} columns={columns} rowKey="id" />
     </div>
   )
 }

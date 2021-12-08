@@ -12,11 +12,13 @@
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "antd": "^4.16.3",
+    "cytoscape": "^3.20.0",
     "immer": "^9.0.7",
     "js-yaml": "^4.1.0",
     "next": "11.0.0",
     "nprogress": "^0.2.0",
     "react": "17.0.2",
+    "react-cytoscapejs": "^1.2.1",
     "react-dom": "17.0.2",
     "react-markdown": "^7.1.0",
     "zustand": "^3.6.7"
@@ -25,6 +27,7 @@
     "@types/js-yaml": "^4.0.3",
     "@types/nprogress": "^0.2.0",
     "@types/react": "17.0.11",
+    "@types/react-cytoscapejs": "^1.2.2",
     "eslint": "7.29.0",
     "eslint-config-next": "11.0.0",
     "netlify-ts": "^1.1.0",

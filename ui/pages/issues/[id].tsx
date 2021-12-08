@@ -5,10 +5,12 @@ import { useRouter } from 'next/router'
 import { useStore } from '../../data/store'
 import { StopOutlined } from '@ant-design/icons'
 import { IssueLink } from '../../components/EntityLink'
+import { IssueGraph } from '../../components/Graph'
 
 const IssuePage = () => {
   const router = useRouter()
-  const issue = useStore(state => state.issues[String(router.query.id)])
+  const id = String(router.query.id)
+  const issue = useStore(state => state.issues[id])
   if (!issue) {
     return <>404</>
   }
@@ -34,7 +36,12 @@ const IssuePage = () => {
         </Descriptions>
       </Row>
     </PageHeader>
-    <ReactMarkdown>{issue.body}</ReactMarkdown>
+    <div style={{ display: 'flex' }}>
+      <div style={{ flexGrow: 1 }}>
+        <ReactMarkdown>{issue.body}</ReactMarkdown>
+      </div>
+      <IssueGraph id={id} />
+    </div>
   </>
 }
 
