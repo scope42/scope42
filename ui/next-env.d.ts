@@ -13,3 +13,5 @@ declare module 'react-markdown/react-markdown.min' {
   export const uriTransformer: uriTransformer
   export default ReactMarkdown
 }
+
+declare module 'cytoscape-cose-bilkent'

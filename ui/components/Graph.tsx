@@ -4,6 +4,10 @@ import dynamic from 'next/dynamic'
 import type { ElementDefinition, Stylesheet } from 'cytoscape'
 import { EntityId, Improvement, Issue, Risk } from '../data'
 import { useStore } from '../data/store'
+import Cytoscape from 'cytoscape'
+import CoseBilkent from 'cytoscape-cose-bilkent'
+
+Cytoscape.use(CoseBilkent)
 
 const CytoscapeComponent = dynamic(() => import('react-cytoscapejs'), { ssr: false })
 
@@ -104,10 +108,8 @@ const Graph: React.FC<{elements: ElementDefinition[]}> = ({ elements }) => {
     <CytoscapeComponent
       elements={elements}
       stylesheet={STYLESHEET}
-      panningEnabled={false}
-      zoomingEnabled={false}
+      layout={{ name: 'cose-bilkent', nodeDimensionsIncludeLabels: true }}
       pan={{ x: SIZE / 2, y: SIZE / 2 }}
-      autolock={true}
       style={ { width: SIZE, height: SIZE } }
     />
   </NoSsr>
