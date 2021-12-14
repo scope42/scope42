@@ -1,70 +1,34 @@
-scope42
-=======
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-A tool for aim42
+## Getting Started
 
-[![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![Version](https://img.shields.io/npm/v/scope42.svg)](https://npmjs.org/package/scope42)
-[![Downloads/week](https://img.shields.io/npm/dw/scope42.svg)](https://npmjs.org/package/scope42)
-[![License](https://img.shields.io/npm/l/scope42.svg)](https://github.com/erikhofer/scope42/blob/master/package.json)
+First, run the development server:
 
-<!-- toc -->
-* [Usage](#usage)
-* [Commands](#commands)
-<!-- tocstop -->
-# Usage
-<!-- usage -->
-```sh-session
-$ npm install -g scope42
-$ scope42 COMMAND
-running command...
-$ scope42 (-v|--version|version)
-scope42/0.0.0 win32-x64 node-v14.17.1
-$ scope42 --help [COMMAND]
-USAGE
-  $ scope42 COMMAND
-...
-```
-<!-- usagestop -->
-# Commands
-<!-- commands -->
-* [`scope42 hello [FILE]`](#scope42-hello-file)
-* [`scope42 help [COMMAND]`](#scope42-help-command)
-
-## `scope42 hello [FILE]`
-
-describe the command here
-
-```
-USAGE
-  $ scope42 hello [FILE]
-
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
-
-EXAMPLE
-  $ scope42 hello
-  hello world from ./src/hello.ts!
+```bash
+npm run dev
+# or
+yarn dev
 ```
 
-_See code: [src/commands/hello.ts](https://github.com/erikhofer/scope42/blob/v0.0.0/src/commands/hello.ts)_
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## `scope42 help [COMMAND]`
+You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
-display help for scope42
+[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.tsx`.
 
-```
-USAGE
-  $ scope42 help [COMMAND]
+The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-ARGUMENTS
-  COMMAND  command to show help for
+## Learn More
 
-OPTIONS
-  --all  see all commands in CLI
-```
+To learn more about Next.js, take a look at the following resources:
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.3/src/commands/help.ts)_
-<!-- commandsstop -->
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
