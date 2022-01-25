@@ -3,11 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "npm run gen && next dev",
-    "build": "npm run gen && next build",
+    "dev": "next dev",
+    "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "gen": "netlify-ts ../cms/config.yml data/types.d.ts"
+    "lint": "next lint"
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
@@ -16,7 +15,7 @@
     "cytoscape-cose-bilkent": "^4.1.0",
     "immer": "^9.0.7",
     "js-yaml": "^4.1.0",
-    "next": "11.0.0",
+    "next": "12.0.8",
     "nprogress": "^0.2.0",
     "react": "17.0.2",
     "react-cytoscapejs": "^1.2.1",
