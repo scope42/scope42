@@ -1,4 +1,3 @@
-/* eslint-disable unicorn/filename-case */
 import ReactMarkdown from 'react-markdown/react-markdown.min'
 import { PageHeader, Tag, Row, Descriptions, Badge } from 'antd'
 import { useRouter } from 'next/router'
@@ -38,7 +37,7 @@ const IssuePage = () => {
     </PageHeader>
     <div style={{ display: 'flex' }}>
       <div style={{ flexGrow: 1 }}>
-        <ReactMarkdown>{issue.body}</ReactMarkdown>
+        <ReactMarkdown>{issue.body || ''}</ReactMarkdown>
       </div>
       <IssueGraph id={id} />
     </div>

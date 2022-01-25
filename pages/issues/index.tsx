@@ -1,15 +1,16 @@
 /* eslint-disable react/display-name */
-import { EntityId, Issue } from '../../data'
+import { Issue, IssueId } from '../../data/types'
 import { Table } from 'antd'
 import  Link  from 'next/link'
 import { useStore } from '../../data/store'
+import { IssueLink } from '../../components/EntityLink'
 
 const columns = [
   {
     title: 'Title',
     dataIndex: 'title',
     key: 'title',
-    render: (title: string, issue: Issue & {id: EntityId}) => <Link href={`/issues/${issue.id}`}>{title}</Link>,
+    render: (title: string, issue: Issue & {id: IssueId}) => <IssueLink id={issue.id} />,
   },
   {
     title: 'Id',

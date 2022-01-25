@@ -1,5 +1,4 @@
 import { Button } from 'antd'
-import { loadIssues } from '../data'
 
 export default function Home(props: any) {
   return (
@@ -9,8 +8,4 @@ export default function Home(props: any) {
       <Button>Test</Button>
     </div>
   )
-}
-
-export const getStaticProps = () => {
-  return { props: { workspace: process.env.WORKSPACE ?? 'nix', data: loadIssues() } }
 }
