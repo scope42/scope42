@@ -11,6 +11,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "antd": "^4.16.3",
+    "antd-button-color": "^1.0.4",
     "cytoscape": "^3.20.0",
     "cytoscape-cose-bilkent": "^4.1.0",
     "immer": "^9.0.7",

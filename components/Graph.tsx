@@ -2,7 +2,7 @@ import React, { useCallback, useMemo } from 'react'
 import { NoSsr } from '../components/NoSsr'
 import dynamic from 'next/dynamic'
 import type { ElementDefinition, Stylesheet } from 'cytoscape'
-import { EntityId, Improvement, Issue, Risk } from '../data'
+import { Improvement, Issue, IssueId, ItemId, Risk } from '../data/types'
 import { useStore } from '../data/store'
 import Cytoscape from 'cytoscape'
 import CoseBilkent from 'cytoscape-cose-bilkent'
@@ -11,7 +11,7 @@ Cytoscape.use(CoseBilkent)
 
 const CytoscapeComponent = dynamic(() => import('react-cytoscapejs'), { ssr: false })
 
-type NodeType<T extends string, E> = {type: T; entity: E; id: EntityId}
+type NodeType<T extends string, E> = {type: T; entity: E; id: ItemId}
 type Node = NodeType<'issue', Issue> | NodeType<'risk', Risk> | NodeType<'improvement', Improvement>
 
 const STYLESHEET: Stylesheet[] = [
@@ -115,7 +115,7 @@ const Graph: React.FC<{elements: ElementDefinition[]}> = ({ elements }) => {
   </NoSsr>
 }
 
-export const IssueGraph: React.FC<{id: EntityId}> = ({ id }) => {
+export const IssueGraph: React.FC<{id: IssueId}> = ({ id }) => {
   const [issue, cause, improvements] = useStore(useCallback(state => {
     const issue = state.issues[id]
     return [

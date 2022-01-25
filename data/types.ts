@@ -40,3 +40,4 @@ export type ImprovementId = z.infer<typeof ImprovementId>;
 export type Issue = z.infer<typeof Issue>;
 export type Risk = z.infer<typeof Risk>;
 export type Improvement = z.infer<typeof Improvement>;
+export type ItemId = IssueId | RiskId | ImprovementId;
