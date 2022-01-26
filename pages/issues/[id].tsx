@@ -5,6 +5,7 @@ import { useStore } from '../../data/store'
 import { StopOutlined } from '@ant-design/icons'
 import { IssueLink } from '../../components/EntityLink'
 import { IssueGraph } from '../../components/Graph'
+import { ISSUE_STATUS_UI } from '../../components/Status'
 
 const IssuePage = () => {
   const router = useRouter()
@@ -23,11 +24,11 @@ const IssuePage = () => {
       <Row>
         <Descriptions size="small" column={3}>
           <Descriptions.Item label="Status">
-            <Tag color="green">Open</Tag>
+            {ISSUE_STATUS_UI[issue.status].component}
           </Descriptions.Item>
           <Descriptions.Item label="Created">2017-01-10</Descriptions.Item>
           <Descriptions.Item label="Tags">
-            <Tag>Frontend</Tag>
+            {issue.tags.map(tag => <Tag key={tag}>{tag}</Tag>)}
           </Descriptions.Item>
           <Descriptions.Item label="Cause">
             {issue.cause ? <IssueLink id={issue.cause} /> : <Tag color="red"><StopOutlined /> Root Cause</Tag>}

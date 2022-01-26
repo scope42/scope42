@@ -41,3 +41,6 @@ export type Issue = z.infer<typeof Issue>;
 export type Risk = z.infer<typeof Risk>;
 export type Improvement = z.infer<typeof Improvement>;
 export type ItemId = IssueId | RiskId | ImprovementId;
+export type IssueStatus = z.infer<typeof IssueStatus>;
+export type RiskStatus = z.infer<typeof RiskStatus>;
+export type ImprovementStatus = z.infer<typeof ImprovementStatus>;
