@@ -36,7 +36,7 @@ export const EditIssue: React.FC<{hide: () => void, issueId?: IssueId}> = (props
     props.hide()
   }
 
-  return <Modal title={<><IssueIcon /><span>TODO Issue</span></>} visible={true} onOk={handleSubmit(onSuccess)} onCancel={props.hide}>
+  return <Modal title={<div style={{display: "flex", alignItems: "center", gap: 8}}><IssueIcon /><span>{props.issueId ? "Edit" : "Create"} Issue</span></div>} visible={true} onOk={handleSubmit(onSuccess)} onCancel={props.hide}>
     <Form
       labelCol={{ span: 4 }}
       wrapperCol={{ span: 20 }}

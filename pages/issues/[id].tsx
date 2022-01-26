@@ -1,13 +1,17 @@
 import ReactMarkdown from 'react-markdown/react-markdown.min'
-import { PageHeader, Tag, Row, Descriptions, Badge } from 'antd'
+import { PageHeader, Tag, Row, Descriptions, Badge, Button } from 'antd'
 import { useRouter } from 'next/router'
 import { useStore } from '../../data/store'
-import { StopOutlined } from '@ant-design/icons'
+import { EditOutlined, StopOutlined } from '@ant-design/icons'
 import { IssueLink } from '../../components/EntityLink'
 import { IssueGraph } from '../../components/Graph'
 import { ISSUE_STATUS_UI } from '../../components/Status'
+import { useState } from 'react'
+import { EditIssue } from '../../components/EditIssue'
+import { renderDate } from '../../data/util'
 
 const IssuePage = () => {
+  const [editing, setEditing] = useState(false)
   const router = useRouter()
   const id = String(router.query.id)
   const issue = useStore(state => state.issues[id])
@@ -20,18 +24,20 @@ const IssuePage = () => {
       onBack={() => window.history.back()}
       title={<><Badge color={'cyan'} />{issue.title}</>}
       subTitle="This is a subtitle"
+      extra={<Button type="primary" icon={<EditOutlined />} onClick={() => setEditing(true)}>Edit</Button>}
     >
       <Row>
         <Descriptions size="small" column={3}>
           <Descriptions.Item label="Status">
             {ISSUE_STATUS_UI[issue.status].component}
           </Descriptions.Item>
-          <Descriptions.Item label="Created">2017-01-10</Descriptions.Item>
-          <Descriptions.Item label="Tags">
-            {issue.tags.map(tag => <Tag key={tag}>{tag}</Tag>)}
-          </Descriptions.Item>
+          <Descriptions.Item label="Created">{renderDate(issue.created)}</Descriptions.Item>
+          <Descriptions.Item label="Modified">{renderDate(issue.modified)}</Descriptions.Item>
           <Descriptions.Item label="Cause">
             {issue.cause ? <IssueLink id={issue.cause} /> : <Tag color="red"><StopOutlined /> Root Cause</Tag>}
+          </Descriptions.Item>
+          <Descriptions.Item label="Tags">
+            {issue.tags.map(tag => <Tag key={tag}>{tag}</Tag>)}
           </Descriptions.Item>
         </Descriptions>
       </Row>
@@ -42,6 +48,7 @@ const IssuePage = () => {
       </div>
       <IssueGraph id={id} />
     </div>
+    {editing ? <EditIssue hide={() => setEditing(false)} issueId={id} /> : null}
   </>
 }
 

@@ -30,7 +30,7 @@ export const useStore = create<AppState>((set, get) => ({
     'improvement-6': Improvement.parse({ title: 'Improvement 6', body: 'Das ist ein Test', solves: ['issue-2'] }),
   },
   updateIssue: (id, issue) => set(produce(state => {
-    state.issues[id] = issue
+    state.issues[id] = {...issue, modified: new Date() }
   })),
   createIssue: (issue) => {
     const id = "issue-" + (Math.max(...(Object.keys(get().issues).map(getNumericId))) + 1)
