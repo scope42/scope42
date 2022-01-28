@@ -11,14 +11,16 @@ import { EditIssue } from '../../components/EditIssue'
 import { renderDate } from '../../data/util'
 import { IssueIcon } from '../../components/ItemIcon'
 import { PageHeader } from '../../components/PageHeader'
+import Error404 from '../404'
 
 const IssuePage = () => {
   const [editing, setEditing] = useState(false)
   const router = useRouter()
   const id = String(router.query.id)
   const issue = useStore(state => state.issues[id])
+  
   if (!issue) {
-    return <>404</>
+    return <Error404 />
   }
 
   return <>
