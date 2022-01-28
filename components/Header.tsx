@@ -10,9 +10,11 @@ export const Header: React.FC = () => {
   return <Layout.Header className={styles.header}>
     <div className={styles.left}>
       <div className={styles.logo} />
-      <Menu theme="dark" mode="horizontal" defaultSelectedKeys={[router.pathname]}>
+      <Menu theme="dark" mode="horizontal" defaultSelectedKeys={[router.pathname]} style={{width: 400}}>
         <Menu.Item key="/"><Link href="/">Dashboard</Link></Menu.Item>
         <Menu.Item key="/issues"><Link href="/issues">Issues</Link></Menu.Item>
+        <Menu.Item key="/improvements"><Link href="/improvements">Improvements</Link></Menu.Item>
+        <Menu.Item key="/risks"><Link href="/risks">Risks</Link></Menu.Item>
       </Menu>
     </div>
     <AddIconButton />
