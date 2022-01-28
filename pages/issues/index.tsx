@@ -5,6 +5,7 @@ import { useStore } from '../../data/store'
 import { IssueLink } from '../../components/EntityLink'
 import { ISSUE_STATUS_UI } from '../../components/Status'
 import { renderDate } from '../../data/util'
+import { PageHeader } from '../../components/PageHeader'
 
 const columns = [
   {
@@ -44,6 +45,7 @@ export default function IssuesPage() {
   const dataSource = Object.keys(issues).map(id => ({ ...issues[id], id }))
   return (
     <div>
+      <PageHeader title='Issues' />
       <Table dataSource={dataSource} columns={columns} rowKey="id" />
     </div>
   )

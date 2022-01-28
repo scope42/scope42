@@ -1,11 +1,9 @@
-import { Button } from 'antd'
+import { PageHeader } from '../components/PageHeader'
 
 export default function Home(props: any) {
   return (
     <div>
-      <pre>{props.workspace}</pre>
-      <pre>{JSON.stringify(props.data)}</pre>
-      <Button>Test</Button>
+      <PageHeader title='Dashboard' />
     </div>
   )
 }

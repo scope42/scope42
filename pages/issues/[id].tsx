@@ -1,5 +1,5 @@
 import ReactMarkdown from 'react-markdown/react-markdown.min'
-import { PageHeader, Tag, Row, Descriptions, Badge, Button } from 'antd'
+import { Tag, Row, Descriptions, Badge, Button } from 'antd'
 import { useRouter } from 'next/router'
 import { useStore } from '../../data/store'
 import { EditOutlined, StopOutlined } from '@ant-design/icons'
@@ -9,6 +9,8 @@ import { ISSUE_STATUS_UI } from '../../components/Status'
 import { useState } from 'react'
 import { EditIssue } from '../../components/EditIssue'
 import { renderDate } from '../../data/util'
+import { IssueIcon } from '../../components/ItemIcon'
+import { PageHeader } from '../../components/PageHeader'
 
 const IssuePage = () => {
   const [editing, setEditing] = useState(false)
@@ -21,9 +23,9 @@ const IssuePage = () => {
 
   return <>
     <PageHeader
-      onBack={() => window.history.back()}
-      title={<><Badge color={'cyan'} />{issue.title}</>}
-      subTitle="This is a subtitle"
+      title={issue.title}
+      icon={<IssueIcon size={24} />}
+      backButton
       extra={<Button type="primary" icon={<EditOutlined />} onClick={() => setEditing(true)}>Edit</Button>}
     >
       <Row>
