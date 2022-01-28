@@ -1,19 +1,21 @@
 import { Form, Input, message, Modal, Select, Tag } from "antd"
-import { IssueIcon } from "./ItemIcon"
+import { IssueIcon } from "../ItemIcon"
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Issue, IssueId } from "../data/types"
-import { ISSUE_STATUS_UI } from "./Status"
-import { selectAllTags, useStore } from "../data/store"
+import { Issue, IssueId } from "../../data/types"
+import { ISSUE_STATUS_UI } from "../Status"
+import { selectAllTags, useStore } from "../../data/store"
 import TextArea from "antd/lib/input/TextArea"
 import { useRouter } from "next/router"
+import { useEditorStore } from "./ItemEditor"
 
-export const EditIssue: React.FC<{hide: () => void, issueId?: IssueId}> = (props) => {
+export const IssueEditor: React.FC<{issueId?: IssueId}> = (props) => {
   const allTags = useStore(selectAllTags)
   const allIssues = useStore(state => state.issues)
   const updateIssue = useStore(state => state.updateIssue)
   const createIssue = useStore(state => state.createIssue)
   const router = useRouter()
+  const closeEditor = useEditorStore(state => state.closeEditor)
 
   const {
     handleSubmit,
@@ -33,10 +35,10 @@ export const EditIssue: React.FC<{hide: () => void, issueId?: IssueId}> = (props
       message.success("Issue created")
       router.push("/issues/" + newId)
     }
-    props.hide()
+    closeEditor()
   }
 
-  return <Modal title={<div style={{display: "flex", alignItems: "center", gap: 8}}><IssueIcon /><span>{props.issueId ? "Edit" : "Create"} Issue</span></div>} visible={true} onOk={handleSubmit(onSuccess)} onCancel={props.hide}>
+  return <Modal title={<div style={{display: "flex", alignItems: "center", gap: 8}}><IssueIcon /><span>{props.issueId ? "Edit" : "Create"} Issue</span></div>} visible={true} onOk={handleSubmit(onSuccess)} onCancel={closeEditor}>
     <Form
       labelCol={{ span: 4 }}
       wrapperCol={{ span: 20 }}

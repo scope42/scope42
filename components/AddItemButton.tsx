@@ -1,22 +1,21 @@
 import { PlusOutlined } from "@ant-design/icons"
 import { Dropdown, Menu, Modal } from "antd"
 import Button from "antd-button-color"
-import { useState } from "react"
-import { EditIssue } from "./EditIssue"
+import { useEditorStore } from "./ItemEditor/ItemEditor"
 import { ImprovementIcon, IssueIcon, RiskIcon } from "./ItemIcon"
 
 export const AddIconButton: React.FC = () => {
-  const [activeModal, setActiveModal] = useState<"issue" | "improvement" | "risk" | null>(null)
+  const editor = useEditorStore(({createIssue, createImprovement, createRisk}) => ({createIssue, createImprovement, createRisk}))
 
   const addMenu = (
     <Menu>
-      <Menu.Item key="issue" icon={<IssueIcon />} onClick={() => setActiveModal("issue")}>
+      <Menu.Item key="issue" icon={<IssueIcon />} onClick={editor.createIssue}>
         <span style={{marginLeft: 8}}>Issue</span>
       </Menu.Item>
-      <Menu.Item key="improvement" icon={<ImprovementIcon />} onClick={() => setActiveModal("improvement")}>
+      <Menu.Item key="improvement" icon={<ImprovementIcon />} onClick={editor.createImprovement}>
         <span style={{marginLeft: 8}}>Improvement</span>
       </Menu.Item>
-      <Menu.Item key="risk" icon={<RiskIcon />} onClick={() => setActiveModal("risk")}>
+      <Menu.Item key="risk" icon={<RiskIcon />} onClick={editor.createRisk}>
         <span style={{marginLeft: 8}}>Risk</span>
       </Menu.Item>
     </Menu>
@@ -26,6 +25,5 @@ export const AddIconButton: React.FC = () => {
     <Dropdown overlay={addMenu} placement="bottomCenter" trigger={['click']}>
       <Button type="success" shape="circle" size="large" icon={<PlusOutlined />} />
     </Dropdown>
-    {activeModal === "issue" ? <EditIssue hide={() => setActiveModal(null)} /> : null}
   </>
 }

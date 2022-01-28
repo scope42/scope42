@@ -8,6 +8,7 @@ import NProgress from 'nprogress'
 import Router from 'next/router'
 import 'nprogress/nprogress.css'
 import { Header } from '../components/Header'
+import { ItemEditor } from '../components/ItemEditor/ItemEditor'
 
 NProgress.configure({
   minimum: 0.3,
@@ -29,6 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>scope42</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
+      <ItemEditor />
       <Layout style={{ minHeight: '100%' }}>
         <Header />
         <Content style={{ backgroundColor: 'white', padding: '50px 50px' }}>

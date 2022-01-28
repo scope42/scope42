@@ -1,5 +1,5 @@
 import ReactMarkdown from 'react-markdown/react-markdown.min'
-import { Tag, Row, Descriptions, Badge, Button } from 'antd'
+import { Tag, Row, Descriptions, Button } from 'antd'
 import { useRouter } from 'next/router'
 import { useStore } from '../../data/store'
 import { EditOutlined, StopOutlined } from '@ant-design/icons'
@@ -7,18 +7,19 @@ import { IssueLink } from '../../components/ItemLink'
 import { IssueGraph } from '../../components/Graph'
 import { ISSUE_STATUS_UI } from '../../components/Status'
 import { useState } from 'react'
-import { EditIssue } from '../../components/EditIssue'
 import { renderDate } from '../../data/util'
 import { IssueIcon } from '../../components/ItemIcon'
 import { PageHeader } from '../../components/PageHeader'
 import Error404 from '../404'
+import { useEditorStore } from '../../components/ItemEditor/ItemEditor'
 
 const IssuePage = () => {
   const [editing, setEditing] = useState(false)
   const router = useRouter()
   const id = String(router.query.id)
   const issue = useStore(state => state.issues[id])
-  
+  const edit = useEditorStore(state => state.editIssue)
+
   if (!issue) {
     return <Error404 />
   }
@@ -28,7 +29,7 @@ const IssuePage = () => {
       title={issue.title}
       icon={<IssueIcon size={24} />}
       backButton
-      extra={<Button type="primary" icon={<EditOutlined />} onClick={() => setEditing(true)}>Edit</Button>}
+      extra={<Button type="primary" icon={<EditOutlined />} onClick={() => edit(id)}>Edit</Button>}
     >
       <Row>
         <Descriptions size="small" column={3}>
@@ -52,7 +53,6 @@ const IssuePage = () => {
       </div>
       <IssueGraph id={id} />
     </div>
-    {editing ? <EditIssue hide={() => setEditing(false)} issueId={id} /> : null}
   </>
 }
 
