@@ -14,7 +14,6 @@ import Error404 from '../404'
 import { useEditorStore } from '../../components/ItemEditor/ItemEditor'
 
 const IssuePage = () => {
-  const [editing, setEditing] = useState(false)
   const router = useRouter()
   const id = String(router.query.id)
   const issue = useStore(state => state.issues[id])

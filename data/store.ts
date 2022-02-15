@@ -1,17 +1,28 @@
 import create from 'zustand'
 import produce from 'immer'
-import { Improvement, ImprovementId, Issue, IssueId, Risk, RiskId } from './types'
+import { Improvement, ImprovementId, Issue, IssueId, Risk, RiskId, WorkspaceConfig } from './types'
 import { getNumericId } from './util'
+import { writeWorkspaceReadme, writeYaml } from './persistence'
 
 export interface AppState {
   issues: Record<IssueId, Issue>;
   risks: Record<RiskId, Risk>;
   improvements: Record<ImprovementId, Improvement>;
+  workspace: {
+    present: boolean,
+    name: string,
+    handle?: FileSystemDirectoryHandle
+  }
+  createWorkspace: (dirHandle: FileSystemDirectoryHandle) => Promise<void>
   updateIssue: (id: IssueId, issue: Issue) => void;
   createIssue: (issue: Issue) => IssueId;
 }
 
 export const useStore = create<AppState>((set, get) => ({
+  workspace: {
+    present: false,
+    name: ""
+  },
   issues: {
     'issue-1': Issue.parse({ title: 'Issue 1', body: 'Das ist ein Test', tags: ["frontend"] }),
     'issue-2': Issue.parse({ title: 'Issue 2', body: 'Das ist ein Test', cause: 'issue-1', tags: ["backend"] }),
@@ -28,6 +39,12 @@ export const useStore = create<AppState>((set, get) => ({
     'improvement-4': Improvement.parse({ title: 'Improvement 4', body: 'Das ist ein Test', solves: ['issue-2'] }),
     'improvement-5': Improvement.parse({ title: 'Improvement 5', body: 'Das ist ein Test', solves: ['issue-2'] }),
     'improvement-6': Improvement.parse({ title: 'Improvement 6', body: 'Das ist ein Test', solves: ['issue-2'] }),
+  },
+  createWorkspace: async dirHandle => {
+    const configFileHandle = await dirHandle.getFileHandle("scope42.yml", { create: true })
+    await writeYaml(configFileHandle, WorkspaceConfig.parse({}))
+    await writeWorkspaceReadme(dirHandle)
+    set({ workspace: { present: true, name: dirHandle.name, handle: dirHandle } })
   },
   updateIssue: (id, issue) => set(produce(state => {
     state.issues[id] = {...issue, modified: new Date() }

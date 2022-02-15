@@ -34,6 +34,10 @@ export const Improvement = Item.extend({
   solves: z.array(IssueId).default([]),
 })
 
+export const WorkspaceConfig = z.object({
+  version: z.number().positive().int().default(1)
+})
+
 export type IssueId = z.infer<typeof IssueId>;
 export type RiskId = z.infer<typeof RiskId>;
 export type ImprovementId = z.infer<typeof ImprovementId>;

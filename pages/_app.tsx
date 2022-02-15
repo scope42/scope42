@@ -8,7 +8,8 @@ import NProgress from 'nprogress'
 import Router from 'next/router'
 import 'nprogress/nprogress.css'
 import { Header } from '../components/Header'
-import { ItemEditor } from '../components/ItemEditor/ItemEditor'
+import { WorkspaceSelection } from '../components/WorkspaceSelection'
+import { useStore } from '../data/store'
 
 NProgress.configure({
   minimum: 0.3,
@@ -24,14 +25,14 @@ Router.events.on('routeChangeError', () => NProgress.done())
 const { Content, Footer } = Layout
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const workspacePresent = useStore(state => state.workspace.present)
   return (
     <>
       <Head>
         <title>scope42</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <ItemEditor />
-      <Layout style={{ minHeight: '100%' }}>
+      { workspacePresent ? <Layout style={{ minHeight: '100%' }}>
         <Header />
         <Content style={{ backgroundColor: 'white', padding: '50px 50px' }}>
           <div className="site-layout-content"><Component {...pageProps} /></div>
@@ -39,7 +40,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Footer style={{ textAlign: 'center' }}>
         TODO
         </Footer>
-      </Layout>
+      </Layout> 
+      : <WorkspaceSelection />
+      }
     </>
   )
 }
