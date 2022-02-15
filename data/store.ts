@@ -14,6 +14,7 @@ export interface AppState {
     handle?: FileSystemDirectoryHandle
   }
   createWorkspace: (dirHandle: FileSystemDirectoryHandle) => Promise<void>
+  closeWorkspace: () => void,
   updateIssue: (id: IssueId, issue: Issue) => void;
   createIssue: (issue: Issue) => IssueId;
 }
@@ -45,6 +46,9 @@ export const useStore = create<AppState>((set, get) => ({
     await writeYaml(configFileHandle, WorkspaceConfig.parse({}))
     await writeWorkspaceReadme(dirHandle)
     set({ workspace: { present: true, name: dirHandle.name, handle: dirHandle } })
+  },
+  closeWorkspace: () => {
+    set({ workspace: { present: false, name: "" } })
   },
   updateIssue: (id, issue) => set(produce(state => {
     state.issues[id] = {...issue, modified: new Date() }

@@ -1,12 +1,21 @@
-import { Input, Layout, Menu } from "antd"
+import { Button, Input, Layout, Menu, Popover } from "antd"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import styles from "../styles/Header.module.css"
 import { AddIconButton } from "./AddItemButton"
 import Image from 'next/image'
+import { LogoutOutlined, SettingOutlined } from "@ant-design/icons"
+import { useStore } from "../data/store"
 
 export const Header: React.FC = () => {
   const router = useRouter()
+  const workspaceName = useStore(state => state.workspace.name)
+  const closeWorkspace = useStore(state => state.closeWorkspace)
+
+  const workspacePopover = <>
+    <p><b>{workspaceName}</b></p>
+    <Button type="primary" icon={<LogoutOutlined />} onClick={closeWorkspace}>Close</Button>
+  </>
   
   return <Layout.Header className={styles.header}>
     <div className={styles.left}>
@@ -20,6 +29,11 @@ export const Header: React.FC = () => {
       </Menu>
     </div>
     <AddIconButton />
-    <Input.Search placeholder="Search" onSearch={() => {}} size="large" style={{width: 300}} enterButton disabled />
+    <div className={styles.right}>
+      <Input.Search placeholder="Search" onSearch={() => {}} size="large" style={{width: 300}} enterButton disabled />
+      <Popover placement="bottomRight" title="Workspace" content={workspacePopover} trigger="click">
+        <SettingOutlined style={{ fontSize: '24px', color: 'white' }} />
+      </Popover>
+    </div>
   </Layout.Header>
 }
