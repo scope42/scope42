@@ -2,7 +2,7 @@ import create from 'zustand'
 import produce from 'immer'
 import { Improvement, ImprovementId, Issue, IssueId, Risk, RiskId, WorkspaceConfig } from './types'
 import { getNumericId } from './util'
-import { writeWorkspaceReadme, writeYaml } from './persistence'
+import { loadItems, writeWorkspaceReadme, writeYaml } from './persistence'
 
 export interface AppState {
   issues: Record<IssueId, Issue>;
@@ -10,10 +10,13 @@ export interface AppState {
   improvements: Record<ImprovementId, Improvement>;
   workspace: {
     present: boolean,
-    name: string,
+    name?: string,
     handle?: FileSystemDirectoryHandle
+    loading?: boolean,
+    error?: unknown
   }
   createWorkspace: (dirHandle: FileSystemDirectoryHandle) => Promise<void>
+  openWorkspace: (dirHandle: FileSystemDirectoryHandle) => Promise<void>
   closeWorkspace: () => void,
   updateIssue: (id: IssueId, issue: Issue) => void;
   createIssue: (issue: Issue) => IssueId;
@@ -21,8 +24,7 @@ export interface AppState {
 
 export const useStore = create<AppState>((set, get) => ({
   workspace: {
-    present: false,
-    name: ""
+    present: false
   },
   issues: {
     'issue-1': Issue.parse({ title: 'Issue 1', body: 'Das ist ein Test', tags: ["frontend"] }),
@@ -45,10 +47,20 @@ export const useStore = create<AppState>((set, get) => ({
     const configFileHandle = await dirHandle.getFileHandle("scope42.yml", { create: true })
     await writeYaml(configFileHandle, WorkspaceConfig.parse({}))
     await writeWorkspaceReadme(dirHandle)
+    await get().openWorkspace(dirHandle)
+  },
+  openWorkspace: async dirHandle => {
+    set({ workspace: { present: false, loading: true } })
+    try {
+      set(await loadItems(dirHandle))
+    } catch(error) {
+      set({workspace: { present: false, error }})
+      return
+    }
     set({ workspace: { present: true, name: dirHandle.name, handle: dirHandle } })
   },
   closeWorkspace: () => {
-    set({ workspace: { present: false, name: "" } })
+    set({ workspace: { present: false } })
   },
   updateIssue: (id, issue) => set(produce(state => {
     state.issues[id] = {...issue, modified: new Date() }

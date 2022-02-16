@@ -1,6 +1,9 @@
+import { AppState } from "./store"
+import { Improvement, ImprovementId, Issue, IssueId, Risk, RiskId } from "./types"
+import YAML from "yaml"
 
 export async function writeYaml(fileHandle: FileSystemFileHandle, data: object) {
-  return await writeFile(fileHandle, JSON.stringify(data))
+  return await writeFile(fileHandle, YAML.stringify(data))
 }
 
 export async function writeFile(fileHandle: FileSystemFileHandle, contents: FileSystemWriteChunkType) {
@@ -22,4 +25,54 @@ Click the link below and open this directory as a workspace.
 
 <!-- This file is generated once when creating a workspace to give others a hint what is contained in this diretory. Feel free to edit or delete this. -->
 `)
+}
+
+interface Parser<T> {
+  parse(data: unknown): T
+}
+
+export async function loadItems(workspaceDir: FileSystemDirectoryHandle): Promise<Pick<AppState, "issues" | "improvements" | "risks">> {
+  const items = await Promise.all([
+    parseItemsInDirectory(workspaceDir, "issues", IssueId, Issue),
+    parseItemsInDirectory(workspaceDir, "improvements", ImprovementId, Improvement),
+    parseItemsInDirectory(workspaceDir, "risks", RiskId, Risk)
+  ])
+
+  return {
+    issues: items[0],
+    improvements: items[1],
+    risks: items[2]
+  }
+}
+
+async function parseItemsInDirectory<ITEM>(workspaceDir: FileSystemDirectoryHandle, itemDirName: string, idType: Parser<string>, itemType: Parser<ITEM>): Promise<Record<string, ITEM>> {
+  let dir: FileSystemDirectoryHandle
+  try {
+    dir = await workspaceDir.getDirectoryHandle(itemDirName)
+  } catch {
+    return {} // if the directory does not exist, that's okay
+  }
+
+  const promises: Promise<{ id: string, item: ITEM }>[] = []
+
+  for await (const entry of dir.values()) {
+    if (entry.kind !== 'file' || !entry.name.endsWith(".yml")) {
+      break
+    }
+    promises.push(parseItemFile(entry, idType, itemType))
+  }
+
+  const results = await Promise.all(promises)
+  return results.reduce((items, result) => ({...items, [result.id]: result.item}), {} as Record<string, ITEM>)
+}
+
+async function parseItemFile<ITEM>(fileHandle: FileSystemFileHandle, idType: Parser<string>, itemType: Parser<ITEM>): Promise<{ id: string, item: ITEM }> {
+  try {
+    const file = await fileHandle.getFile()
+    const id = idType.parse(file.name.slice(0, -4)) // omit ".yml"
+    const item = itemType.parse(YAML.parse(await file.text()))
+    return { id, item }
+  } catch(error) {
+    throw new Error(`Validation of '${fileHandle.name}' failed: ${error}`)
+  }
 }

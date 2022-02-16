@@ -3,8 +3,12 @@ import { Alert, Button, Card, Col, Modal, Row } from 'antd'
 import Image from 'next/image'
 import { useStore } from '../data/store'
 import { NoSsr } from './NoSsr'
+import { useEffect } from 'react'
 
 export const WorkspaceSelection: React.VFC = () => {
+  const loading = useStore(state => state.workspace.loading)
+  const error = useStore(state => state.workspace.error)
+
   return <div style={{ width: "100vw", height: "100vh", display: "flex", alignItems: "center", justifyContent: "center"}}>
     <div style={{ maxWidth: 1000, padding: 16, display: "flex", alignItems: "center", flexDirection: "column", gap: 16}}>
       <div>
@@ -15,12 +19,14 @@ export const WorkspaceSelection: React.VFC = () => {
         This tool helps you to keep track of issues, arising risks and possible improvements of your existing architecture.
         The terminology and concepts are based on aim42, the Architecture Improvement Method.
       </div>
-      <Card title="Workspace">
+      <Card title="Workspace" style={{width: "100%"}}>
         <Row>
           <Col span={12}><Image src="/workspace.svg" alt="Improvement" width={777.00073 * 0.5} height={407.99846 * 0.5} /></Col>
           <Col span={12}>
-            <p>To ensure your data ownership, scope42 stores all data in an open file format on your machine. Click the button below to choose a directory that is used as the workspace root.</p>
-            <NoSsr><DirectoryPicker /></NoSsr>
+            { loading ? <Loading /> : 
+              <><p>To ensure your data ownership, scope42 stores all data in an open file format on your machine. Click the button below to choose a directory that is used as the workspace root.</p>
+              { error ? <><Alert type="error" message="Opening workspace failed" description={`${error}`}  /><br /></> : null }
+              <NoSsr><DirectoryPicker /></NoSsr></> }
           </Col>
         </Row>
       </Card>
@@ -29,10 +35,17 @@ export const WorkspaceSelection: React.VFC = () => {
   </div>
 }
 
+const Loading: React.VFC = () => {
+  // @ts-ignore
+  useEffect(() => { import("liquid-loading") }, [])
+  return (<liquid-loading />)
+}
+
 const DirectoryPicker: React.VFC = () => {
   const browserSupported = window.showDirectoryPicker !== undefined
 
   const createWorkspace = useStore(state => state.createWorkspace)
+  const openWorkspace = useStore(state => state.openWorkspace)
 
   const chooseWorkspace = async () => {
     const dirHandle = await window.showDirectoryPicker()
@@ -46,6 +59,8 @@ const DirectoryPicker: React.VFC = () => {
         content: 'The selected directory is a scope42 workspace yet. Do you want to create a new workspace here? This should only be done in empty directories to avoid loss of existing data!',
         onOk: () => createWorkspace(dirHandle),
       })
+    } else {
+      await openWorkspace(dirHandle)
     }
 
   }

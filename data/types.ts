@@ -2,9 +2,9 @@ import { z } from 'zod'
 
 const DateString = z.string().regex(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/)
 
-const IssueId = z.string().regex(/issue-[1-9][0-9]*/)
-const RiskId = z.string().regex(/risk-[1-9][0-9]*/)
-const ImprovementId = z.string().regex(/improvement-[1-9][0-9]*/)
+export const IssueId = z.string().regex(/issue-[1-9][0-9]*/)
+export const RiskId = z.string().regex(/risk-[1-9][0-9]*/)
+export const ImprovementId = z.string().regex(/improvement-[1-9][0-9]*/)
 
 const IssueStatus = z.enum(['potential', 'current', 'resolved', 'discarded'])
 const RiskStatus = z.enum(['current', 'mitigated', 'discarded'])
