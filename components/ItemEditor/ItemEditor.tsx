@@ -15,7 +15,7 @@ interface EditorState {
 
 export const useEditorStore = create<EditorState>(set => ({
   current: null,
-  createIssue: () => set({ current: { type: "issue" }}),
+  createIssue: () => { console.log("JA MOIN"); set({ current: { type: "issue" }}) },
   createImprovement: () => set({ current: { type: "improvement" }}),
   createRisk: () => set({ current: { type: "risk" }}),
   editIssue: id => set({ current: { type: "issue", id }}),

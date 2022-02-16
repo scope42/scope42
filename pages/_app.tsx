@@ -10,6 +10,7 @@ import 'nprogress/nprogress.css'
 import { Header } from '../components/Header'
 import { WorkspaceSelection } from '../components/WorkspaceSelection'
 import { useStore } from '../data/store'
+import { ItemEditor } from '../components/ItemEditor/ItemEditor'
 
 NProgress.configure({
   minimum: 0.3,
@@ -34,6 +35,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       { workspacePresent ? <Layout style={{ minHeight: '100%' }}>
         <Header />
+        <ItemEditor />
         <Content style={{ backgroundColor: 'white', padding: '50px 50px' }}>
           <div className="site-layout-content"><Component {...pageProps} /></div>
         </Content>

@@ -4,7 +4,7 @@ import Button from "antd-button-color"
 import { useEditorStore } from "./ItemEditor/ItemEditor"
 import { ImprovementIcon, IssueIcon, RiskIcon } from "./ItemIcon"
 
-export const AddIconButton: React.FC = () => {
+export const AddItemButton: React.FC = () => {
   const editor = useEditorStore(({createIssue, createImprovement, createRisk}) => ({createIssue, createImprovement, createRisk}))
 
   const addMenu = (

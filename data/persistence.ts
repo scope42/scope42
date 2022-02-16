@@ -1,16 +1,31 @@
 import { AppState } from "./store"
 import { Improvement, ImprovementId, Issue, IssueId, Risk, RiskId } from "./types"
 import YAML from "yaml"
+import { message } from "antd"
 
 export async function writeYaml(fileHandle: FileSystemFileHandle, data: object) {
-  return await writeFile(fileHandle, YAML.stringify(data))
+  return await writeFile(fileHandle, YAML.stringify(data, {}))
 }
 
 export async function writeFile(fileHandle: FileSystemFileHandle, contents: FileSystemWriteChunkType) {
-  const writable = await fileHandle.createWritable()
-  await writable.truncate(0) // override exsiting data
-  await writable.write(contents)
-  await writable.close()
+  try {
+    const writable = await fileHandle.createWritable()
+    await writable.truncate(0) // override exsiting data
+    await writable.write(contents)
+    await writable.close()
+  } catch(error) {
+    message.error(`${error}`)
+    throw error
+  }
+}
+
+export async function writeItem(workspaceDir: FileSystemDirectoryHandle | undefined, itemDirName: string, id: string, item: object) {
+  if (!workspaceDir) {
+    return // this is allowed in demo mode
+  }
+  const dir = await workspaceDir.getDirectoryHandle(itemDirName, { create: true })
+  const file = await dir.getFileHandle(`${id}.yml`, { create: true })
+  await writeYaml(file, item)
 }
 
 export async function writeWorkspaceReadme(dirHandle: FileSystemDirectoryHandle) {
@@ -73,6 +88,6 @@ async function parseItemFile<ITEM>(fileHandle: FileSystemFileHandle, idType: Par
     const item = itemType.parse(YAML.parse(await file.text()))
     return { id, item }
   } catch(error) {
-    throw new Error(`Validation of '${fileHandle.name}' failed: ${error}`)
+    throw new Error(`Parsing '${fileHandle.name}' failed: ${error}`)
   }
 }

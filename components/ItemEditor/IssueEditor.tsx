@@ -26,12 +26,12 @@ export const IssueEditor: React.FC<{issueId?: IssueId}> = (props) => {
     resolver: zodResolver(Issue),
   })  
 
-  const onSuccess = (newIssue: Issue) => {
+  const onSuccess = async (newIssue: Issue) => {
     if (props.issueId) {
-      updateIssue(props.issueId, newIssue)
+      await updateIssue(props.issueId, newIssue)
       message.success("Issue updated")
     } else {
-      const newId = createIssue(newIssue)
+      const newId = await createIssue(newIssue)
       message.success("Issue created")
       router.push("/issues/" + newId)
     }
@@ -70,7 +70,7 @@ export const IssueEditor: React.FC<{issueId?: IssueId}> = (props) => {
       </Form.Item>
 
       <Form.Item label="Body" validateStatus={errors.body?.message ? "error" : undefined} help={errors.body?.message} style={{ marginBottom: 0 }}>
-        <TextArea rows={6} />
+        <Controller control={control} name="body" render={({ field }) => <TextArea rows={6} {...field} />} />
       </Form.Item>
     </Form>
   </Modal>

@@ -1,8 +1,8 @@
 import create from 'zustand'
 import produce from 'immer'
-import { Improvement, ImprovementId, Issue, IssueId, Risk, RiskId, WorkspaceConfig } from './types'
+import { Improvement, ImprovementId, Issue, IssueId, ItemId, Risk, RiskId, WorkspaceConfig } from './types'
 import { getNumericId } from './util'
-import { loadItems, writeWorkspaceReadme, writeYaml } from './persistence'
+import { loadItems, writeItem, writeWorkspaceReadme, writeYaml } from './persistence'
 
 export interface AppState {
   issues: Record<IssueId, Issue>;
@@ -18,8 +18,8 @@ export interface AppState {
   createWorkspace: (dirHandle: FileSystemDirectoryHandle) => Promise<void>
   openWorkspace: (dirHandle: FileSystemDirectoryHandle) => Promise<void>
   closeWorkspace: () => void,
-  updateIssue: (id: IssueId, issue: Issue) => void;
-  createIssue: (issue: Issue) => IssueId;
+  updateIssue: (id: IssueId, issue: Issue) => Promise<void>;
+  createIssue: (issue: Issue) => Promise<IssueId>;
 }
 
 export const useStore = create<AppState>((set, get) => ({
@@ -62,17 +62,26 @@ export const useStore = create<AppState>((set, get) => ({
   closeWorkspace: () => {
     set({ workspace: { present: false } })
   },
-  updateIssue: (id, issue) => set(produce(state => {
-    state.issues[id] = {...issue, modified: new Date() }
-  })),
-  createIssue: (issue) => {
-    const id = "issue-" + (Math.max(...(Object.keys(get().issues).map(getNumericId))) + 1)
-    set(produce(state => {
-      state.issues[id] = issue
-    }))
+  updateIssue: async (id, issue) => {
+    const updatedIssue = {...issue, modified: new Date() }
+    await writeItem(get().workspace.handle, "issues", id, updatedIssue)
+    set(produce(state => { state.issues[id] = updatedIssue }))
+  },
+  createIssue: async (issue) => {
+    const id = `issue-${getNextId(Object.keys(get().issues))}`
+    await writeItem(get().workspace.handle, "issues", id, issue)
+    set(produce(state => { state.issues[id] = issue }))
     return id
   },
 }))
+
+function getNextId(existingIds: ItemId[]) {
+  if (existingIds.length === 0) {
+    return 1
+  }
+  const highestExistingId = Math.max(...(existingIds.map(getNumericId)))
+  return highestExistingId + 1
+}
 
 export const selectAllItems = (state: AppState) => [...Object.values(state.issues), ...Object.values(state.improvements), ...Object.values(state.risks)]
 

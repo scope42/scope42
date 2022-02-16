@@ -2,7 +2,7 @@ import { Button, Input, Layout, Menu, Popover } from "antd"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import styles from "../styles/Header.module.css"
-import { AddIconButton } from "./AddItemButton"
+import { AddItemButton } from "./AddItemButton"
 import Image from 'next/image'
 import { LogoutOutlined, SettingOutlined } from "@ant-design/icons"
 import { useStore } from "../data/store"
@@ -28,7 +28,7 @@ export const Header: React.FC = () => {
         <Menu.Item key="/risks"><Link href="/risks">Risks</Link></Menu.Item>
       </Menu>
     </div>
-    <AddIconButton />
+    <AddItemButton />
     <div className={styles.right}>
       <Input.Search placeholder="Search" onSearch={() => {}} size="large" style={{width: 300}} enterButton disabled />
       <Popover placement="bottomRight" title="Workspace" content={workspacePopover} trigger="click">
