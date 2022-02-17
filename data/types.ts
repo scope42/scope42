@@ -2,6 +2,14 @@ import { z } from 'zod'
 
 const DateString = z.string().regex(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/)
 
+const DeserializableDate = z.preprocess(
+  arg => {
+      if ( typeof arg == 'string' || arg instanceof Date )
+          return new Date( arg )
+  },
+  z.date()
+)
+
 export const IssueId = z.string().regex(/issue-[1-9][0-9]*/)
 export const RiskId = z.string().regex(/risk-[1-9][0-9]*/)
 export const ImprovementId = z.string().regex(/improvement-[1-9][0-9]*/)
@@ -14,10 +22,10 @@ const Tag = z.string().nonempty()
 
 const Item = z.object({
   title: z.string().nonempty(),
-  body: z.string().optional(),
+  body: z.string().optional().nullable(),
   tags: z.array(Tag).default([]),
-  created: z.date().default(() => new Date()),
-  modified: z.date().default(() => new Date()),
+  created: DeserializableDate.default(() => new Date()),
+  modified: DeserializableDate.default(() => new Date()),
 })
 
 export const Risk = Item.extend({
@@ -26,7 +34,7 @@ export const Risk = Item.extend({
 
 export const Issue = Item.extend({
   status: IssueStatus.default('current'),
-  cause: IssueId.optional(),
+  cause: IssueId.optional().nullable(),
 })
 
 export const Improvement = Item.extend({
