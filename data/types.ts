@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z, ZodTypeAny } from 'zod'
 
 const DateString = z.string().regex(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/)
 
@@ -9,6 +9,15 @@ const DeserializableDate = z.preprocess(
   },
   z.date()
 )
+
+/**
+ * Converts `null` to `undefined` before parsing. This is needed beacuse our
+ * forms may produce `null`s for emtpy values. This also allows `null`s in YAML
+ * files without polluting our type declarations.
+ */
+function nullsafeOptional<T extends ZodTypeAny>(schema: T) {
+ return z.preprocess(arg => arg === null ? undefined : arg, schema.optional())
+}
 
 export const IssueId = z.string().regex(/issue-[1-9][0-9]*/)
 export const RiskId = z.string().regex(/risk-[1-9][0-9]*/)
@@ -22,7 +31,7 @@ const Tag = z.string().nonempty()
 
 const Item = z.object({
   title: z.string().nonempty(),
-  body: z.string().optional().nullable(),
+  body: nullsafeOptional(z.string()),
   tags: z.array(Tag).default([]),
   created: DeserializableDate.default(() => new Date()),
   modified: DeserializableDate.default(() => new Date()),
@@ -34,7 +43,7 @@ export const Risk = Item.extend({
 
 export const Issue = Item.extend({
   status: IssueStatus.default('current'),
-  cause: IssueId.optional().nullable(),
+  cause: nullsafeOptional(IssueId),
 })
 
 export const Improvement = Item.extend({
