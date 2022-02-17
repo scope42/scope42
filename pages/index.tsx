@@ -1,6 +1,14 @@
 import { PageHeader } from '../components/PageHeader'
+import { Welcome } from '../components/Welcome'
+import { selectAllItems, useStore } from '../data/store'
 
-export default function Home(props: any) {
+export default function Home() {
+  const noItems = useStore(state => selectAllItems(state).length === 0)
+
+  if (noItems) {
+    return <Welcome />
+  }
+
   return (
     <div>
       <PageHeader title='Dashboard' />

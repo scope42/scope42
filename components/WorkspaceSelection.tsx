@@ -8,6 +8,7 @@ import { useEffect } from 'react'
 export const WorkspaceSelection: React.VFC = () => {
   const loading = useStore(state => state.workspace.loading)
   const error = useStore(state => state.workspace.error)
+  const openDemoWorkspace = useStore(state => state.openDemoWorkspace)
 
   return <div style={{ width: "100vw", height: "100vh", display: "flex", alignItems: "center", justifyContent: "center"}}>
     <div style={{ maxWidth: 1000, padding: 16, display: "flex", alignItems: "center", flexDirection: "column", gap: 16}}>
@@ -30,7 +31,7 @@ export const WorkspaceSelection: React.VFC = () => {
           </Col>
         </Row>
       </Card>
-      <Button block type='primary' ghost>Open Demo (no data persistence)</Button>
+      <Button block type='primary' ghost onClick={openDemoWorkspace}>Open Demo (no data persistence)</Button>
     </div>
   </div>
 }
