@@ -22,6 +22,10 @@ export interface AppState {
   loadExampleData: () => Promise<void>,
   updateIssue: (id: IssueId, issue: Issue) => Promise<void>;
   createIssue: (issue: Issue) => Promise<IssueId>;
+  updateImprovement: (id: ImprovementId, improvement: Improvement) => Promise<void>;
+  createImprovement: (improvement: Improvement) => Promise<ImprovementId>;
+  updateRisk: (id: RiskId, risk: Risk) => Promise<void>;
+  createRisk: (risk: Risk) => Promise<RiskId>;
 }
 
 export const useStore = create<AppState>((set, get) => ({
@@ -64,6 +68,28 @@ export const useStore = create<AppState>((set, get) => ({
     const id = `issue-${getNextId(Object.keys(get().issues))}`
     await writeItem(get().workspace.handle, "issues", id, issue)
     set(produce(state => { state.issues[id] = issue }))
+    return id
+  },
+  updateImprovement: async (id, improvement) => {
+    const updatedImprovement = {...improvement, modified: new Date() }
+    await writeItem(get().workspace.handle, "improvements", id, updatedImprovement)
+    set(produce(state => { state.improvements[id] = updatedImprovement }))
+  },
+  createImprovement: async (improvement) => {
+    const id = `improvement-${getNextId(Object.keys(get().improvements))}`
+    await writeItem(get().workspace.handle, "improvements", id, improvement)
+    set(produce(state => { state.improvements[id] = improvement }))
+    return id
+  },
+  updateRisk: async (id, risk) => {
+    const updatedRisk = {...risk, modified: new Date() }
+    await writeItem(get().workspace.handle, "risks", id, updatedRisk)
+    set(produce(state => { state.risks[id] = updatedRisk }))
+  },
+  createRisk: async (risk) => {
+    const id = `risk-${getNextId(Object.keys(get().risks))}`
+    await writeItem(get().workspace.handle, "risks", id, risk)
+    set(produce(state => { state.risks[id] = risk }))
     return id
   },
 }))

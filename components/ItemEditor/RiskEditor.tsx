@@ -1,19 +1,19 @@
 import { Form, Input, message, Modal, Select, Tag } from "antd"
-import { IssueIcon } from "../ItemIcon"
+import { RiskIcon } from "../ItemIcon"
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Issue, IssueId, IssueStatus } from "../../data/types"
-import { ISSUE_STATUS_UI } from "../Status"
+import { IssueId, Risk, RiskStatus } from "../../data/types"
+import { RISK_STATUS_UI } from "../Status"
 import { selectAllTags, useStore } from "../../data/store"
 import TextArea from "antd/lib/input/TextArea"
 import { useRouter } from "next/router"
 import { useEditorStore } from "./ItemEditor"
 
-export const IssueEditor: React.FC<{issueId?: IssueId}> = (props) => {
+export const RiskEditor: React.FC<{riskId?: IssueId}> = (props) => {
   const allTags = useStore(selectAllTags)
-  const allIssues = useStore(state => state.issues)
-  const updateIssue = useStore(state => state.updateIssue)
-  const createIssue = useStore(state => state.createIssue)
+  const allRisks = useStore(state => state.risks)
+  const updateRisk = useStore(state => state.updateRisk)
+  const createRisk = useStore(state => state.createRisk)
   const router = useRouter()
   const closeEditor = useEditorStore(state => state.closeEditor)
 
@@ -22,23 +22,23 @@ export const IssueEditor: React.FC<{issueId?: IssueId}> = (props) => {
     control,
     formState: { errors },
   } = useForm({
-    defaultValues: props.issueId ? allIssues[props.issueId] : {...Issue.parse({title: "dummy"}), title: ""},
-    resolver: zodResolver(Issue),
+    defaultValues: props.riskId ? allRisks[props.riskId] : {...Risk.parse({title: "dummy"}), title: ""},
+    resolver: zodResolver(Risk),
   })  
 
-  const onSuccess = async (newIssue: Issue) => {
-    if (props.issueId) {
-      await updateIssue(props.issueId, newIssue)
-      message.success("Issue updated")
+  const onSuccess = async (newRisk: Risk) => {
+    if (props.riskId) {
+      await updateRisk(props.riskId, newRisk)
+      message.success("Risk updated")
     } else {
-      const newId = await createIssue(newIssue)
-      message.success("Issue created")
-      router.push("/issues/" + newId)
+      const newId = await createRisk(newRisk)
+      message.success("Risk created")
+      router.push("/risks/" + newId)
     }
     closeEditor()
   }
 
-  return <Modal title={<div style={{display: "flex", alignItems: "center", gap: 8}}><IssueIcon /><span>{props.issueId ? "Edit" : "Create"} Issue</span></div>} visible={true} onOk={handleSubmit(onSuccess)} onCancel={closeEditor}>
+  return <Modal title={<div style={{display: "flex", alignItems: "center", gap: 8}}><RiskIcon /><span>{props.riskId ? "Edit" : "Create"} Risk</span></div>} visible={true} onOk={handleSubmit(onSuccess)} onCancel={closeEditor}>
     <Form
       labelCol={{ span: 4 }}
       wrapperCol={{ span: 20 }}
@@ -50,19 +50,13 @@ export const IssueEditor: React.FC<{issueId?: IssueId}> = (props) => {
 
       <Form.Item required label="Status" validateStatus={errors.status?.message ? "error" : undefined} help={errors.status?.message}>
         <Controller control={control} name="status" render={({ field }) => <Select {...field}>
-          { IssueStatus.options.map(status => <Select.Option value={status} key={status}>{ISSUE_STATUS_UI[status].label}</Select.Option>) }
+          { RiskStatus.options.map(status => <Select.Option value={status} key={status}>{RISK_STATUS_UI[status].label}</Select.Option>) }
         </Select>} />
       </Form.Item>
 
       <Form.Item label="Tags" validateStatus={errors.tags ? "error" : undefined} help={errors.tags?.map(e => e.message).join(", ")}>
         <Controller control={control} name="tags" render={({ field }) => <Select {...field} mode="tags">
           {allTags.map(tag => <Select.Option key={tag} value={tag}>{tag}</Select.Option>)}
-        </Select>} />
-      </Form.Item>
-
-      <Form.Item label="Cause" validateStatus={errors.cause?.message ? "error" : undefined} help={errors.cause?.message}>
-        <Controller control={control} name="cause" render={({ field }) => <Select {...field} allowClear showSearch optionFilterProp="children">
-          {Object.keys(allIssues).map(id => <Select.Option key={id} value={id}><Tag>{id}</Tag> {allIssues[id].title}</Select.Option>)}
         </Select>} />
       </Form.Item>
 

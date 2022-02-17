@@ -1,19 +1,20 @@
 import { Form, Input, message, Modal, Select, Tag } from "antd"
-import { IssueIcon } from "../ItemIcon"
+import { ImprovementIcon } from "../ItemIcon"
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Issue, IssueId, IssueStatus } from "../../data/types"
-import { ISSUE_STATUS_UI } from "../Status"
+import { Improvement, ImprovementId, ImprovementStatus } from "../../data/types"
+import { IMPROVEMENT_STATUS_UI } from "../Status"
 import { selectAllTags, useStore } from "../../data/store"
 import TextArea from "antd/lib/input/TextArea"
 import { useRouter } from "next/router"
 import { useEditorStore } from "./ItemEditor"
 
-export const IssueEditor: React.FC<{issueId?: IssueId}> = (props) => {
+export const ImprovementEditor: React.FC<{improvementId?: ImprovementId}> = (props) => {
   const allTags = useStore(selectAllTags)
   const allIssues = useStore(state => state.issues)
-  const updateIssue = useStore(state => state.updateIssue)
-  const createIssue = useStore(state => state.createIssue)
+  const allImprovements = useStore(state => state.improvements)
+  const updateImprovement = useStore(state => state.updateImprovement)
+  const createImprovement = useStore(state => state.createImprovement)
   const router = useRouter()
   const closeEditor = useEditorStore(state => state.closeEditor)
 
@@ -22,23 +23,23 @@ export const IssueEditor: React.FC<{issueId?: IssueId}> = (props) => {
     control,
     formState: { errors },
   } = useForm({
-    defaultValues: props.issueId ? allIssues[props.issueId] : {...Issue.parse({title: "dummy"}), title: ""},
-    resolver: zodResolver(Issue),
+    defaultValues: props.improvementId ? allImprovements[props.improvementId] : {...Improvement.parse({title: "dummy"}), title: ""},
+    resolver: zodResolver(Improvement),
   })  
 
-  const onSuccess = async (newIssue: Issue) => {
-    if (props.issueId) {
-      await updateIssue(props.issueId, newIssue)
-      message.success("Issue updated")
+  const onSuccess = async (newImprovement: Improvement) => {
+    if (props.improvementId) {
+      await updateImprovement(props.improvementId, newImprovement)
+      message.success("Improvement updated")
     } else {
-      const newId = await createIssue(newIssue)
-      message.success("Issue created")
-      router.push("/issues/" + newId)
+      const newId = await createImprovement(newImprovement)
+      message.success("Improvement created")
+      router.push("/improvements/" + newId)
     }
     closeEditor()
   }
 
-  return <Modal title={<div style={{display: "flex", alignItems: "center", gap: 8}}><IssueIcon /><span>{props.issueId ? "Edit" : "Create"} Issue</span></div>} visible={true} onOk={handleSubmit(onSuccess)} onCancel={closeEditor}>
+  return <Modal title={<div style={{display: "flex", alignItems: "center", gap: 8}}><ImprovementIcon /><span>{props.improvementId ? "Edit" : "Create"} Improvement</span></div>} visible={true} onOk={handleSubmit(onSuccess)} onCancel={closeEditor}>
     <Form
       labelCol={{ span: 4 }}
       wrapperCol={{ span: 20 }}
@@ -50,7 +51,7 @@ export const IssueEditor: React.FC<{issueId?: IssueId}> = (props) => {
 
       <Form.Item required label="Status" validateStatus={errors.status?.message ? "error" : undefined} help={errors.status?.message}>
         <Controller control={control} name="status" render={({ field }) => <Select {...field}>
-          { IssueStatus.options.map(status => <Select.Option value={status} key={status}>{ISSUE_STATUS_UI[status].label}</Select.Option>) }
+          { ImprovementStatus.options.map(status => <Select.Option value={status} key={status}>{IMPROVEMENT_STATUS_UI[status].label}</Select.Option>) }
         </Select>} />
       </Form.Item>
 
@@ -60,8 +61,8 @@ export const IssueEditor: React.FC<{issueId?: IssueId}> = (props) => {
         </Select>} />
       </Form.Item>
 
-      <Form.Item label="Cause" validateStatus={errors.cause?.message ? "error" : undefined} help={errors.cause?.message}>
-        <Controller control={control} name="cause" render={({ field }) => <Select {...field} allowClear showSearch optionFilterProp="children">
+      <Form.Item label="Solves" validateStatus={errors.solves ? "error" : undefined} help={errors.solves?.map(e => e.message).join(", ")}>
+        <Controller control={control} name="solves" render={({ field }) => <Select {...field} allowClear showSearch optionFilterProp="children" mode="multiple">
           {Object.keys(allIssues).map(id => <Select.Option key={id} value={id}><Tag>{id}</Tag> {allIssues[id].title}</Select.Option>)}
         </Select>} />
       </Form.Item>

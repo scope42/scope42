@@ -1,6 +1,8 @@
 import create from "zustand"
 import { ImprovementId, IssueId, RiskId } from "../../data/types"
+import { ImprovementEditor } from "./ImprovementEditor"
 import { IssueEditor } from "./IssueEditor"
+import { RiskEditor } from "./RiskEditor"
 
 interface EditorState {
   current: null | { type: "issue", id?: IssueId } | { type: "improvement", id?: ImprovementId } | { type: "risk", id?: RiskId },
@@ -15,7 +17,7 @@ interface EditorState {
 
 export const useEditorStore = create<EditorState>(set => ({
   current: null,
-  createIssue: () => { console.log("JA MOIN"); set({ current: { type: "issue" }}) },
+  createIssue: () => set({ current: { type: "issue" }}),
   createImprovement: () => set({ current: { type: "improvement" }}),
   createRisk: () => set({ current: { type: "risk" }}),
   editIssue: id => set({ current: { type: "issue", id }}),
@@ -29,6 +31,14 @@ export const ItemEditor: React.FC = () => {
 
   if (current?.type === "issue") {
     return <IssueEditor issueId={current.id} />
+  }
+
+  if (current?.type === "improvement") {
+    return <ImprovementEditor improvementId={current.id} />
+  }
+
+  if (current?.type === "risk") {
+    return <RiskEditor riskId={current.id} />
   }
 
   return null

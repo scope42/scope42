@@ -23,9 +23,9 @@ export const IssueId = z.string().regex(/issue-[1-9][0-9]*/)
 export const RiskId = z.string().regex(/risk-[1-9][0-9]*/)
 export const ImprovementId = z.string().regex(/improvement-[1-9][0-9]*/)
 
-const IssueStatus = z.enum(['potential', 'current', 'resolved', 'discarded'])
-const RiskStatus = z.enum(['current', 'mitigated', 'discarded'])
-const ImprovementStatus  = z.enum(['proposed', 'accepted', 'implemented', 'discarded'])
+export const IssueStatus = z.enum(['potential', 'current', 'resolved', 'discarded'])
+export const RiskStatus = z.enum(['current', 'mitigated', 'discarded'])
+export const ImprovementStatus  = z.enum(['proposed', 'accepted', 'implemented', 'discarded'])
 
 const Tag = z.string().nonempty()
 
