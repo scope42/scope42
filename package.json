@@ -1,17 +1,20 @@
 {
-  "name": "@scope42/ui",
+  "name": "scope42",
   "version": "0.0.0",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@hookform/resolvers": "^2.8.8",
+    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/react": "^12.1.3",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.4.0",
+    "@types/node": "^16.11.25",
+    "@types/react": "^17.0.39",
+    "@types/react-dom": "^17.0.11",
     "@types/wicg-file-system-access": "^2020.9.5",
+    "@types/js-yaml": "^4.0.3",
+    "@types/react-cytoscapejs": "^1.2.2",
     "antd": "^4.16.3",
     "antd-button-color": "^1.0.4",
     "cytoscape": "^3.20.0",
@@ -20,26 +23,41 @@
     "immer": "^9.0.7",
     "js-yaml": "^4.1.0",
     "liquid-loading": "^1.0.0",
-    "next": "12.0.8",
-    "nprogress": "^0.2.0",
-    "react": "17.0.2",
+    "react": "^17.0.2",
     "react-cytoscapejs": "^1.2.1",
-    "react-dom": "17.0.2",
-    "react-hook-form": "^7.25.1",
-    "react-markdown": "^7.1.0",
+    "react-dom": "^17.0.2",
+    "react-hook-form": "^7.27.0",
+    "react-markdown": "8.0.0",
+    "react-router-dom": "^6.2.1",
+    "react-scripts": "5.0.0",
+    "typescript": "4.3.4",
+    "web-vitals": "^2.1.4",
     "yaml": "^1.10.2",
     "zod": "^3.11.6",
     "zustand": "^3.6.7"
   },
-  "devDependencies": {
-    "@types/js-yaml": "^4.0.3",
-    "@types/nprogress": "^0.2.0",
-    "@types/react": "17.0.11",
-    "@types/react-cytoscapejs": "^1.2.2",
-    "eslint": "7.29.0",
-    "eslint-config-next": "11.0.0",
-    "netlify-ts": "^1.1.0",
-    "next-transpile-modules": "^8.0.0",
-    "typescript": "4.3.4"
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

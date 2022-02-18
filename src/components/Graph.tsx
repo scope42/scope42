@@ -1,15 +1,12 @@
 import React, { useCallback, useMemo } from 'react'
-import { NoSsr } from '../components/NoSsr'
-import dynamic from 'next/dynamic'
 import type { ElementDefinition, Stylesheet } from 'cytoscape'
 import { Improvement, Issue, IssueId, ItemId, Risk } from '../data/types'
 import { useStore } from '../data/store'
 import Cytoscape from 'cytoscape'
 import CoseBilkent from 'cytoscape-cose-bilkent'
+import CytoscapeComponent from 'react-cytoscapejs'
 
 Cytoscape.use(CoseBilkent)
-
-const CytoscapeComponent = dynamic(() => import('react-cytoscapejs'), { ssr: false })
 
 type NodeType<T extends string, E> = {type: T; entity: E; id: ItemId}
 type Node = NodeType<'issue', Issue> | NodeType<'risk', Risk> | NodeType<'improvement', Improvement>
@@ -104,15 +101,13 @@ class ElementsBuilder {
 }
 
 const Graph: React.FC<{elements: ElementDefinition[]}> = ({ elements }) => {
-  return <NoSsr>
-    <CytoscapeComponent
+  return <CytoscapeComponent
       elements={elements}
       stylesheet={STYLESHEET}
-      layout={{ name: 'cose-bilkent', nodeDimensionsIncludeLabels: true }}
+      layout={ { name: 'cose-bilkent' as any, nodeDimensionsIncludeLabels: true }}
       pan={{ x: SIZE / 2, y: SIZE / 2 }}
       style={ { width: SIZE, height: SIZE } }
     />
-  </NoSsr>
 }
 
 export const IssueGraph: React.FC<{id: IssueId}> = ({ id }) => {

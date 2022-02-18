@@ -1,7 +1,5 @@
 import { z, ZodTypeAny } from 'zod'
 
-const DateString = z.string().regex(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/)
-
 const DeserializableDate = z.preprocess(
   arg => {
       if ( typeof arg == 'string' || arg instanceof Date )
@@ -54,6 +52,8 @@ export const Improvement = Item.extend({
 export const WorkspaceConfig = z.object({
   version: z.number().positive().int().default(1)
 })
+
+/* eslint-disable @typescript-eslint/no-redeclare */
 
 export type IssueId = z.infer<typeof IssueId>;
 export type RiskId = z.infer<typeof RiskId>;

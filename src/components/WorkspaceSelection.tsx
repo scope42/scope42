@@ -1,9 +1,7 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { Alert, Button, Card, Col, Modal, Row } from 'antd'
-import Image from 'next/image'
 import { useStore } from '../data/store'
-import { NoSsr } from './NoSsr'
-import { useEffect } from 'react'
+import "liquid-loading"
 
 export const WorkspaceSelection: React.VFC = () => {
   const loading = useStore(state => state.workspace.loading)
@@ -13,7 +11,7 @@ export const WorkspaceSelection: React.VFC = () => {
   return <div style={{ width: "100vw", height: "100vh", display: "flex", alignItems: "center", justifyContent: "center"}}>
     <div style={{ maxWidth: 1000, padding: 16, display: "flex", alignItems: "center", flexDirection: "column", gap: 16}}>
       <div>
-        <Image src="/logo.svg" alt="scope42 logo" width={78.417763 * 8} height={15.01984 * 8} />
+        <img src={process.env.PUBLIC_URL + '/logo.svg'} alt="scope42 logo" width={78.417763 * 8} height={15.01984 * 8} />
         <h2 style={{textAlign: "center"}}>Improve your software architecture with precision!</h2>
       </div>
       <div>
@@ -22,12 +20,12 @@ export const WorkspaceSelection: React.VFC = () => {
       </div>
       <Card title="Workspace" style={{width: "100%"}}>
         <Row>
-          <Col span={12}><Image src="/workspace.svg" alt="Improvement" width={777.00073 * 0.5} height={407.99846 * 0.5} /></Col>
+          <Col span={12}><img src={process.env.PUBLIC_URL + '/workspace.svg'} alt="Improvement" width={777.00073 * 0.5} height={407.99846 * 0.5} /></Col>
           <Col span={12}>
             { loading ? <Loading /> : 
               <><p>To ensure your data ownership, scope42 stores all data in an open file format on your machine. Click the button below to choose a directory that is used as the workspace root.</p>
               { error ? <><Alert type="error" message="Opening workspace failed" description={`${error}`}  /><br /></> : null }
-              <NoSsr><DirectoryPicker /></NoSsr></> }
+              <DirectoryPicker /></> }
           </Col>
         </Row>
       </Card>
@@ -38,7 +36,6 @@ export const WorkspaceSelection: React.VFC = () => {
 
 const Loading: React.VFC = () => {
   // @ts-ignore
-  useEffect(() => { import("liquid-loading") }, [])
   return (<liquid-loading />)
 }
 

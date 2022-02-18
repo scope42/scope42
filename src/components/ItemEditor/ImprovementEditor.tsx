@@ -6,8 +6,8 @@ import { Improvement, ImprovementId, ImprovementStatus } from "../../data/types"
 import { IMPROVEMENT_STATUS_UI } from "../Status"
 import { selectAllTags, useStore } from "../../data/store"
 import TextArea from "antd/lib/input/TextArea"
-import { useRouter } from "next/router"
 import { useEditorStore } from "./ItemEditor"
+import { useNavigate } from "react-router-dom";
 
 export const ImprovementEditor: React.FC<{improvementId?: ImprovementId}> = (props) => {
   const allTags = useStore(selectAllTags)
@@ -15,7 +15,7 @@ export const ImprovementEditor: React.FC<{improvementId?: ImprovementId}> = (pro
   const allImprovements = useStore(state => state.improvements)
   const updateImprovement = useStore(state => state.updateImprovement)
   const createImprovement = useStore(state => state.createImprovement)
-  const router = useRouter()
+  const navigate = useNavigate();
   const closeEditor = useEditorStore(state => state.closeEditor)
 
   const {
@@ -34,7 +34,7 @@ export const ImprovementEditor: React.FC<{improvementId?: ImprovementId}> = (pro
     } else {
       const newId = await createImprovement(newImprovement)
       message.success("Improvement created")
-      router.push("/improvements/" + newId)
+      navigate("/improvements/" + newId)
     }
     closeEditor()
   }

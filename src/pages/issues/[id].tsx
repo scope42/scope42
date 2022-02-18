@@ -1,21 +1,19 @@
-import ReactMarkdown from 'react-markdown/react-markdown.min'
+import ReactMarkdown from 'react-markdown'
 import { Tag, Row, Descriptions, Button } from 'antd'
-import { useRouter } from 'next/router'
 import { useStore } from '../../data/store'
 import { EditOutlined, StopOutlined } from '@ant-design/icons'
 import { IssueLink } from '../../components/ItemLink'
 import { IssueGraph } from '../../components/Graph'
 import { ISSUE_STATUS_UI } from '../../components/Status'
-import { useState } from 'react'
 import { renderDate } from '../../data/util'
 import { IssueIcon } from '../../components/ItemIcon'
 import { PageHeader } from '../../components/PageHeader'
 import Error404 from '../404'
 import { useEditorStore } from '../../components/ItemEditor/ItemEditor'
+import { useParams } from 'react-router-dom'
 
 const IssuePage = () => {
-  const router = useRouter()
-  const id = String(router.query.id)
+  const id = String(useParams().id)
   const issue = useStore(state => state.issues[id])
   const edit = useEditorStore(state => state.editIssue)
 

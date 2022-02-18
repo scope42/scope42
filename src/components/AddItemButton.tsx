@@ -1,5 +1,5 @@
 import { PlusOutlined } from "@ant-design/icons"
-import { Dropdown, Menu, Modal } from "antd"
+import { Dropdown, Menu } from "antd"
 import Button from "antd-button-color"
 import { useEditorStore } from "./ItemEditor/ItemEditor"
 import { ImprovementIcon, IssueIcon, RiskIcon } from "./ItemIcon"
