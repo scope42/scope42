@@ -5,12 +5,12 @@ import { Header } from './components/Header';
 import { ItemEditor } from './components/ItemEditor/ItemEditor';
 import { WorkspaceSelection } from './components/WorkspaceSelection';
 import { useStore } from './data/store';
-import HomePage from './pages';
-import Error404 from './pages/404';
-import ImprovementsPage from './pages/improvements';
-import IssuesPage from './pages/issues';
-import IssuePage from './pages/issues/[id]';
-import RisksPage from './pages/risks';
+import HomePage from './pages/HomePage';
+import Error404 from './components/Error404';
+import ImprovementsPage from './pages/ImprovementsPage';
+import IssuesPage from './pages/issues/IssuesPage';
+import IssuePage from './pages/IssuePage';
+import RisksPage from './pages/RisksPage';
 
 const { Content, Footer } = Layout
 

@@ -1,11 +1,11 @@
 /* eslint-disable react/display-name */
-import { Improvement, ImprovementId, ImprovementStatus } from '../../data/types'
+import { Improvement, ImprovementId, ImprovementStatus } from '../data/types'
 import { Table, Tag } from 'antd'
-import { useStore } from '../../data/store'
-import { ImprovementLink } from '../../components/ItemLink'
-import { IMPROVEMENT_STATUS_UI } from '../../components/Status'
-import { renderDate } from '../../data/util'
-import { PageHeader } from '../../components/PageHeader'
+import { useStore } from '../data/store'
+import { ImprovementLink } from '../components/ItemLink'
+import { IMPROVEMENT_STATUS_UI } from '../components/Status'
+import { renderDate } from '../data/util'
+import { PageHeader } from '../components/PageHeader'
 
 const columns = [
   {
