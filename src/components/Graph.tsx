@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react'
 import type { ElementDefinition, Stylesheet } from 'cytoscape'
-import { Improvement, Issue, IssueId, ItemId, Risk } from '../data/types'
+import { Improvement, Issue, IssueId, ItemId, Risk, RiskId } from '../data/types'
 import { useStore } from '../data/store'
 import Cytoscape from 'cytoscape'
 import CoseBilkent from 'cytoscape-cose-bilkent'
@@ -110,7 +110,7 @@ const Graph: React.FC<{elements: ElementDefinition[]}> = ({ elements }) => {
     />
 }
 
-export const IssueGraph: React.FC<{id: IssueId}> = ({ id }) => {
+export const IssueGraph: React.VFC<{id: IssueId}> = ({ id }) => {
   const [issue, cause, improvements] = useStore(useCallback(state => {
     const issue = state.issues[id]
     return [
@@ -132,5 +132,18 @@ export const IssueGraph: React.FC<{id: IssueId}> = ({ id }) => {
     }
     return builder.build()
   }, [id, issue, cause, improvements])
+  return <Graph elements={elements} />
+}
+
+export const RiskGraph: React.VFC<{id: RiskId}> = ({ id }) => {
+  const [risk] = useStore(useCallback(state => {
+    const risk = state.risks[id]
+    return [risk]
+  }, [id]))
+  const elements = useMemo(() => {
+    const builder = new ElementsBuilder()
+    builder.center({ type: 'risk', entity: risk, id })
+    return builder.build()
+  }, [id, risk])
   return <Graph elements={elements} />
 }
