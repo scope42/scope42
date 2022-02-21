@@ -25,7 +25,9 @@ export const WorkspaceSelection: React.VFC = () => {
             { loading ? <Loading /> : 
               <><p>To ensure your data ownership, scope42 stores all data in an open file format on your machine. Click the button below to choose a directory that is used as the workspace root.</p>
               { error ? <><Alert type="error" message="Opening workspace failed" description={`${error}`}  /><br /></> : null }
-              <DirectoryPicker /></> }
+              <DirectoryPicker />
+              <Alert style={{marginTop: 16}} type="warning" message="⚠ This project is currently in alpha stage. Breaking changes to the data format can happen without notice." />
+              </> }
           </Col>
         </Row>
       </Card>

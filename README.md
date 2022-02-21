@@ -5,6 +5,8 @@
 
 This tool helps you to keep track of issues, arising risks and possible improvements of your existing architecture. The terminology and concepts are based on aim42, the Architecture Improvement Method.
 
+⚠⚠⚠ **This project is currently in alpha stage. Breaking changes to the data format can happen without notice. Early feedback is very welcome and helpful to stabilize soon.**
+
 ## Features
 
 - Management of items with a fancy UI
