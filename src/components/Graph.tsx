@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react'
 import type { ElementDefinition, Stylesheet } from 'cytoscape'
-import { Improvement, Issue, IssueId, ItemId, Risk, RiskId } from '../data/types'
+import { Improvement, ImprovementId, Issue, IssueId, ItemId, Risk, RiskId } from '../data/types'
 import { useStore } from '../data/store'
 import Cytoscape from 'cytoscape'
 import CoseBilkent from 'cytoscape-cose-bilkent'
@@ -132,6 +132,26 @@ export const IssueGraph: React.VFC<{id: IssueId}> = ({ id }) => {
     }
     return builder.build()
   }, [id, issue, cause, improvements])
+  return <Graph elements={elements} />
+}
+
+export const ImprovementGraph: React.VFC<{id: ImprovementId}> = ({ id }) => {
+  const [improvement, solves] = useStore(useCallback(state => {
+    const improvement = state.improvements[id]
+    return [
+      improvement,
+      improvement.solves.map(id => ({id, data: state.issues[id]}))
+    ]
+  }, [id]))
+  const elements = useMemo(() => {
+    const builder = new ElementsBuilder()
+    builder.center({ type: 'improvement', entity: improvement, id })
+    for (const issue of solves) {
+      builder.node({ type: 'issue', entity: issue.data, id: issue.id })
+          .edge({ type: 'improvement', id: id }, { type: 'issue', id: issue.id }, 'Solves')
+    }
+    return builder.build()
+  }, [id, improvement, solves])
   return <Graph elements={elements} />
 }
 

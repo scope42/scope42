@@ -12,6 +12,7 @@ import IssuesPage from './pages/IssuesPage';
 import IssuePage from './pages/IssuePage';
 import RisksPage from './pages/RisksPage';
 import RiskPage from './pages/RiskPage';
+import ImprovementPage from './pages/ImprovementPage';
 
 const { Content, Footer } = Layout
 
@@ -33,6 +34,7 @@ const App: React.VFC = () => {
             <Route path="/issues" element={<IssuesPage />} />
             <Route path="/issues/:id" element={<IssuePage />} />
             <Route path="/improvements" element={<ImprovementsPage />} />
+            <Route path="/improvements/:id" element={<ImprovementPage />} />
             <Route path="/risks" element={<RisksPage />} />
             <Route path="/risks/:id" element={<RiskPage />} />
             <Route path="*" element={<Error404 />} />
