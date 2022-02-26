@@ -1,12 +1,8 @@
 import { z, ZodTypeAny } from 'zod'
 
-const DeserializableDate = z.preprocess(
-  arg => {
-      if ( typeof arg == 'string' || arg instanceof Date )
-          return new Date( arg )
-  },
-  z.date()
-)
+const DeserializableDate = z.preprocess(arg => {
+  if (typeof arg == 'string' || arg instanceof Date) return new Date(arg)
+}, z.date())
 
 /**
  * Converts `null` to `undefined` before parsing. This is needed beacuse our
@@ -14,7 +10,10 @@ const DeserializableDate = z.preprocess(
  * files without polluting our type declarations.
  */
 function nullsafeOptional<T extends ZodTypeAny>(schema: T) {
- return z.preprocess(arg => arg === null ? undefined : arg, schema.optional())
+  return z.preprocess(
+    arg => (arg === null ? undefined : arg),
+    schema.optional()
+  )
 }
 
 export const IssueId = z.string().regex(/issue-[1-9][0-9]*/)
@@ -23,7 +22,12 @@ export const ImprovementId = z.string().regex(/improvement-[1-9][0-9]*/)
 
 export const IssueStatus = z.enum(['current', 'resolved', 'discarded'])
 export const RiskStatus = z.enum(['current', 'mitigated', 'discarded'])
-export const ImprovementStatus  = z.enum(['proposed', 'accepted', 'implemented', 'discarded'])
+export const ImprovementStatus = z.enum([
+  'proposed',
+  'accepted',
+  'implemented',
+  'discarded'
+])
 
 const Tag = z.string().nonempty()
 
@@ -32,21 +36,21 @@ const Item = z.object({
   body: nullsafeOptional(z.string()),
   tags: z.array(Tag).default([]),
   created: DeserializableDate.default(() => new Date()),
-  modified: DeserializableDate.default(() => new Date()),
+  modified: DeserializableDate.default(() => new Date())
 })
 
 export const Risk = Item.extend({
-  status: RiskStatus.default('current'),
+  status: RiskStatus.default('current')
 })
 
 export const Issue = Item.extend({
   status: IssueStatus.default('current'),
-  cause: nullsafeOptional(IssueId),
+  cause: nullsafeOptional(IssueId)
 })
 
 export const Improvement = Item.extend({
   status: ImprovementStatus.default('proposed'),
-  solves: z.array(IssueId).default([]),
+  solves: z.array(IssueId).default([])
 })
 
 export const WorkspaceConfig = z.object({
@@ -55,13 +59,13 @@ export const WorkspaceConfig = z.object({
 
 /* eslint-disable @typescript-eslint/no-redeclare */
 
-export type IssueId = z.infer<typeof IssueId>;
-export type RiskId = z.infer<typeof RiskId>;
-export type ImprovementId = z.infer<typeof ImprovementId>;
-export type Issue = z.infer<typeof Issue>;
-export type Risk = z.infer<typeof Risk>;
-export type Improvement = z.infer<typeof Improvement>;
-export type ItemId = IssueId | RiskId | ImprovementId;
-export type IssueStatus = z.infer<typeof IssueStatus>;
-export type RiskStatus = z.infer<typeof RiskStatus>;
-export type ImprovementStatus = z.infer<typeof ImprovementStatus>;
+export type IssueId = z.infer<typeof IssueId>
+export type RiskId = z.infer<typeof RiskId>
+export type ImprovementId = z.infer<typeof ImprovementId>
+export type Issue = z.infer<typeof Issue>
+export type Risk = z.infer<typeof Risk>
+export type Improvement = z.infer<typeof Improvement>
+export type ItemId = IssueId | RiskId | ImprovementId
+export type IssueStatus = z.infer<typeof IssueStatus>
+export type RiskStatus = z.infer<typeof RiskStatus>
+export type ImprovementStatus = z.infer<typeof ImprovementStatus>

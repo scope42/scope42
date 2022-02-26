@@ -12,13 +12,17 @@ const columns = [
     title: 'Title',
     dataIndex: 'title',
     key: 'title',
-    render: (title: string, improvement: Improvement & {id: ImprovementId}) => <ImprovementLink id={improvement.id} />,
+    render: (
+      title: string,
+      improvement: Improvement & { id: ImprovementId }
+    ) => <ImprovementLink id={improvement.id} />
   },
   {
     title: 'Status',
     dataIndex: 'status',
     key: 'status',
-    render: (status: ImprovementStatus) => IMPROVEMENT_STATUS_UI[status].component
+    render: (status: ImprovementStatus) =>
+      IMPROVEMENT_STATUS_UI[status].component
   },
   {
     title: 'Tags',
@@ -37,15 +41,18 @@ const columns = [
     dataIndex: 'modified',
     key: 'modified',
     render: renderDate
-  },
+  }
 ]
 
 export default function ImprovementsPage() {
   const improvements = useStore(state => state.improvements)
-  const dataSource = Object.keys(improvements).map(id => ({ ...improvements[id], id }))
+  const dataSource = Object.keys(improvements).map(id => ({
+    ...improvements[id],
+    id
+  }))
   return (
     <div>
-      <PageHeader title='Issues' />
+      <PageHeader title="Issues" />
       <Table dataSource={dataSource} columns={columns} rowKey="id" />
     </div>
   )

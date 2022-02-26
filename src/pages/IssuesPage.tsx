@@ -12,7 +12,9 @@ const columns = [
     title: 'Title',
     dataIndex: 'title',
     key: 'title',
-    render: (title: string, issue: Issue & {id: IssueId}) => <IssueLink id={issue.id} />,
+    render: (title: string, issue: Issue & { id: IssueId }) => (
+      <IssueLink id={issue.id} />
+    )
   },
   {
     title: 'Status',
@@ -37,7 +39,7 @@ const columns = [
     dataIndex: 'modified',
     key: 'modified',
     render: renderDate
-  },
+  }
 ]
 
 export default function IssuesPage() {
@@ -45,7 +47,7 @@ export default function IssuesPage() {
   const dataSource = Object.keys(issues).map(id => ({ ...issues[id], id }))
   return (
     <div>
-      <PageHeader title='Issues' />
+      <PageHeader title="Issues" />
       <Table dataSource={dataSource} columns={columns} rowKey="id" />
     </div>
   )

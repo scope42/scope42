@@ -21,36 +21,58 @@ const IssuePage = () => {
     return <Error404 />
   }
 
-  return <>
-    <PageHeader
-      title={issue.title}
-      icon={<IssueIcon size={24} />}
-      backButton
-      extra={<Button type="primary" icon={<EditOutlined />} onClick={() => edit(id)}>Edit</Button>}
-    >
-      <Row>
-        <Descriptions size="small" column={3}>
-          <Descriptions.Item label="Status">
-            {ISSUE_STATUS_UI[issue.status].component}
-          </Descriptions.Item>
-          <Descriptions.Item label="Created">{renderDate(issue.created)}</Descriptions.Item>
-          <Descriptions.Item label="Modified">{renderDate(issue.modified)}</Descriptions.Item>
-          <Descriptions.Item label="Cause">
-            {issue.cause ? <IssueLink id={issue.cause} /> : <Tag color="red"><StopOutlined /> Root Cause</Tag>}
-          </Descriptions.Item>
-          <Descriptions.Item label="Tags">
-            {issue.tags.map(tag => <Tag key={tag}>{tag}</Tag>)}
-          </Descriptions.Item>
-        </Descriptions>
-      </Row>
-    </PageHeader>
-    <div style={{ display: 'flex' }}>
-      <div style={{ flexGrow: 1 }}>
-        <ReactMarkdown>{issue.body || ''}</ReactMarkdown>
+  return (
+    <>
+      <PageHeader
+        title={issue.title}
+        icon={<IssueIcon size={24} />}
+        backButton
+        extra={
+          <Button
+            type="primary"
+            icon={<EditOutlined />}
+            onClick={() => edit(id)}
+          >
+            Edit
+          </Button>
+        }
+      >
+        <Row>
+          <Descriptions size="small" column={3}>
+            <Descriptions.Item label="Status">
+              {ISSUE_STATUS_UI[issue.status].component}
+            </Descriptions.Item>
+            <Descriptions.Item label="Created">
+              {renderDate(issue.created)}
+            </Descriptions.Item>
+            <Descriptions.Item label="Modified">
+              {renderDate(issue.modified)}
+            </Descriptions.Item>
+            <Descriptions.Item label="Cause">
+              {issue.cause ? (
+                <IssueLink id={issue.cause} />
+              ) : (
+                <Tag color="red">
+                  <StopOutlined /> Root Cause
+                </Tag>
+              )}
+            </Descriptions.Item>
+            <Descriptions.Item label="Tags">
+              {issue.tags.map(tag => (
+                <Tag key={tag}>{tag}</Tag>
+              ))}
+            </Descriptions.Item>
+          </Descriptions>
+        </Row>
+      </PageHeader>
+      <div style={{ display: 'flex' }}>
+        <div style={{ flexGrow: 1 }}>
+          <ReactMarkdown>{issue.body || ''}</ReactMarkdown>
+        </div>
+        <IssueGraph id={id} />
       </div>
-      <IssueGraph id={id} />
-    </div>
-  </>
+    </>
+  )
 }
 
 export default IssuePage

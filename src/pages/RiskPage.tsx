@@ -20,33 +20,49 @@ const RiskPage = () => {
     return <Error404 />
   }
 
-  return <>
-    <PageHeader
-      title={risk.title}
-      icon={<RiskIcon size={24} />}
-      backButton
-      extra={<Button type="primary" icon={<EditOutlined />} onClick={() => edit(id)}>Edit</Button>}
-    >
-      <Row>
-        <Descriptions size="small" column={3}>
-          <Descriptions.Item label="Status">
-            {RISK_STATUS_UI[risk.status].component}
-          </Descriptions.Item>
-          <Descriptions.Item label="Created">{renderDate(risk.created)}</Descriptions.Item>
-          <Descriptions.Item label="Modified">{renderDate(risk.modified)}</Descriptions.Item>
-          <Descriptions.Item label="Tags">
-            {risk.tags.map(tag => <Tag key={tag}>{tag}</Tag>)}
-          </Descriptions.Item>
-        </Descriptions>
-      </Row>
-    </PageHeader>
-    <div style={{ display: 'flex' }}>
-      <div style={{ flexGrow: 1 }}>
-        <ReactMarkdown>{risk.body || ''}</ReactMarkdown>
+  return (
+    <>
+      <PageHeader
+        title={risk.title}
+        icon={<RiskIcon size={24} />}
+        backButton
+        extra={
+          <Button
+            type="primary"
+            icon={<EditOutlined />}
+            onClick={() => edit(id)}
+          >
+            Edit
+          </Button>
+        }
+      >
+        <Row>
+          <Descriptions size="small" column={3}>
+            <Descriptions.Item label="Status">
+              {RISK_STATUS_UI[risk.status].component}
+            </Descriptions.Item>
+            <Descriptions.Item label="Created">
+              {renderDate(risk.created)}
+            </Descriptions.Item>
+            <Descriptions.Item label="Modified">
+              {renderDate(risk.modified)}
+            </Descriptions.Item>
+            <Descriptions.Item label="Tags">
+              {risk.tags.map(tag => (
+                <Tag key={tag}>{tag}</Tag>
+              ))}
+            </Descriptions.Item>
+          </Descriptions>
+        </Row>
+      </PageHeader>
+      <div style={{ display: 'flex' }}>
+        <div style={{ flexGrow: 1 }}>
+          <ReactMarkdown>{risk.body || ''}</ReactMarkdown>
+        </div>
+        <RiskGraph id={id} />
       </div>
-      <RiskGraph id={id} />
-    </div>
-  </>
+    </>
+  )
 }
 
 export default RiskPage

@@ -1,19 +1,19 @@
-import { Divider, Layout, Typography } from 'antd';
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Header } from './components/Header';
-import { ItemEditor } from './components/ItemEditor/ItemEditor';
-import { WorkspaceSelection } from './components/WorkspaceSelection';
-import { useStore } from './data/store';
-import HomePage from './pages/HomePage';
-import Error404 from './components/Error404';
-import ImprovementsPage from './pages/ImprovementsPage';
-import IssuesPage from './pages/IssuesPage';
-import IssuePage from './pages/IssuePage';
-import RisksPage from './pages/RisksPage';
-import RiskPage from './pages/RiskPage';
-import ImprovementPage from './pages/ImprovementPage';
-import { BugOutlined, GithubOutlined } from '@ant-design/icons';
+import { Divider, Layout, Typography } from 'antd'
+import React from 'react'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { Header } from './components/Header'
+import { ItemEditor } from './components/ItemEditor/ItemEditor'
+import { WorkspaceSelection } from './components/WorkspaceSelection'
+import { useStore } from './data/store'
+import HomePage from './pages/HomePage'
+import Error404 from './components/Error404'
+import ImprovementsPage from './pages/ImprovementsPage'
+import IssuesPage from './pages/IssuesPage'
+import IssuePage from './pages/IssuePage'
+import RisksPage from './pages/RisksPage'
+import RiskPage from './pages/RiskPage'
+import ImprovementPage from './pages/ImprovementPage'
+import { BugOutlined, GithubOutlined } from '@ant-design/icons'
 
 const { Content, Footer } = Layout
 
@@ -42,14 +42,32 @@ const App: React.VFC = () => {
           </Routes>
         </Content>
         <Footer style={{ textAlign: 'center' }}>
-          Version 0.0.0 <Divider type='vertical' />
-          <GithubOutlined /> <a target="_blank" href='https://github.com/erikhofer/scope42' rel="noreferrer noopener">Source Code</a> <Divider type='vertical' />
-          <BugOutlined /> <a target="_blank" href='https://github.com/erikhofer/scope42/issues' rel="noreferrer noopener">Report Issue</a> <Divider type='vertical' />
-          <Typography.Text type="secondary">Not affiliated with aim42.</Typography.Text>
+          Version 0.0.0 <Divider type="vertical" />
+          <GithubOutlined />{' '}
+          <a
+            target="_blank"
+            href="https://github.com/erikhofer/scope42"
+            rel="noreferrer noopener"
+          >
+            Source Code
+          </a>{' '}
+          <Divider type="vertical" />
+          <BugOutlined />{' '}
+          <a
+            target="_blank"
+            href="https://github.com/erikhofer/scope42/issues"
+            rel="noreferrer noopener"
+          >
+            Report Issue
+          </a>{' '}
+          <Divider type="vertical" />
+          <Typography.Text type="secondary">
+            Not affiliated with aim42.
+          </Typography.Text>
         </Footer>
-      </Layout> 
+      </Layout>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App
