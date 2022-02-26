@@ -49,8 +49,13 @@ const ImprovementPage = () => {
               {renderDate(improvement.modified)}
             </Descriptions.Item>
             <Descriptions.Item label="Solves">
-              {improvement.solves.map(issueId => (
-                <IssueLink key={issueId} id={issueId} />
+              {improvement.solves.map((issueId, index) => (
+                <>
+                  {index === 0 ? null : (
+                    <span style={{ marginRight: 8 }}>,</span>
+                  )}
+                  <IssueLink key={issueId} id={issueId} />
+                </>
               ))}
             </Descriptions.Item>
             <Descriptions.Item label="Tags">
