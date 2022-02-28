@@ -1,4 +1,4 @@
-import { Form, Input, message, Modal, Select } from 'antd'
+import { Form, Input, message, Modal, Select, Tag } from 'antd'
 import { RiskIcon } from '../ItemIcon'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom'
 export const RiskEditor: React.FC<{ riskId?: IssueId }> = props => {
   const allTags = useStore(selectAllTags)
   const allRisks = useStore(state => state.risks)
+  const allIssues = useStore(state => state.issues)
   const updateRisk = useStore(state => state.updateRisk)
   const createRisk = useStore(state => state.createRisk)
   const navigate = useNavigate()
@@ -100,6 +101,31 @@ export const RiskEditor: React.FC<{ riskId?: IssueId }> = props => {
                 {allTags.map(tag => (
                   <Select.Option key={tag} value={tag}>
                     {tag}
+                  </Select.Option>
+                ))}
+              </Select>
+            )}
+          />
+        </Form.Item>
+
+        <Form.Item
+          label="Cause"
+          validateStatus={errors.cause?.message ? 'error' : undefined}
+          help={errors.cause?.message}
+        >
+          <Controller
+            control={control}
+            name="cause"
+            render={({ field }) => (
+              <Select
+                {...field}
+                allowClear
+                showSearch
+                optionFilterProp="children"
+              >
+                {Object.keys(allIssues).map(id => (
+                  <Select.Option key={id} value={id}>
+                    <Tag>{id}</Tag> {allIssues[id].title}
                   </Select.Option>
                 ))}
               </Select>

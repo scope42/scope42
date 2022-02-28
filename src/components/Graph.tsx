@@ -138,14 +138,14 @@ const Graph: React.FC<{ elements: ElementDefinition[] }> = ({ elements }) => {
         name: 'cose-bilkent' as any,
         nodeDimensionsIncludeLabels: true
       }}
-      pan={{ x: SIZE / 2, y: SIZE / 2 }}
       style={{ width: SIZE, height: SIZE }}
+      wheelSensitivity={0.2}
     />
   )
 }
 
 export const IssueGraph: React.VFC<{ id: IssueId }> = ({ id }) => {
-  const [issue, cause, improvements] = useStore(
+  const [issue, cause, improvements, causedRisks] = useStore(
     useCallback(
       state => {
         const issue = state.issues[id]
@@ -156,7 +156,10 @@ export const IssueGraph: React.VFC<{ id: IssueId }> = ({ id }) => {
             : undefined,
           Object.keys(state.improvements)
             .map(id => ({ id, data: state.improvements[id] }))
-            .filter(i => i.data.solves.includes(id))
+            .filter(i => i.data.solves.includes(id)),
+          Object.keys(state.risks)
+            .map(id => ({ id, data: state.risks[id] }))
+            .filter(i => i.data.cause === id)
         ]
       },
       [id]
@@ -187,8 +190,21 @@ export const IssueGraph: React.VFC<{ id: IssueId }> = ({ id }) => {
           'Solves'
         )
     }
+    for (const causedRisk of causedRisks) {
+      builder
+        .node({
+          type: 'risk',
+          entity: causedRisk.data,
+          id: causedRisk.id
+        })
+        .edge(
+          { type: 'issue', id: id },
+          { type: 'risk', id: causedRisk.id },
+          'Causes'
+        )
+    }
     return builder.build()
-  }, [id, issue, cause, improvements])
+  }, [id, issue, cause, improvements, causedRisks])
   return <Graph elements={elements} />
 }
 
@@ -223,11 +239,16 @@ export const ImprovementGraph: React.VFC<{ id: ImprovementId }> = ({ id }) => {
 }
 
 export const RiskGraph: React.VFC<{ id: RiskId }> = ({ id }) => {
-  const [risk] = useStore(
+  const [risk, cause] = useStore(
     useCallback(
       state => {
         const risk = state.risks[id]
-        return [risk]
+        return [
+          risk,
+          risk.cause
+            ? { id: risk.cause, data: state.issues[risk.cause] }
+            : undefined
+        ]
       },
       [id]
     )
@@ -235,7 +256,17 @@ export const RiskGraph: React.VFC<{ id: RiskId }> = ({ id }) => {
   const elements = useMemo(() => {
     const builder = new ElementsBuilder()
     builder.center({ type: 'risk', entity: risk, id })
+    if (cause) {
+      builder
+        .node({ type: 'issue', entity: cause.data, id: cause.id })
+        .edge(
+          { type: 'risk', id },
+          { type: 'issue', id: cause.id },
+          'Caused by'
+        )
+    }
+
     return builder.build()
-  }, [id, risk])
+  }, [id, risk, cause])
   return <Graph elements={elements} />
 }

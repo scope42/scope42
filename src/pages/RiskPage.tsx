@@ -10,6 +10,7 @@ import { PageHeader } from '../components/PageHeader'
 import Error404 from '../components/Error404'
 import { useEditorStore } from '../components/ItemEditor/ItemEditor'
 import { useParams } from 'react-router-dom'
+import { IssueLink } from '../components/ItemLink'
 
 const RiskPage = () => {
   const id = String(useParams().id)
@@ -46,6 +47,9 @@ const RiskPage = () => {
             </Descriptions.Item>
             <Descriptions.Item label="Modified">
               {renderDate(risk.modified)}
+            </Descriptions.Item>
+            <Descriptions.Item label="Cause">
+              {risk.cause ? <IssueLink id={risk.cause} /> : null}
             </Descriptions.Item>
             <Descriptions.Item label="Tags">
               {risk.tags.map(tag => (

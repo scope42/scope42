@@ -40,7 +40,8 @@ const Item = z.object({
 })
 
 export const Risk = Item.extend({
-  status: RiskStatus.default('current')
+  status: RiskStatus.default('current'),
+  cause: nullsafeOptional(IssueId)
 })
 
 export const Issue = Item.extend({
