@@ -9,10 +9,11 @@ import {
   Risk,
   RiskId
 } from '../data/types'
-import { useStore } from '../data/store'
+import { createItemSelector, useStore } from '../data/store'
 import Cytoscape from 'cytoscape'
 import CoseBilkent from 'cytoscape-cose-bilkent'
 import CytoscapeComponent from 'react-cytoscapejs'
+import { getTypeFromId } from '../data/util'
 
 Cytoscape.use(CoseBilkent)
 
@@ -154,7 +155,7 @@ export const IssueGraph: React.VFC<{ id: IssueId }> = ({ id }) => {
           issue.causedBy.map(id => ({ id, data: state.issues[id] })),
           Object.keys(state.improvements)
             .map(id => ({ id, data: state.improvements[id] }))
-            .filter(i => i.data.solves.includes(id)),
+            .filter(i => i.data.resolves.includes(id)),
           Object.keys(state.risks)
             .map(id => ({ id, data: state.risks[id] }))
             .filter(i => i.data.causedBy.includes(id))
@@ -185,7 +186,7 @@ export const IssueGraph: React.VFC<{ id: IssueId }> = ({ id }) => {
         .edge(
           { type: 'improvement', id: improvement.id },
           { type: 'issue', id: id },
-          'solves'
+          'resolves'
         )
     }
     for (const causedRisk of causedRisks) {
@@ -207,13 +208,16 @@ export const IssueGraph: React.VFC<{ id: IssueId }> = ({ id }) => {
 }
 
 export const ImprovementGraph: React.VFC<{ id: ImprovementId }> = ({ id }) => {
-  const [improvement, solves] = useStore(
+  const [improvement, resolves] = useStore(
     useCallback(
       state => {
         const improvement = state.improvements[id]
         return [
           improvement,
-          improvement.solves.map(id => ({ id, data: state.issues[id] }))
+          improvement.resolves.map(id => ({
+            id,
+            data: createItemSelector(id)(state)
+          }))
         ]
       },
       [id]
@@ -222,17 +226,21 @@ export const ImprovementGraph: React.VFC<{ id: ImprovementId }> = ({ id }) => {
   const elements = useMemo(() => {
     const builder = new ElementsBuilder()
     builder.center({ type: 'improvement', entity: improvement, id })
-    for (const issue of solves) {
+    for (const issueOrRisk of resolves) {
       builder
-        .node({ type: 'issue', entity: issue.data, id: issue.id })
+        .node({
+          type: getTypeFromId(issueOrRisk.id),
+          entity: issueOrRisk.data,
+          id: issueOrRisk.id
+        } as Node)
         .edge(
           { type: 'improvement', id: id },
-          { type: 'issue', id: issue.id },
-          'solves'
+          { type: getTypeFromId(issueOrRisk.id), id: issueOrRisk.id },
+          'resolves'
         )
     }
     return builder.build()
-  }, [id, improvement, solves])
+  }, [id, improvement, resolves])
   return <Graph elements={elements} />
 }
 

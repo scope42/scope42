@@ -8,12 +8,16 @@ import { selectAllTags, useStore } from '../../data/store'
 import TextArea from 'antd/lib/input/TextArea'
 import { useEditorStore } from './ItemEditor'
 import { useNavigate } from 'react-router-dom'
+import { getErrorMessage } from './form-utils'
 
 export const ImprovementEditor: React.FC<{
   improvementId?: ImprovementId
 }> = props => {
   const allTags = useStore(selectAllTags)
-  const allIssues = useStore(state => state.issues)
+  const allIssuesAndRisks = useStore(state => ({
+    ...state.issues,
+    ...state.risks
+  }))
   const allImprovements = useStore(state => state.improvements)
   const updateImprovement = useStore(state => state.updateImprovement)
   const createImprovement = useStore(state => state.createImprovement)
@@ -93,7 +97,7 @@ export const ImprovementEditor: React.FC<{
         <Form.Item
           label="Tags"
           validateStatus={errors.tags ? 'error' : undefined}
-          help={errors.tags?.map(e => e.message).join(', ')}
+          help={getErrorMessage(errors.tags)}
         >
           <Controller
             control={control}
@@ -111,13 +115,14 @@ export const ImprovementEditor: React.FC<{
         </Form.Item>
 
         <Form.Item
-          label="Solves"
-          validateStatus={errors.solves ? 'error' : undefined}
-          help={errors.solves?.map(e => e.message).join(', ')}
+          label="Resolves"
+          required
+          validateStatus={errors.resolves ? 'error' : undefined}
+          help={getErrorMessage(errors.resolves)}
         >
           <Controller
             control={control}
-            name="solves"
+            name="resolves"
             render={({ field }) => (
               <Select
                 {...field}
@@ -126,9 +131,9 @@ export const ImprovementEditor: React.FC<{
                 optionFilterProp="children"
                 mode="multiple"
               >
-                {Object.keys(allIssues).map(id => (
+                {Object.keys(allIssuesAndRisks).map(id => (
                   <Select.Option key={id} value={id}>
-                    <Tag>{id}</Tag> {allIssues[id].title}
+                    <Tag>{id}</Tag> {allIssuesAndRisks[id].title}
                   </Select.Option>
                 ))}
               </Select>

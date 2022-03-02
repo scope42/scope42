@@ -1,16 +1,17 @@
-import create from 'zustand'
+import create, { StateSelector } from 'zustand'
 import produce from 'immer'
 import {
   Improvement,
   ImprovementId,
   Issue,
   IssueId,
+  Item,
   ItemId,
   Risk,
   RiskId,
   WorkspaceConfig
 } from './types'
-import { getNumericId } from './util'
+import { getNumericId, getTypeFromId } from './util'
 import {
   loadItems,
   writeItem,
@@ -160,3 +161,14 @@ export const selectAllItems = (state: AppState) => [
 
 export const selectAllTags = (state: AppState) =>
   [...new Set(selectAllItems(state).flatMap(i => i.tags))].sort()
+
+export function createItemSelector(id: ItemId): StateSelector<AppState, Item> {
+  switch (getTypeFromId(id)) {
+    case 'issue':
+      return (state: AppState) => state.issues[id]
+    case 'risk':
+      return (state: AppState) => state.risks[id]
+    case 'improvement':
+      return (state: AppState) => state.improvements[id]
+  }
+}

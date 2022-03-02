@@ -41,19 +41,21 @@ const Item = z.object({
   modified: DeserializableDate.default(() => new Date())
 })
 
-export const Risk = Item.extend({
-  status: RiskStatus.default('current'),
-  causedBy: z.array(IssueId).default([])
-})
-
 export const Issue = Item.extend({
   status: IssueStatus.default('current'),
   causedBy: z.array(IssueId).default([])
 })
 
+// In the original aim42 model, risk inherits from issue. We treat it as an independent
+// item type for now. This especially means the ID space is distinct from issues.
+export const Risk = Item.extend({
+  status: RiskStatus.default('current'),
+  causedBy: z.array(IssueId).default([])
+})
+
 export const Improvement = Item.extend({
   status: ImprovementStatus.default('proposed'),
-  solves: z.array(IssueId).default([])
+  resolves: z.array(IssueId.or(RiskId)).min(1)
 })
 
 export const WorkspaceConfig = z.object({
@@ -73,3 +75,4 @@ export type ItemId = IssueId | RiskId | ImprovementId
 export type IssueStatus = z.infer<typeof IssueStatus>
 export type RiskStatus = z.infer<typeof RiskStatus>
 export type ImprovementStatus = z.infer<typeof ImprovementStatus>
+export type Item = Issue | Risk | Improvement
