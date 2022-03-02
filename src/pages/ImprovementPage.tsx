@@ -2,7 +2,7 @@ import ReactMarkdown from 'react-markdown'
 import { Tag, Row, Descriptions, Button } from 'antd'
 import { useStore } from '../data/store'
 import { EditOutlined } from '@ant-design/icons'
-import { IssueLink } from '../components/ItemLink'
+import { ItemLinkList } from '../components/ItemLink'
 import { ImprovementGraph } from '../components/Graph'
 import { IMPROVEMENT_STATUS_UI } from '../components/Status'
 import { renderDate } from '../data/util'
@@ -49,14 +49,7 @@ const ImprovementPage = () => {
               {renderDate(improvement.modified)}
             </Descriptions.Item>
             <Descriptions.Item label="Solves">
-              {improvement.solves.map((issueId, index) => (
-                <>
-                  {index === 0 ? null : (
-                    <span style={{ marginRight: 8 }}>,</span>
-                  )}
-                  <IssueLink key={issueId} id={issueId} />
-                </>
-              ))}
+              <ItemLinkList ids={improvement.solves} />
             </Descriptions.Item>
             <Descriptions.Item label="Tags">
               {improvement.tags.map(tag => (

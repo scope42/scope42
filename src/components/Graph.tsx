@@ -145,21 +145,19 @@ const Graph: React.FC<{ elements: ElementDefinition[] }> = ({ elements }) => {
 }
 
 export const IssueGraph: React.VFC<{ id: IssueId }> = ({ id }) => {
-  const [issue, cause, improvements, causedRisks] = useStore(
+  const [issue, causedBy, improvements, causedRisks] = useStore(
     useCallback(
       state => {
         const issue = state.issues[id]
         return [
           issue,
-          issue.cause
-            ? { id: issue.cause, data: state.issues[issue.cause] }
-            : undefined,
+          issue.causedBy.map(id => ({ id, data: state.issues[id] })),
           Object.keys(state.improvements)
             .map(id => ({ id, data: state.improvements[id] }))
             .filter(i => i.data.solves.includes(id)),
           Object.keys(state.risks)
             .map(id => ({ id, data: state.risks[id] }))
-            .filter(i => i.data.cause === id)
+            .filter(i => i.data.causedBy.includes(id))
         ]
       },
       [id]
@@ -168,13 +166,13 @@ export const IssueGraph: React.VFC<{ id: IssueId }> = ({ id }) => {
   const elements = useMemo(() => {
     const builder = new ElementsBuilder()
     builder.center({ type: 'issue', entity: issue, id })
-    if (cause) {
+    for (const cause of causedBy) {
       builder
         .node({ type: 'issue', entity: cause.data, id: cause.id })
         .edge(
           { type: 'issue', id },
           { type: 'issue', id: cause.id },
-          'Caused by'
+          'caused by'
         )
     }
     for (const improvement of improvements) {
@@ -187,7 +185,7 @@ export const IssueGraph: React.VFC<{ id: IssueId }> = ({ id }) => {
         .edge(
           { type: 'improvement', id: improvement.id },
           { type: 'issue', id: id },
-          'Solves'
+          'solves'
         )
     }
     for (const causedRisk of causedRisks) {
@@ -200,11 +198,11 @@ export const IssueGraph: React.VFC<{ id: IssueId }> = ({ id }) => {
         .edge(
           { type: 'issue', id: id },
           { type: 'risk', id: causedRisk.id },
-          'Causes'
+          'causes'
         )
     }
     return builder.build()
-  }, [id, issue, cause, improvements, causedRisks])
+  }, [id, issue, causedBy, improvements, causedRisks])
   return <Graph elements={elements} />
 }
 
@@ -230,7 +228,7 @@ export const ImprovementGraph: React.VFC<{ id: ImprovementId }> = ({ id }) => {
         .edge(
           { type: 'improvement', id: id },
           { type: 'issue', id: issue.id },
-          'Solves'
+          'solves'
         )
     }
     return builder.build()
@@ -239,16 +237,11 @@ export const ImprovementGraph: React.VFC<{ id: ImprovementId }> = ({ id }) => {
 }
 
 export const RiskGraph: React.VFC<{ id: RiskId }> = ({ id }) => {
-  const [risk, cause] = useStore(
+  const [risk, causedBy] = useStore(
     useCallback(
       state => {
         const risk = state.risks[id]
-        return [
-          risk,
-          risk.cause
-            ? { id: risk.cause, data: state.issues[risk.cause] }
-            : undefined
-        ]
+        return [risk, risk.causedBy.map(id => ({ id, data: state.issues[id] }))]
       },
       [id]
     )
@@ -256,17 +249,17 @@ export const RiskGraph: React.VFC<{ id: RiskId }> = ({ id }) => {
   const elements = useMemo(() => {
     const builder = new ElementsBuilder()
     builder.center({ type: 'risk', entity: risk, id })
-    if (cause) {
+    for (const cause of causedBy) {
       builder
         .node({ type: 'issue', entity: cause.data, id: cause.id })
         .edge(
           { type: 'risk', id },
           { type: 'issue', id: cause.id },
-          'Caused by'
+          'caused by'
         )
     }
 
     return builder.build()
-  }, [id, risk, cause])
+  }, [id, risk, causedBy])
   return <Graph elements={elements} />
 }

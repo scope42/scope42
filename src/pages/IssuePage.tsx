@@ -2,7 +2,7 @@ import ReactMarkdown from 'react-markdown'
 import { Tag, Row, Descriptions, Button } from 'antd'
 import { useStore } from '../data/store'
 import { EditOutlined, StopOutlined } from '@ant-design/icons'
-import { IssueLink } from '../components/ItemLink'
+import { ItemLinkList } from '../components/ItemLink'
 import { IssueGraph } from '../components/Graph'
 import { ISSUE_STATUS_UI } from '../components/Status'
 import { renderDate } from '../data/util'
@@ -49,8 +49,8 @@ const IssuePage = () => {
               {renderDate(issue.modified)}
             </Descriptions.Item>
             <Descriptions.Item label="Cause">
-              {issue.cause ? (
-                <IssueLink id={issue.cause} />
+              {issue.causedBy.length > 0 ? (
+                <ItemLinkList ids={issue.causedBy} />
               ) : (
                 <Tag color="red">
                   <StopOutlined /> Root Cause

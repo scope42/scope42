@@ -109,19 +109,20 @@ export const RiskEditor: React.FC<{ riskId?: IssueId }> = props => {
         </Form.Item>
 
         <Form.Item
-          label="Cause"
-          validateStatus={errors.cause?.message ? 'error' : undefined}
-          help={errors.cause?.message}
+          label="Caused by"
+          validateStatus={errors.causedBy ? 'error' : undefined}
+          help={errors.causedBy?.map(e => e.message).join(', ')}
         >
           <Controller
             control={control}
-            name="cause"
+            name="causedBy"
             render={({ field }) => (
               <Select
                 {...field}
                 allowClear
                 showSearch
                 optionFilterProp="children"
+                mode="multiple"
               >
                 {Object.keys(allIssues).map(id => (
                   <Select.Option key={id} value={id}>

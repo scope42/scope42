@@ -16,6 +16,8 @@ function nullsafeOptional<T extends ZodTypeAny>(schema: T) {
   )
 }
 
+export const ItemType = z.enum(['issue', 'risk', 'improvement'])
+
 export const IssueId = z.string().regex(/issue-[1-9][0-9]*/)
 export const RiskId = z.string().regex(/risk-[1-9][0-9]*/)
 export const ImprovementId = z.string().regex(/improvement-[1-9][0-9]*/)
@@ -41,12 +43,12 @@ const Item = z.object({
 
 export const Risk = Item.extend({
   status: RiskStatus.default('current'),
-  cause: nullsafeOptional(IssueId)
+  causedBy: z.array(IssueId).default([])
 })
 
 export const Issue = Item.extend({
   status: IssueStatus.default('current'),
-  cause: nullsafeOptional(IssueId)
+  causedBy: z.array(IssueId).default([])
 })
 
 export const Improvement = Item.extend({
@@ -60,6 +62,7 @@ export const WorkspaceConfig = z.object({
 
 /* eslint-disable @typescript-eslint/no-redeclare */
 
+export type ItemType = z.infer<typeof ItemType>
 export type IssueId = z.infer<typeof IssueId>
 export type RiskId = z.infer<typeof RiskId>
 export type ImprovementId = z.infer<typeof ImprovementId>
