@@ -22,6 +22,10 @@ export const IMPROVEMENT_STATUS_UI: {
 }
 
 export const RISK_STATUS_UI: { [status in RiskStatus]: StatusUi } = {
+  potential: {
+    label: 'Potential',
+    component: <Tag color="orange">Potential</Tag>
+  },
   current: { label: 'Current', component: <Tag color="red">Current</Tag> },
   mitigated: {
     label: 'Mitigated',

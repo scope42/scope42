@@ -208,7 +208,7 @@ export const IssueGraph: React.VFC<{ id: IssueId }> = ({ id }) => {
 }
 
 export const ImprovementGraph: React.VFC<{ id: ImprovementId }> = ({ id }) => {
-  const [improvement, resolves] = useStore(
+  const [improvement, resolves, modifies, creates] = useStore(
     useCallback(
       state => {
         const improvement = state.improvements[id]
@@ -217,7 +217,9 @@ export const ImprovementGraph: React.VFC<{ id: ImprovementId }> = ({ id }) => {
           improvement.resolves.map(id => ({
             id,
             data: createItemSelector(id)(state)
-          }))
+          })),
+          improvement.modifies.map(id => ({ id, data: state.risks[id] })),
+          improvement.creates.map(id => ({ id, data: state.risks[id] }))
         ]
       },
       [id]
@@ -239,17 +241,52 @@ export const ImprovementGraph: React.VFC<{ id: ImprovementId }> = ({ id }) => {
           'resolves'
         )
     }
+    for (const risk of modifies) {
+      builder
+        .node({
+          type: 'risk',
+          entity: risk.data,
+          id: risk.id
+        })
+        .edge(
+          { type: 'improvement', id },
+          { type: 'risk', id: risk.id },
+          'modifies'
+        )
+    }
+    for (const risk of creates) {
+      builder
+        .node({
+          type: 'risk',
+          entity: risk.data,
+          id: risk.id
+        })
+        .edge(
+          { type: 'improvement', id },
+          { type: 'risk', id: risk.id },
+          'creates'
+        )
+    }
     return builder.build()
-  }, [id, improvement, resolves])
+  }, [id, improvement, resolves, modifies, creates])
   return <Graph elements={elements} />
 }
 
 export const RiskGraph: React.VFC<{ id: RiskId }> = ({ id }) => {
-  const [risk, causedBy] = useStore(
+  const [risk, causedBy, modifiedBy, createdBy] = useStore(
     useCallback(
       state => {
         const risk = state.risks[id]
-        return [risk, risk.causedBy.map(id => ({ id, data: state.issues[id] }))]
+        return [
+          risk,
+          risk.causedBy.map(id => ({ id, data: state.issues[id] })),
+          Object.keys(state.improvements)
+            .map(id => ({ id, data: state.improvements[id] }))
+            .filter(i => i.data.modifies.includes(id)),
+          Object.keys(state.improvements)
+            .map(id => ({ id, data: state.improvements[id] }))
+            .filter(i => i.data.creates.includes(id))
+        ]
       },
       [id]
     )
@@ -266,8 +303,34 @@ export const RiskGraph: React.VFC<{ id: RiskId }> = ({ id }) => {
           'caused by'
         )
     }
+    for (const improvement of modifiedBy) {
+      builder
+        .node({
+          type: 'improvement',
+          entity: improvement.data,
+          id: improvement.id
+        })
+        .edge(
+          { type: 'risk', id },
+          { type: 'improvement', id: improvement.id },
+          'modified by'
+        )
+    }
+    for (const improvement of createdBy) {
+      builder
+        .node({
+          type: 'improvement',
+          entity: improvement.data,
+          id: improvement.id
+        })
+        .edge(
+          { type: 'risk', id },
+          { type: 'improvement', id: improvement.id },
+          'created by'
+        )
+    }
 
     return builder.build()
-  }, [id, risk, causedBy])
+  }, [id, risk, causedBy, modifiedBy, createdBy])
   return <Graph elements={elements} />
 }

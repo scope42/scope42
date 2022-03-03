@@ -23,7 +23,12 @@ export const RiskId = z.string().regex(/risk-[1-9][0-9]*/)
 export const ImprovementId = z.string().regex(/improvement-[1-9][0-9]*/)
 
 export const IssueStatus = z.enum(['current', 'resolved', 'discarded'])
-export const RiskStatus = z.enum(['current', 'mitigated', 'discarded'])
+export const RiskStatus = z.enum([
+  'potential',
+  'current',
+  'mitigated',
+  'discarded'
+])
 export const ImprovementStatus = z.enum([
   'proposed',
   'accepted',
@@ -55,7 +60,9 @@ export const Risk = Item.extend({
 
 export const Improvement = Item.extend({
   status: ImprovementStatus.default('proposed'),
-  resolves: z.array(IssueId.or(RiskId)).min(1)
+  resolves: z.array(IssueId.or(RiskId)).min(1),
+  modifies: z.array(RiskId).default([]),
+  creates: z.array(RiskId).default([])
 })
 
 export const WorkspaceConfig = z.object({

@@ -51,6 +51,12 @@ const ImprovementPage = () => {
             <Descriptions.Item label="Resolves">
               <ItemLinkList ids={improvement.resolves} />
             </Descriptions.Item>
+            <Descriptions.Item label="Modifies">
+              <ItemLinkList ids={improvement.modifies} />
+            </Descriptions.Item>
+            <Descriptions.Item label="Creates">
+              <ItemLinkList ids={improvement.creates} />
+            </Descriptions.Item>
             <Descriptions.Item label="Tags">
               {improvement.tags.map(tag => (
                 <Tag key={tag}>{tag}</Tag>

@@ -14,15 +14,14 @@ export const ImprovementEditor: React.FC<{
   improvementId?: ImprovementId
 }> = props => {
   const allTags = useStore(selectAllTags)
-  const allIssuesAndRisks = useStore(state => ({
-    ...state.issues,
-    ...state.risks
-  }))
+  const allIssues = useStore(state => state.issues)
+  const allRisks = useStore(state => state.risks)
   const allImprovements = useStore(state => state.improvements)
   const updateImprovement = useStore(state => state.updateImprovement)
   const createImprovement = useStore(state => state.createImprovement)
   const navigate = useNavigate()
   const closeEditor = useEditorStore(state => state.closeEditor)
+  const allIssuesAndRisks = { ...allIssues, ...allRisks }
 
   const {
     handleSubmit,
@@ -134,6 +133,58 @@ export const ImprovementEditor: React.FC<{
                 {Object.keys(allIssuesAndRisks).map(id => (
                   <Select.Option key={id} value={id}>
                     <Tag>{id}</Tag> {allIssuesAndRisks[id].title}
+                  </Select.Option>
+                ))}
+              </Select>
+            )}
+          />
+        </Form.Item>
+
+        <Form.Item
+          label="Modifies"
+          validateStatus={errors.modifies ? 'error' : undefined}
+          help={getErrorMessage(errors.modifies)}
+        >
+          <Controller
+            control={control}
+            name="modifies"
+            render={({ field }) => (
+              <Select
+                {...field}
+                allowClear
+                showSearch
+                optionFilterProp="children"
+                mode="multiple"
+              >
+                {Object.keys(allRisks).map(id => (
+                  <Select.Option key={id} value={id}>
+                    <Tag>{id}</Tag> {allRisks[id].title}
+                  </Select.Option>
+                ))}
+              </Select>
+            )}
+          />
+        </Form.Item>
+
+        <Form.Item
+          label="Creates"
+          validateStatus={errors.creates ? 'error' : undefined}
+          help={getErrorMessage(errors.creates)}
+        >
+          <Controller
+            control={control}
+            name="creates"
+            render={({ field }) => (
+              <Select
+                {...field}
+                allowClear
+                showSearch
+                optionFilterProp="children"
+                mode="multiple"
+              >
+                {Object.keys(allRisks).map(id => (
+                  <Select.Option key={id} value={id}>
+                    <Tag>{id}</Tag> {allRisks[id].title}
                   </Select.Option>
                 ))}
               </Select>
