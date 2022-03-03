@@ -1,4 +1,6 @@
-# scope42
+<img src="https://raw.githubusercontent.com/scope42/scope42/main/public/logo.svg" width="100%" alt="scope42 logo">
+
+<h1 align="center">Improve your software architecture with precision!</h1>
 
 [![Build](https://github.com/erikhofer/scope42/actions/workflows/build.yml/badge.svg)](https://github.com/erikhofer/scope42/actions/workflows/build.yml)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
