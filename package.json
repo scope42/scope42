@@ -38,7 +38,7 @@
     "web-vitals": "2.1.4",
     "yaml": "1.10.2",
     "zod": "3.11.6",
-    "zustand": "3.7.0"
+    "zustand": "3.7.1"
   },
   "scripts": {
     "start": "react-scripts start",
