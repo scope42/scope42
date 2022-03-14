@@ -10,7 +10,7 @@
     "@testing-library/user-event": "13.5.0",
     "@types/jest": "27.4.1",
     "@types/js-yaml": "4.0.5",
-    "@types/node": "16.11.25",
+    "@types/node": "16.11.26",
     "@types/react": "17.0.39",
     "@types/react-cytoscapejs": "1.2.2",
     "@types/react-dom": "17.0.11",
