@@ -11,6 +11,7 @@ import { PageHeader } from '../components/PageHeader'
 import Error404 from '../components/Error404'
 import { useEditorStore } from '../components/ItemEditor/ItemEditor'
 import { useParams } from 'react-router-dom'
+import { TicketLink } from '../components/TicketLink'
 
 const ImprovementPage = () => {
   const id = String(useParams().id)
@@ -62,6 +63,11 @@ const ImprovementPage = () => {
                 <Tag key={tag}>{tag}</Tag>
               ))}
             </Descriptions.Item>
+            {improvement.ticket ? (
+              <Descriptions.Item label="Ticket">
+                <TicketLink url={improvement.ticket} />
+              </Descriptions.Item>
+            ) : null}
           </Descriptions>
         </Row>
       </PageHeader>

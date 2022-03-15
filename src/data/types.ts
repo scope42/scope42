@@ -43,7 +43,8 @@ const Item = z.object({
   body: nullsafeOptional(z.string()),
   tags: z.array(Tag).default([]),
   created: DeserializableDate.default(() => new Date()),
-  modified: DeserializableDate.default(() => new Date())
+  modified: DeserializableDate.default(() => new Date()),
+  ticket: nullsafeOptional(z.string())
 })
 
 export const Issue = Item.extend({
