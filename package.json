@@ -2,6 +2,7 @@
   "name": "scope42",
   "version": "0.0.0",
   "private": true,
+  "license": "GPL-3.0-only",
   "dependencies": {
     "@ant-design/icons": "4.7.0",
     "@hookform/resolvers": "2.8.8",

@@ -21,7 +21,7 @@ export default function HomePage() {
               what content would be useful here, you are welcome to contribute
               to the{' '}
               <a
-                href="https://github.com/erikhofer/scope42/discussions/3"
+                href="https://github.com/scope42/scope42/discussions/3"
                 target="_blank"
                 rel="noopener noreferrer"
               >
