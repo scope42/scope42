@@ -135,6 +135,18 @@ export const RiskEditor: React.FC<{ riskId?: IssueId }> = props => {
         </Form.Item>
 
         <Form.Item
+          label="Ticket URL"
+          validateStatus={errors.ticket?.message ? 'error' : undefined}
+          help={errors.ticket?.message}
+        >
+          <Controller
+            control={control}
+            name="ticket"
+            render={({ field }) => <Input {...field} />}
+          />
+        </Form.Item>
+
+        <Form.Item
           label="Body"
           validateStatus={errors.body?.message ? 'error' : undefined}
           help={errors.body?.message}

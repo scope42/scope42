@@ -44,7 +44,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --passWithNoTests",
+    "test": "react-scripts test",
     "lint:prettier": "prettier --check \"src/**/*\"",
     "fix:prettier": "prettier --write \"src/**/*\"",
     "lint:eslint": "eslint \"src/**/*.{ts,tsx,js,jsx}\"",
