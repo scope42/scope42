@@ -46,11 +46,15 @@ export interface AppState {
   createRisk: (risk: Risk) => Promise<RiskId>
 }
 
-export const useStore = create<AppState>((set, get) => ({
+const INITIAL_STATE = {
   workspace: { present: false },
   issues: {},
   risks: {},
-  improvements: {},
+  improvements: {}
+}
+
+export const useStore = create<AppState>((set, get) => ({
+  ...INITIAL_STATE,
   createWorkspace: async dirHandle => {
     const configFileHandle = await dirHandle.getFileHandle('scope42.yml', {
       create: true
@@ -75,7 +79,7 @@ export const useStore = create<AppState>((set, get) => ({
     set({ workspace: { present: true, name: 'Demo' } })
   },
   closeWorkspace: () => {
-    set({ workspace: { present: false } })
+    set(INITIAL_STATE)
   },
   loadExampleData: async () => {
     const { EXAMPLE_DATA } = await import('./example')

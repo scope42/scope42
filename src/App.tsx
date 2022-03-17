@@ -1,6 +1,6 @@
-import { Divider, Layout, Typography } from 'antd'
+import { Divider, Layout } from 'antd'
 import React from 'react'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom'
 import { Header } from './components/Header'
 import { ItemEditor } from './components/ItemEditor/ItemEditor'
 import { WorkspaceSelection } from './components/WorkspaceSelection'
@@ -13,7 +13,9 @@ import IssuePage from './pages/IssuePage'
 import RisksPage from './pages/RisksPage'
 import RiskPage from './pages/RiskPage'
 import ImprovementPage from './pages/ImprovementPage'
-import { BugOutlined, GithubOutlined } from '@ant-design/icons'
+import { GithubOutlined } from '@ant-design/icons'
+import { AboutPage } from './pages/AboutPage'
+import { ExternalLink } from './components/ExternalLink'
 
 const { Content, Footer } = Layout
 
@@ -32,6 +34,7 @@ const App: React.VFC = () => {
         <Content style={{ backgroundColor: 'white', padding: '50px 50px' }}>
           <Routes>
             <Route index element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
             <Route path="/issues" element={<IssuesPage />} />
             <Route path="/issues/:id" element={<IssuePage />} />
             <Route path="/improvements" element={<ImprovementsPage />} />
@@ -43,27 +46,12 @@ const App: React.VFC = () => {
         </Content>
         <Footer style={{ textAlign: 'center' }}>
           Version 0.0.0 <Divider type="vertical" />
+          <Link to="/about">About</Link>
+          <Divider type="vertical" />
           <GithubOutlined />{' '}
-          <a
-            target="_blank"
-            href="https://github.com/erikhofer/scope42"
-            rel="noreferrer noopener"
-          >
+          <ExternalLink noIcon url="https://github.com/scope42/scope42">
             Source Code
-          </a>{' '}
-          <Divider type="vertical" />
-          <BugOutlined />{' '}
-          <a
-            target="_blank"
-            href="https://github.com/erikhofer/scope42/issues"
-            rel="noreferrer noopener"
-          >
-            Report Issue
-          </a>{' '}
-          <Divider type="vertical" />
-          <Typography.Text type="secondary">
-            Not affiliated with aim42.
-          </Typography.Text>
+          </ExternalLink>
         </Footer>
       </Layout>
     </Router>

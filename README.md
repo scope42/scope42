@@ -2,9 +2,9 @@
 
 <h1 align="center">Improve your software architecture with precision!</h1>
 
-[![Build](https://github.com/erikhofer/scope42/actions/workflows/build.yml/badge.svg)](https://github.com/erikhofer/scope42/actions/workflows/build.yml)
+[![Build](https://github.com/scope42/scope42/actions/workflows/build.yml/badge.svg)](https://github.com/scope42/scope42/actions/workflows/build.yml)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
-[![License: AGPL v3](https://img.shields.io/badge/License-MIT-informational.svg)](https://github.com/erikhofer/scope42/blob/main/LICENSE)
+[![License: AGPL v3](https://img.shields.io/badge/License-MIT-informational.svg)](https://github.com/scope42/scope42/blob/main/LICENSE)
 
 This tool helps you to keep track of issues, arising risks and possible improvements of your existing architecture. The terminology and concepts are based on aim42, the Architecture Improvement Method.
 

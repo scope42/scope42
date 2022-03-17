@@ -34,7 +34,7 @@ export const Header: React.FC = () => {
         <Menu
           theme="dark"
           mode="horizontal"
-          defaultSelectedKeys={[location.pathname]}
+          selectedKeys={[location.pathname]}
           style={{ width: 400 }}
         >
           <Menu.Item key="/">
