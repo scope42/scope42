@@ -1,5 +1,6 @@
 import { GithubOutlined, GitlabOutlined } from '@ant-design/icons'
 import React, { ReactNode } from 'react'
+import { ExternalLink } from './ExternalLink'
 
 type Tracker = 'unknown' | 'github' | 'gitlab' | 'jira'
 
@@ -19,9 +20,7 @@ export const TicketLink: React.VFC<{ url: string }> = ({ url }) => {
   return (
     <>
       {icon ? <span style={{ marginRight: 4 }}>{icon}</span> : null}
-      <a href={url} target="_blank" rel="noreferrer noopener">
-        {label}
-      </a>
+      <ExternalLink url={url}>{label}</ExternalLink>
     </>
   )
 }
