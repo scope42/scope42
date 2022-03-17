@@ -73,7 +73,7 @@ const ImprovementPage = () => {
       </PageHeader>
       <div style={{ display: 'flex' }}>
         <div style={{ flexGrow: 1 }}>
-          <ReactMarkdown>{improvement.body || ''}</ReactMarkdown>
+          <ReactMarkdown>{improvement.description || ''}</ReactMarkdown>
         </div>
         <ImprovementGraph id={id} />
       </div>

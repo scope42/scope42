@@ -146,14 +146,14 @@ export const IssueEditor: React.FC<{ issueId?: IssueId }> = props => {
         </Form.Item>
 
         <Form.Item
-          label="Body"
-          validateStatus={errors.body?.message ? 'error' : undefined}
-          help={errors.body?.message}
+          label="Description"
+          validateStatus={errors.description?.message ? 'error' : undefined}
+          help={errors.description?.message}
           style={{ marginBottom: 0 }}
         >
           <Controller
             control={control}
-            name="body"
+            name="description"
             render={({ field }) => <TextArea rows={6} {...field} />}
           />
         </Form.Item>

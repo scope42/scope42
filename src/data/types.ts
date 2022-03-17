@@ -46,7 +46,7 @@ const Tag = z.string().nonempty()
 
 const Item = z.object({
   title: z.string().nonempty(),
-  body: nullsafeOptional(z.string()),
+  description: nullsafeOptional(z.string()),
   tags: z.array(Tag).default([]),
   created: DeserializableDate.default(() => new Date()),
   modified: DeserializableDate.default(() => new Date()),

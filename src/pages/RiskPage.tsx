@@ -67,7 +67,7 @@ const RiskPage = () => {
       </PageHeader>
       <div style={{ display: 'flex' }}>
         <div style={{ flexGrow: 1 }}>
-          <ReactMarkdown>{risk.body || ''}</ReactMarkdown>
+          <ReactMarkdown>{risk.description || ''}</ReactMarkdown>
         </div>
         <RiskGraph id={id} />
       </div>

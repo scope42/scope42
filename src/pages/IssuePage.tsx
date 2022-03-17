@@ -73,7 +73,7 @@ const IssuePage = () => {
       </PageHeader>
       <div style={{ display: 'flex' }}>
         <div style={{ flexGrow: 1 }}>
-          <ReactMarkdown>{issue.body || ''}</ReactMarkdown>
+          <ReactMarkdown>{issue.description || ''}</ReactMarkdown>
         </div>
         <IssueGraph id={id} />
       </div>
