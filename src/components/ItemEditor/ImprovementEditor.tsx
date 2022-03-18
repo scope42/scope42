@@ -9,6 +9,7 @@ import TextArea from 'antd/lib/input/TextArea'
 import { useEditorStore } from './ItemEditor'
 import { useNavigate } from 'react-router-dom'
 import { getErrorMessage } from './form-utils'
+import { getDefaults } from '../../data/util'
 
 export const ImprovementEditor: React.FC<{
   improvementId?: ImprovementId
@@ -30,7 +31,7 @@ export const ImprovementEditor: React.FC<{
   } = useForm({
     defaultValues: props.improvementId
       ? allImprovements[props.improvementId]
-      : { ...Improvement.parse({ title: 'dummy' }), title: '' },
+      : (getDefaults(Improvement) as Improvement),
     resolver: zodResolver(Improvement)
   })
 

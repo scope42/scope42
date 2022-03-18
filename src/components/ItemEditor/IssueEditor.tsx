@@ -8,6 +8,7 @@ import { selectAllTags, useStore } from '../../data/store'
 import TextArea from 'antd/lib/input/TextArea'
 import { useEditorStore } from './ItemEditor'
 import { useNavigate } from 'react-router-dom'
+import { getDefaults } from '../../data/util'
 
 export const IssueEditor: React.FC<{ issueId?: IssueId }> = props => {
   const allTags = useStore(selectAllTags)
@@ -24,7 +25,7 @@ export const IssueEditor: React.FC<{ issueId?: IssueId }> = props => {
   } = useForm({
     defaultValues: props.issueId
       ? allIssues[props.issueId]
-      : { ...Issue.parse({ title: 'dummy' }), title: '' },
+      : (getDefaults(Issue) as Issue),
     resolver: zodResolver(Issue)
   })
 
