@@ -8,6 +8,10 @@
 
 This tool helps you to keep track of issues, arising risks and possible improvements of your existing architecture. The terminology and concepts are based on [aim42, the Architecture Improvement Method](https://www.aim42.org/).
 
+scope42 is a Progressive Web App that runs entirely inside your browser. Click the link below to access the app.
+
+<h3 align="center">🔗 <a href="https://scope42.netlify.app">scope42.netlify.app</a></h3>
+
 ⚠⚠⚠ **This project is currently in alpha stage. Breaking changes to the data format can happen without notice. Early feedback is very welcome and helpful to stabilize soon.**
 
 ## Features
