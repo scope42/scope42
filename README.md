@@ -6,7 +6,7 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL--3.0-informational.svg)](https://github.com/scope42/scope42/blob/main/LICENSE)
 
-This tool helps you to keep track of issues, arising risks and possible improvements of your existing architecture. The terminology and concepts are based on aim42, the Architecture Improvement Method.
+This tool helps you to keep track of issues, arising risks and possible improvements of your existing architecture. The terminology and concepts are based on [aim42, the Architecture Improvement Method](https://www.aim42.org/).
 
 ⚠⚠⚠ **This project is currently in alpha stage. Breaking changes to the data format can happen without notice. Early feedback is very welcome and helpful to stabilize soon.**
 
@@ -22,13 +22,10 @@ This tool helps you to keep track of issues, arising risks and possible improvem
 - Advanced graphs
 - Advanced filters for tables
 - Full text search
-- Integegration of aim42 content
+- Integration of aim42 content
 - Support for media files
-- Comments
-- i18n
-- Maybe at some point:
-  - Extend to arc42
-  - Integration with docToolchain
+- Comments on items
+- Support for documenting the existing architecture (based on arc42)
 
 ## Tech Stack
 
