@@ -1,5 +1,11 @@
 import { Tag } from 'antd'
-import { ImprovementStatus, IssueStatus, RiskStatus } from '../data/types'
+import React from 'react'
+import {
+  ImprovementStatus,
+  IssueStatus,
+  ItemWithId,
+  RiskStatus
+} from '../data/types'
 
 type StatusUi = { label: string; component: React.ReactNode }
 
@@ -32,4 +38,20 @@ export const RISK_STATUS_UI: { [status in RiskStatus]: StatusUi } = {
     component: <Tag color="green">Mitigated</Tag>
   },
   discarded: { label: 'Discarded', component: <Tag>Discarded</Tag> }
+}
+
+export type ItemStatusProps =
+  | { type: 'issue'; status: IssueStatus }
+  | { type: 'risk'; status: RiskStatus }
+  | { type: 'improvement'; status: ImprovementStatus }
+
+export const ItemStatus: React.VFC<{ item: ItemWithId }> = props => {
+  switch (props.item.type) {
+    case 'issue':
+      return <>{ISSUE_STATUS_UI[props.item.data.status].component}</>
+    case 'risk':
+      return <>{RISK_STATUS_UI[props.item.data.status].component}</>
+    case 'improvement':
+      return <>{IMPROVEMENT_STATUS_UI[props.item.data.status].component}</>
+  }
 }

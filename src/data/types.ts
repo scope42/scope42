@@ -90,3 +90,8 @@ export type IssueStatus = z.infer<typeof IssueStatus>
 export type RiskStatus = z.infer<typeof RiskStatus>
 export type ImprovementStatus = z.infer<typeof ImprovementStatus>
 export type Item = Issue | Risk | Improvement
+
+export type ItemWithId =
+  | { type: 'issue'; id: IssueId; data: Issue }
+  | { type: 'risk'; id: RiskId; data: Risk }
+  | { type: 'improvement'; id: ImprovementId; data: Improvement }
