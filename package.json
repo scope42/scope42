@@ -21,7 +21,7 @@
     "antd-button-color": "1.0.4",
     "cytoscape": "3.21.0",
     "cytoscape-cose-bilkent": "4.1.0",
-    "dayjs": "1.10.8",
+    "dayjs": "1.11.0",
     "eslint": "8.11.0",
     "immer": "9.0.12",
     "js-yaml": "4.1.0",
