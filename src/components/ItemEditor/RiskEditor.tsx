@@ -2,7 +2,7 @@ import { Form, Input, message, Modal, Select, Tag } from 'antd'
 import { RiskIcon } from '../ItemIcon'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { NewRisk, Risk, RiskId, RiskStatus } from '../../data/types'
+import { NewRisk, RiskId, RiskStatus } from '../../data/types'
 import { RISK_STATUS_UI } from '../Status'
 import {
   selectAllIssues,
@@ -35,9 +35,9 @@ export const RiskEditor: React.FC<{ riskId?: RiskId }> = props => {
     resolver: zodResolver(NewRisk)
   })
 
-  const onSuccess = async (risk: Risk | NewRisk) => {
-    if ('id' in risk) {
-      await updateItem(risk)
+  const onSuccess = async (risk: NewRisk) => {
+    if (props.riskId) {
+      await updateItem({ ...risk, id: props.riskId })
       message.success('Risk updated')
     } else {
       const newId = await createItem(risk)

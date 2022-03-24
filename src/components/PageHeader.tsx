@@ -1,13 +1,16 @@
-import { PageHeader as AntdPageHeader } from 'antd'
+import {
+  PageHeader as AntdPageHeader,
+  PageHeaderProps as AntdPageHeaderProps
+} from 'antd'
 
-interface PageHeaderProps {
+type PageHeaderProps = {
   title: string
   icon?: React.ReactNode
-  extra?: React.ReactNode
   backButton?: boolean
-}
+} & Pick<AntdPageHeaderProps, 'tags' | 'extra'>
 
 export const PageHeader: React.FC<PageHeaderProps> = props => {
+  const { children, title, icon, backButton, ...restProps } = props
   return (
     <AntdPageHeader
       style={{
@@ -15,16 +18,16 @@ export const PageHeader: React.FC<PageHeaderProps> = props => {
         backgroundColor: '#f9f9f9',
         marginBottom: 50
       }}
-      onBack={props.backButton ? () => window.history.back() : undefined}
+      onBack={backButton ? () => window.history.back() : undefined}
       title={
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          {props.icon}
-          {props.title}
+          {icon}
+          {title}
         </div>
       }
-      extra={props.extra}
+      {...restProps}
     >
-      {props.children}
+      {children}
     </AntdPageHeader>
   )
 }
