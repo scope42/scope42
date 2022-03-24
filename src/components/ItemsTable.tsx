@@ -3,27 +3,27 @@ import { ColumnsType } from 'antd/lib/table'
 import dayjs from 'dayjs'
 import React from 'react'
 import { selectAllTags, useStore } from '../data/store'
-import { ItemWithId } from '../data/types'
+import { Item } from '../data/types'
 import { renderDate } from '../data/util'
 import { ItemLink } from './ItemLink'
 import { ItemStatus } from './Status'
 
 const alphabeticSorter =
-  (extractProperty: (item: ItemWithId) => string | null | undefined) =>
-  (a: ItemWithId, b: ItemWithId) => {
+  (extractProperty: (item: Item) => string | null | undefined) =>
+  (a: Item, b: Item) => {
     const valA = extractProperty(a) || ''
     const valB = extractProperty(b) || ''
     return valA.localeCompare(valB)
   }
 
 const dateSorter =
-  (extractProperty: (item: ItemWithId) => Date | null | undefined) =>
-  (a: ItemWithId, b: ItemWithId) => {
+  (extractProperty: (item: Item) => Date | null | undefined) =>
+  (a: Item, b: Item) => {
     return dayjs(extractProperty(a)).diff(extractProperty(b))
   }
 
 export interface ItemsTableProps {
-  items: ItemWithId[]
+  items: Item[]
   possibleStatuses: { text: string; value: string }[]
   defaultVisibleStatuses: string[]
 }
@@ -31,45 +31,45 @@ export interface ItemsTableProps {
 export const ItemsTable: React.VFC<ItemsTableProps> = props => {
   const allTags = useStore(selectAllTags)
 
-  const columns: ColumnsType<ItemWithId> = [
+  const columns: ColumnsType<Item> = [
     {
       title: 'Title',
-      dataIndex: ['data', 'title'],
+      dataIndex: 'title',
       key: 'title',
-      render: (_: string, item: ItemWithId) => <ItemLink id={item.id} />,
-      sorter: alphabeticSorter(item => item.data.title)
+      render: (_: string, item: Item) => <ItemLink id={item.id} />,
+      sorter: alphabeticSorter(item => item.title)
     },
     {
       title: 'Status',
-      dataIndex: ['data', 'status'],
+      dataIndex: 'status',
       key: 'status',
-      render: (_: any, item: ItemWithId) => <ItemStatus item={item} />,
-      sorter: alphabeticSorter(item => item.data.status),
+      render: (_: any, item: Item) => <ItemStatus item={item} />,
+      sorter: alphabeticSorter(item => item.status),
       filters: props.possibleStatuses,
-      onFilter: (value, item) => item.data.status === value,
+      onFilter: (value, item) => item.status === value,
       defaultFilteredValue: props.defaultVisibleStatuses
     },
     {
       title: 'Tags',
-      dataIndex: ['data', 'tags'],
+      dataIndex: 'tags',
       key: 'tags',
       render: (tags: string[]) => tags.map(tag => <Tag key={tag}>{tag}</Tag>),
       filters: allTags.map(tag => ({ text: tag, value: tag })),
-      onFilter: (value, item) => item.data.tags.includes(value as string)
+      onFilter: (value, item) => item.tags.includes(value as string)
     },
     {
       title: 'Created',
-      dataIndex: ['data', 'created'],
+      dataIndex: 'created',
       key: 'created',
       render: renderDate,
-      sorter: dateSorter(item => item.data.created)
+      sorter: dateSorter(item => item.created)
     },
     {
       title: 'Modified',
-      dataIndex: ['data', 'modified'],
+      dataIndex: 'modified',
       key: 'modified',
       render: renderDate,
-      sorter: dateSorter(item => item.data.modified),
+      sorter: dateSorter(item => item.modified),
       defaultSortOrder: 'descend'
     }
   ]

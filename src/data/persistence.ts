@@ -1,14 +1,24 @@
-import { AppState } from './store'
+import { AppState, Items } from './store'
 import {
   Improvement,
   ImprovementId,
   Issue,
   IssueId,
+  Item,
+  ItemId,
+  ItemType,
   Risk,
   RiskId
 } from './types'
 import YAML from 'yaml'
 import { message } from 'antd'
+import { getTypeFromId } from './util'
+
+const DIRECTORIES: Record<ItemType, string> = {
+  issue: 'issues',
+  improvement: 'improvements',
+  risk: 'risks'
+}
 
 export async function writeYaml(
   fileHandle: FileSystemFileHandle,
@@ -34,18 +44,17 @@ export async function writeFile(
 
 export async function writeItem(
   workspaceDir: FileSystemDirectoryHandle | undefined,
-  itemDirName: string,
-  id: string,
-  item: object
+  item: Item
 ) {
   if (!workspaceDir) {
     return // this is allowed in demo mode
   }
-  const dir = await workspaceDir.getDirectoryHandle(itemDirName, {
+  const dir = await workspaceDir.getDirectoryHandle(DIRECTORIES[item.type], {
     create: true
   })
-  const file = await dir.getFileHandle(`${id}.yml`, { create: true })
-  await writeYaml(file, item)
+  const file = await dir.getFileHandle(`${item.id}.yml`, { create: true })
+  const fileContent = { ...item, id: undefined, type: undefined }
+  await writeYaml(file, fileContent)
 }
 
 export async function writeWorkspaceReadme(
@@ -75,7 +84,7 @@ interface Parser<T> {
 
 export async function loadItems(
   workspaceDir: FileSystemDirectoryHandle
-): Promise<Pick<AppState, 'issues' | 'improvements' | 'risks'>> {
+): Promise<Pick<AppState, 'items'>> {
   const items = await Promise.all([
     parseItemsInDirectory(workspaceDir, 'issues', IssueId, Issue),
     parseItemsInDirectory(
@@ -88,18 +97,20 @@ export async function loadItems(
   ])
 
   return {
-    issues: items[0],
-    improvements: items[1],
-    risks: items[2]
+    items: {
+      ...items[0],
+      ...items[1],
+      ...items[2]
+    }
   }
 }
 
-async function parseItemsInDirectory<ITEM>(
+async function parseItemsInDirectory<ITEM extends Item, ID extends ItemId>(
   workspaceDir: FileSystemDirectoryHandle,
   itemDirName: string,
-  idType: Parser<string>,
-  itemType: Parser<ITEM>
-): Promise<Record<string, ITEM>> {
+  idParser: Parser<ID>,
+  itemParser: Parser<ITEM>
+): Promise<Items> {
   let dir: FileSystemDirectoryHandle
   try {
     dir = await workspaceDir.getDirectoryHandle(itemDirName)
@@ -107,32 +118,34 @@ async function parseItemsInDirectory<ITEM>(
     return {} // if the directory does not exist, that's okay
   }
 
-  const promises: Promise<{ id: string; item: ITEM }>[] = []
+  const promises: Promise<ITEM>[] = []
 
   for await (const entry of dir.values()) {
     if (entry.kind !== 'file' || !entry.name.endsWith('.yml')) {
       break
     }
-    promises.push(parseItemFile(entry, idType, itemType))
+    promises.push(parseItemFile(entry, idParser, itemParser))
   }
 
   const results = await Promise.all(promises)
   return results.reduce(
-    (items, result) => ({ ...items, [result.id]: result.item }),
-    {} as Record<string, ITEM>
+    (items, result) => ({ ...items, [result.id]: result }),
+    {} as Record<ID, ITEM>
   )
 }
 
-async function parseItemFile<ITEM>(
+async function parseItemFile<ITEM extends Item, ID extends ItemId>(
   fileHandle: FileSystemFileHandle,
-  idType: Parser<string>,
-  itemType: Parser<ITEM>
-): Promise<{ id: string; item: ITEM }> {
+  idParser: Parser<ID>,
+  itemParser: Parser<ITEM>
+): Promise<ITEM> {
   try {
     const file = await fileHandle.getFile()
-    const id = idType.parse(file.name.slice(0, -4)) // omit ".yml"
-    const item = itemType.parse(YAML.parse(await file.text()))
-    return { id, item }
+    const id = idParser.parse(file.name.slice(0, -4)) // omit ".yml"
+    const type = getTypeFromId(id)
+    const fileContent = YAML.parse(await file.text())
+    const item = itemParser.parse({ id, type, ...fileContent })
+    return item
   } catch (error) {
     throw new Error(`Parsing '${fileHandle.name}' failed: ${error}`)
   }

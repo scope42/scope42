@@ -12,13 +12,14 @@ import { useEditorStore } from '../components/ItemEditor/ItemEditor'
 import { useParams } from 'react-router-dom'
 import { ItemLinkList } from '../components/ItemLink'
 import { TicketLink } from '../components/TicketLink'
+import { RiskId } from '../data/types'
 
 const RiskPage = () => {
-  const id = String(useParams().id)
-  const risk = useStore(state => state.risks[id])
+  const id = String(useParams().id) as RiskId
+  const risk = useStore(state => state.items[id])
   const edit = useEditorStore(state => state.editRisk)
 
-  if (!risk) {
+  if (!risk || risk.type !== 'risk') {
     return <Error404 />
   }
 

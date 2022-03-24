@@ -2,8 +2,19 @@ import { ItemId, ItemType } from './types'
 import dayjs from 'dayjs'
 import { z } from 'zod'
 
-export function getNumericId(id: ItemId): number {
+export function getSerialFromId(id: ItemId): number {
   return parseInt(id.split('-')[1])
+}
+
+export function getIdFromSerial(serial: number, type: ItemType): ItemId {
+  switch (type) {
+    case 'issue':
+      return `issue-${serial}`
+    case 'improvement':
+      return `improvement-${serial}`
+    case 'risk':
+      return `risk-${serial}`
+  }
 }
 
 export function getTypeFromId(id: ItemId): ItemType {
@@ -29,4 +40,8 @@ export function getDefaults<T extends z.ZodRawShape>(
       [key]: defaultValue.success ? defaultValue.data : undefined
     }
   }, {})
+}
+
+export function exists<T>(value: T | null | undefined): value is T {
+  return value !== null && value !== undefined
 }
