@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
-import { ImprovementStatus, ItemWithId } from '../data/types'
-import { useStore } from '../data/store'
+import { ImprovementStatus } from '../data/types'
+import { selectAllImprovements, useStore } from '../data/store'
 import { PageHeader } from '../components/PageHeader'
 import { ItemsTable } from '../components/ItemsTable'
 import { IMPROVEMENT_STATUS_UI } from '../components/Status'
@@ -13,19 +13,13 @@ const possibleStatuses = ImprovementStatus.options.map(status => ({
 const defaultVisibleStatuses: ImprovementStatus[] = ['proposed', 'accepted']
 
 export default function ImprovementsPage() {
-  const improvements = useStore(state => state.improvements)
-
-  const items: ItemWithId[] = Object.keys(improvements).map(id => ({
-    data: improvements[id],
-    id,
-    type: 'improvement'
-  }))
+  const improvements = useStore(selectAllImprovements)
 
   return (
     <div>
       <PageHeader title="Improvements" />
       <ItemsTable
-        items={items}
+        items={improvements}
         possibleStatuses={possibleStatuses}
         defaultVisibleStatuses={defaultVisibleStatuses}
       />

@@ -2,20 +2,25 @@ import { Form, Input, message, Modal, Select, Tag } from 'antd'
 import { RiskIcon } from '../ItemIcon'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { IssueId, Risk, RiskStatus } from '../../data/types'
+import { NewRisk, Risk, RiskId, RiskStatus } from '../../data/types'
 import { RISK_STATUS_UI } from '../Status'
-import { selectAllTags, useStore } from '../../data/store'
+import {
+  selectAllIssues,
+  selectAllRisks,
+  selectAllTags,
+  useStore
+} from '../../data/store'
 import TextArea from 'antd/lib/input/TextArea'
 import { useEditorStore } from './ItemEditor'
 import { useNavigate } from 'react-router-dom'
 import { getDefaults } from '../../data/util'
 
-export const RiskEditor: React.FC<{ riskId?: IssueId }> = props => {
+export const RiskEditor: React.FC<{ riskId?: RiskId }> = props => {
   const allTags = useStore(selectAllTags)
-  const allRisks = useStore(state => state.risks)
-  const allIssues = useStore(state => state.issues)
-  const updateRisk = useStore(state => state.updateRisk)
-  const createRisk = useStore(state => state.createRisk)
+  const allRisks = useStore(selectAllRisks)
+  const allIssues = useStore(selectAllIssues)
+  const createItem = useStore(state => state.createItem)
+  const updateItem = useStore(state => state.updateItem)
   const navigate = useNavigate()
   const closeEditor = useEditorStore(state => state.closeEditor)
 
@@ -25,17 +30,17 @@ export const RiskEditor: React.FC<{ riskId?: IssueId }> = props => {
     formState: { errors }
   } = useForm({
     defaultValues: props.riskId
-      ? allRisks[props.riskId]
-      : (getDefaults(Risk) as Risk),
-    resolver: zodResolver(Risk)
+      ? allRisks.find(r => r.id === props.riskId)
+      : (getDefaults(NewRisk) as NewRisk),
+    resolver: zodResolver(NewRisk)
   })
 
-  const onSuccess = async (newRisk: Risk) => {
-    if (props.riskId) {
-      await updateRisk(props.riskId, newRisk)
+  const onSuccess = async (risk: Risk | NewRisk) => {
+    if ('id' in risk) {
+      await updateItem(risk)
       message.success('Risk updated')
     } else {
-      const newId = await createRisk(newRisk)
+      const newId = await createItem(risk)
       message.success('Risk created')
       navigate('/risks/' + newId)
     }
@@ -125,9 +130,9 @@ export const RiskEditor: React.FC<{ riskId?: IssueId }> = props => {
                 optionFilterProp="children"
                 mode="multiple"
               >
-                {Object.keys(allIssues).map(id => (
-                  <Select.Option key={id} value={id}>
-                    <Tag>{id}</Tag> {allIssues[id].title}
+                {allIssues.map(issue => (
+                  <Select.Option key={issue.id} value={issue.id}>
+                    <Tag>{issue.id}</Tag> {issue.title}
                   </Select.Option>
                 ))}
               </Select>

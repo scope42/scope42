@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
-import { IssueStatus, ItemWithId } from '../data/types'
-import { useStore } from '../data/store'
+import { IssueStatus } from '../data/types'
+import { selectAllIssues, useStore } from '../data/store'
 import { PageHeader } from '../components/PageHeader'
 import { ItemsTable } from '../components/ItemsTable'
 import { ISSUE_STATUS_UI } from '../components/Status'
@@ -13,19 +13,13 @@ const possibleStatuses = IssueStatus.options.map(status => ({
 const defaultVisibleStatuses: IssueStatus[] = ['current']
 
 export default function IssuesPage() {
-  const issues = useStore(state => state.issues)
-
-  const items: ItemWithId[] = Object.keys(issues).map(id => ({
-    data: issues[id],
-    id,
-    type: 'issue'
-  }))
+  const issues = useStore(selectAllIssues)
 
   return (
     <div>
       <PageHeader title="Issues" />
       <ItemsTable
-        items={items}
+        items={issues}
         possibleStatuses={possibleStatuses}
         defaultVisibleStatuses={defaultVisibleStatuses}
       />

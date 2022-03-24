@@ -1,4 +1,4 @@
-import create, { StateSelector } from 'zustand'
+import create from 'zustand'
 import produce from 'immer'
 import {
   Improvement,
@@ -7,11 +7,12 @@ import {
   IssueId,
   Item,
   ItemId,
+  ItemType,
   Risk,
   RiskId,
   WorkspaceConfig
 } from './types'
-import { getNumericId, getTypeFromId } from './util'
+import { getIdFromSerial, getSerialFromId } from './util'
 import {
   loadItems,
   writeItem,
@@ -19,10 +20,14 @@ import {
   writeYaml
 } from './persistence'
 
+export type Items = Partial<
+  Record<IssueId, Issue> &
+    Record<ImprovementId, Improvement> &
+    Record<RiskId, Risk>
+>
+
 export interface AppState {
-  issues: Record<IssueId, Issue>
-  risks: Record<RiskId, Risk>
-  improvements: Record<ImprovementId, Improvement>
+  items: Items
   workspace: {
     present: boolean
     name?: string
@@ -35,22 +40,13 @@ export interface AppState {
   openDemoWorkspace: () => void
   closeWorkspace: () => void
   loadExampleData: () => Promise<void>
-  updateIssue: (id: IssueId, issue: Issue) => Promise<void>
-  createIssue: (issue: Issue) => Promise<IssueId>
-  updateImprovement: (
-    id: ImprovementId,
-    improvement: Improvement
-  ) => Promise<void>
-  createImprovement: (improvement: Improvement) => Promise<ImprovementId>
-  updateRisk: (id: RiskId, risk: Risk) => Promise<void>
-  createRisk: (risk: Risk) => Promise<RiskId>
+  createItem: (item: Omit<Item, 'id'>) => Promise<ItemId>
+  updateItem: (item: Item) => Promise<void>
 }
 
-const INITIAL_STATE = {
+const INITIAL_STATE: Pick<AppState, 'workspace' | 'items'> = {
   workspace: { present: false },
-  issues: {},
-  risks: {},
-  improvements: {}
+  items: {}
 }
 
 export const useStore = create<AppState>((set, get) => ({
@@ -85,94 +81,53 @@ export const useStore = create<AppState>((set, get) => ({
     const { EXAMPLE_DATA } = await import('./example')
     set(EXAMPLE_DATA)
   },
-  updateIssue: async (id, issue) => {
-    const updatedIssue = { ...issue, modified: new Date() }
-    await writeItem(get().workspace.handle, 'issues', id, updatedIssue)
+  createItem: async item => {
+    const id = getNextId(get(), item.type)
+    const newItem = { ...item, id } as Item
+    await writeItem(get().workspace.handle, newItem)
     set(
       produce(state => {
-        state.issues[id] = updatedIssue
-      })
-    )
-  },
-  createIssue: async issue => {
-    const id = `issue-${getNextId(Object.keys(get().issues))}`
-    await writeItem(get().workspace.handle, 'issues', id, issue)
-    set(
-      produce(state => {
-        state.issues[id] = issue
+        state.items[id] = newItem
       })
     )
     return id
   },
-  updateImprovement: async (id, improvement) => {
-    const updatedImprovement = { ...improvement, modified: new Date() }
-    await writeItem(
-      get().workspace.handle,
-      'improvements',
-      id,
-      updatedImprovement
-    )
+  updateItem: async item => {
+    const updatedItem = { ...item, modified: new Date() }
+    await writeItem(get().workspace.handle, updatedItem)
     set(
       produce(state => {
-        state.improvements[id] = updatedImprovement
+        state.items[item.id] = updatedItem
       })
     )
-  },
-  createImprovement: async improvement => {
-    const id = `improvement-${getNextId(Object.keys(get().improvements))}`
-    await writeItem(get().workspace.handle, 'improvements', id, improvement)
-    set(
-      produce(state => {
-        state.improvements[id] = improvement
-      })
-    )
-    return id
-  },
-  updateRisk: async (id, risk) => {
-    const updatedRisk = { ...risk, modified: new Date() }
-    await writeItem(get().workspace.handle, 'risks', id, updatedRisk)
-    set(
-      produce(state => {
-        state.risks[id] = updatedRisk
-      })
-    )
-  },
-  createRisk: async risk => {
-    const id = `risk-${getNextId(Object.keys(get().risks))}`
-    await writeItem(get().workspace.handle, 'risks', id, risk)
-    set(
-      produce(state => {
-        state.risks[id] = risk
-      })
-    )
-    return id
   }
 }))
 
-function getNextId(existingIds: ItemId[]) {
+function getNextId(state: AppState, itemType: ItemType): ItemId {
+  const existingIds = selectAllItems(state)
+    .filter(i => i.type === itemType)
+    .map(i => i.id)
+
   if (existingIds.length === 0) {
-    return 1
+    return getIdFromSerial(1, itemType)
   }
-  const highestExistingId = Math.max(...existingIds.map(getNumericId))
-  return highestExistingId + 1
+  const highestExistingId = Math.max(...existingIds.map(getSerialFromId))
+  return getIdFromSerial(highestExistingId + 1, itemType)
 }
 
-export const selectAllItems = (state: AppState) => [
-  ...Object.values(state.issues),
-  ...Object.values(state.improvements),
-  ...Object.values(state.risks)
-]
+export const selectAllItems = (state: AppState) =>
+  Object.values(state.items) as Item[]
 
 export const selectAllTags = (state: AppState) =>
   [...new Set(selectAllItems(state).flatMap(i => i.tags))].sort()
 
-export function createItemSelector(id: ItemId): StateSelector<AppState, Item> {
-  switch (getTypeFromId(id)) {
-    case 'issue':
-      return (state: AppState) => state.issues[id]
-    case 'risk':
-      return (state: AppState) => state.risks[id]
-    case 'improvement':
-      return (state: AppState) => state.improvements[id]
-  }
-}
+export const selectAllIssues = (state: AppState) =>
+  selectAllItems(state).filter((i): i is Issue => i.type === 'issue')
+
+export const selectAllImprovements = (state: AppState) =>
+  selectAllItems(state).filter(
+    (i): i is Improvement => i.type === 'improvement'
+  )
+
+export const selectAllRisks = (state: AppState) =>
+  selectAllItems(state).filter((i): i is Risk => i.type === 'risk')

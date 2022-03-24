@@ -12,13 +12,14 @@ import Error404 from '../components/Error404'
 import { useEditorStore } from '../components/ItemEditor/ItemEditor'
 import { useParams } from 'react-router-dom'
 import { TicketLink } from '../components/TicketLink'
+import { IssueId } from '../data/types'
 
 const IssuePage = () => {
-  const id = String(useParams().id)
-  const issue = useStore(state => state.issues[id])
+  const id = String(useParams().id) as IssueId
+  const issue = useStore(state => state.items[id])
   const edit = useEditorStore(state => state.editIssue)
 
-  if (!issue) {
+  if (!issue || issue.type !== 'issue') {
     return <Error404 />
   }
 

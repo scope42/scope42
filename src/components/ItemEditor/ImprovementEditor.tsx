@@ -2,9 +2,20 @@ import { Form, Input, message, Modal, Select, Tag } from 'antd'
 import { ImprovementIcon } from '../ItemIcon'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Improvement, ImprovementId, ImprovementStatus } from '../../data/types'
+import {
+  Improvement,
+  ImprovementId,
+  ImprovementStatus,
+  NewImprovement
+} from '../../data/types'
 import { IMPROVEMENT_STATUS_UI } from '../Status'
-import { selectAllTags, useStore } from '../../data/store'
+import {
+  selectAllImprovements,
+  selectAllIssues,
+  selectAllRisks,
+  selectAllTags,
+  useStore
+} from '../../data/store'
 import TextArea from 'antd/lib/input/TextArea'
 import { useEditorStore } from './ItemEditor'
 import { useNavigate } from 'react-router-dom'
@@ -15,14 +26,14 @@ export const ImprovementEditor: React.FC<{
   improvementId?: ImprovementId
 }> = props => {
   const allTags = useStore(selectAllTags)
-  const allIssues = useStore(state => state.issues)
-  const allRisks = useStore(state => state.risks)
-  const allImprovements = useStore(state => state.improvements)
-  const updateImprovement = useStore(state => state.updateImprovement)
-  const createImprovement = useStore(state => state.createImprovement)
+  const allIssues = useStore(selectAllIssues)
+  const allRisks = useStore(selectAllRisks)
+  const allImprovements = useStore(selectAllImprovements)
+  const createItem = useStore(state => state.createItem)
+  const updateItem = useStore(state => state.updateItem)
   const navigate = useNavigate()
   const closeEditor = useEditorStore(state => state.closeEditor)
-  const allIssuesAndRisks = { ...allIssues, ...allRisks }
+  const allIssuesAndRisks = [...allIssues, ...allRisks]
 
   const {
     handleSubmit,
@@ -30,17 +41,17 @@ export const ImprovementEditor: React.FC<{
     formState: { errors }
   } = useForm({
     defaultValues: props.improvementId
-      ? allImprovements[props.improvementId]
-      : (getDefaults(Improvement) as Improvement),
-    resolver: zodResolver(Improvement)
+      ? allImprovements.find(i => i.id === props.improvementId)
+      : (getDefaults(NewImprovement) as NewImprovement),
+    resolver: zodResolver(NewImprovement)
   })
 
-  const onSuccess = async (newImprovement: Improvement) => {
-    if (props.improvementId) {
-      await updateImprovement(props.improvementId, newImprovement)
+  const onSuccess = async (improvement: Improvement | NewImprovement) => {
+    if ('id' in improvement) {
+      await updateItem(improvement)
       message.success('Improvement updated')
     } else {
-      const newId = await createImprovement(newImprovement)
+      const newId = await createItem(improvement)
       message.success('Improvement created')
       navigate('/improvements/' + newId)
     }
@@ -131,9 +142,9 @@ export const ImprovementEditor: React.FC<{
                 optionFilterProp="children"
                 mode="multiple"
               >
-                {Object.keys(allIssuesAndRisks).map(id => (
-                  <Select.Option key={id} value={id}>
-                    <Tag>{id}</Tag> {allIssuesAndRisks[id].title}
+                {allIssuesAndRisks.map(item => (
+                  <Select.Option key={item.id} value={item.id}>
+                    <Tag>{item.id}</Tag> {item.title}
                   </Select.Option>
                 ))}
               </Select>
@@ -157,9 +168,9 @@ export const ImprovementEditor: React.FC<{
                 optionFilterProp="children"
                 mode="multiple"
               >
-                {Object.keys(allRisks).map(id => (
-                  <Select.Option key={id} value={id}>
-                    <Tag>{id}</Tag> {allRisks[id].title}
+                {allRisks.map(risk => (
+                  <Select.Option key={risk.id} value={risk.id}>
+                    <Tag>{risk.id}</Tag> {risk.title}
                   </Select.Option>
                 ))}
               </Select>
@@ -183,9 +194,9 @@ export const ImprovementEditor: React.FC<{
                 optionFilterProp="children"
                 mode="multiple"
               >
-                {Object.keys(allRisks).map(id => (
-                  <Select.Option key={id} value={id}>
-                    <Tag>{id}</Tag> {allRisks[id].title}
+                {allRisks.map(risk => (
+                  <Select.Option key={risk.id} value={risk.id}>
+                    <Tag>{risk.id}</Tag> {risk.title}
                   </Select.Option>
                 ))}
               </Select>

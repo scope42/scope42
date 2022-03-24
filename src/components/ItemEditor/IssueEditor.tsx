@@ -2,9 +2,9 @@ import { Form, Input, message, Modal, Select, Tag } from 'antd'
 import { IssueIcon } from '../ItemIcon'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Issue, IssueId, IssueStatus } from '../../data/types'
+import { Issue, IssueId, IssueStatus, NewIssue } from '../../data/types'
 import { ISSUE_STATUS_UI } from '../Status'
-import { selectAllTags, useStore } from '../../data/store'
+import { selectAllIssues, selectAllTags, useStore } from '../../data/store'
 import TextArea from 'antd/lib/input/TextArea'
 import { useEditorStore } from './ItemEditor'
 import { useNavigate } from 'react-router-dom'
@@ -12,9 +12,9 @@ import { getDefaults } from '../../data/util'
 
 export const IssueEditor: React.FC<{ issueId?: IssueId }> = props => {
   const allTags = useStore(selectAllTags)
-  const allIssues = useStore(state => state.issues)
-  const updateIssue = useStore(state => state.updateIssue)
-  const createIssue = useStore(state => state.createIssue)
+  const allIssues = useStore(selectAllIssues)
+  const createItem = useStore(state => state.createItem)
+  const updateItem = useStore(state => state.updateItem)
   const navigate = useNavigate()
   const closeEditor = useEditorStore(state => state.closeEditor)
 
@@ -24,17 +24,17 @@ export const IssueEditor: React.FC<{ issueId?: IssueId }> = props => {
     formState: { errors }
   } = useForm({
     defaultValues: props.issueId
-      ? allIssues[props.issueId]
-      : (getDefaults(Issue) as Issue),
-    resolver: zodResolver(Issue)
+      ? allIssues.find(i => i.id === props.issueId)
+      : (getDefaults(NewIssue) as NewIssue),
+    resolver: zodResolver(NewIssue)
   })
 
-  const onSuccess = async (newIssue: Issue) => {
-    if (props.issueId) {
-      await updateIssue(props.issueId, newIssue)
+  const onSuccess = async (issue: NewIssue | Issue) => {
+    if ('id' in issue) {
+      await updateItem(issue)
       message.success('Issue updated')
     } else {
-      const newId = await createIssue(newIssue)
+      const newId = await createItem(issue)
       message.success('Issue created')
       navigate('/issues/' + newId)
     }
@@ -124,9 +124,9 @@ export const IssueEditor: React.FC<{ issueId?: IssueId }> = props => {
                 optionFilterProp="children"
                 mode="multiple"
               >
-                {Object.keys(allIssues).map(id => (
-                  <Select.Option key={id} value={id}>
-                    <Tag>{id}</Tag> {allIssues[id].title}
+                {allIssues.map(issue => (
+                  <Select.Option key={issue.id} value={issue.id}>
+                    <Tag>{issue.id}</Tag> {issue.title}
                   </Select.Option>
                 ))}
               </Select>

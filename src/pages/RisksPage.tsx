@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
-import { ItemWithId, RiskStatus } from '../data/types'
-import { useStore } from '../data/store'
+import { RiskStatus } from '../data/types'
+import { selectAllRisks, useStore } from '../data/store'
 import { PageHeader } from '../components/PageHeader'
 import { ItemsTable } from '../components/ItemsTable'
 import { RISK_STATUS_UI } from '../components/Status'
@@ -13,19 +13,13 @@ const possibleStatuses = RiskStatus.options.map(status => ({
 const defaultVisibleStatuses: RiskStatus[] = ['potential', 'current']
 
 export default function RisksPage() {
-  const risks = useStore(state => state.risks)
-
-  const items: ItemWithId[] = Object.keys(risks).map(id => ({
-    data: risks[id],
-    id,
-    type: 'risk'
-  }))
+  const risks = useStore(selectAllRisks)
 
   return (
     <div>
       <PageHeader title="Risks" />
       <ItemsTable
-        items={items}
+        items={risks}
         possibleStatuses={possibleStatuses}
         defaultVisibleStatuses={defaultVisibleStatuses}
       />
