@@ -1,8 +1,6 @@
-import ReactMarkdown from 'react-markdown'
 import { Tag, Row, Descriptions, Button } from 'antd'
 import { useStore } from '../data/store'
 import { EditOutlined } from '@ant-design/icons'
-import { ItemLinkList } from '../components/ItemLink'
 import { ImprovementGraph } from '../components/Graph'
 import { IMPROVEMENT_STATUS_UI } from '../components/Status'
 import { renderDate } from '../data/util'
@@ -13,6 +11,7 @@ import { useEditorStore } from '../components/ItemEditor/ItemEditor'
 import { useParams } from 'react-router-dom'
 import { TicketLink } from '../components/TicketLink'
 import { ImprovementId } from '../data/types'
+import { ItemDetailsPage } from '../features/items'
 
 const ImprovementPage = () => {
   const id = String(useParams().id) as ImprovementId
@@ -50,15 +49,6 @@ const ImprovementPage = () => {
             <Descriptions.Item label="Modified">
               {renderDate(improvement.modified)}
             </Descriptions.Item>
-            <Descriptions.Item label="Resolves">
-              <ItemLinkList ids={improvement.resolves} />
-            </Descriptions.Item>
-            <Descriptions.Item label="Modifies">
-              <ItemLinkList ids={improvement.modifies} />
-            </Descriptions.Item>
-            <Descriptions.Item label="Creates">
-              <ItemLinkList ids={improvement.creates} />
-            </Descriptions.Item>
             <Descriptions.Item label="Tags">
               {improvement.tags.map(tag => (
                 <Tag key={tag}>{tag}</Tag>
@@ -72,12 +62,10 @@ const ImprovementPage = () => {
           </Descriptions>
         </Row>
       </PageHeader>
-      <div style={{ display: 'flex' }}>
-        <div style={{ flexGrow: 1 }}>
-          <ReactMarkdown>{improvement.description || ''}</ReactMarkdown>
-        </div>
-        <ImprovementGraph id={id} />
-      </div>
+      <ItemDetailsPage
+        item={improvement}
+        graph={<ImprovementGraph id={id} />}
+      />
     </>
   )
 }

@@ -115,19 +115,19 @@ function getNextId(state: AppState, itemType: ItemType): ItemId {
   return getIdFromSerial(highestExistingId + 1, itemType)
 }
 
-export const selectAllItems = (state: AppState) =>
+export const selectAllItems = (state: Pick<AppState, 'items'>) =>
   Object.values(state.items) as Item[]
 
-export const selectAllTags = (state: AppState) =>
+export const selectAllTags = (state: Pick<AppState, 'items'>) =>
   [...new Set(selectAllItems(state).flatMap(i => i.tags))].sort()
 
-export const selectAllIssues = (state: AppState) =>
+export const selectAllIssues = (state: Pick<AppState, 'items'>) =>
   selectAllItems(state).filter((i): i is Issue => i.type === 'issue')
 
-export const selectAllImprovements = (state: AppState) =>
+export const selectAllImprovements = (state: Pick<AppState, 'items'>) =>
   selectAllItems(state).filter(
     (i): i is Improvement => i.type === 'improvement'
   )
 
-export const selectAllRisks = (state: AppState) =>
+export const selectAllRisks = (state: Pick<AppState, 'items'>) =>
   selectAllItems(state).filter((i): i is Risk => i.type === 'risk')

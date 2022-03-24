@@ -1,8 +1,6 @@
-import ReactMarkdown from 'react-markdown'
 import { Tag, Row, Descriptions, Button } from 'antd'
 import { useStore } from '../data/store'
 import { EditOutlined, StopOutlined } from '@ant-design/icons'
-import { ItemLinkList } from '../components/ItemLink'
 import { IssueGraph } from '../components/Graph'
 import { ISSUE_STATUS_UI } from '../components/Status'
 import { renderDate } from '../data/util'
@@ -13,6 +11,7 @@ import { useEditorStore } from '../components/ItemEditor/ItemEditor'
 import { useParams } from 'react-router-dom'
 import { TicketLink } from '../components/TicketLink'
 import { IssueId } from '../data/types'
+import { ItemDetailsPage } from '../features/items'
 
 const IssuePage = () => {
   const id = String(useParams().id) as IssueId
@@ -38,6 +37,15 @@ const IssuePage = () => {
             Edit
           </Button>
         }
+        tags={
+          issue.causedBy.length === 0 ? (
+            <Tag color="red">
+              <StopOutlined /> Root Cause
+            </Tag>
+          ) : (
+            []
+          )
+        }
       >
         <Row>
           <Descriptions size="small" column={3}>
@@ -49,15 +57,6 @@ const IssuePage = () => {
             </Descriptions.Item>
             <Descriptions.Item label="Modified">
               {renderDate(issue.modified)}
-            </Descriptions.Item>
-            <Descriptions.Item label="Cause">
-              {issue.causedBy.length > 0 ? (
-                <ItemLinkList ids={issue.causedBy} />
-              ) : (
-                <Tag color="red">
-                  <StopOutlined /> Root Cause
-                </Tag>
-              )}
             </Descriptions.Item>
             <Descriptions.Item label="Tags">
               {issue.tags.map(tag => (
@@ -72,12 +71,7 @@ const IssuePage = () => {
           </Descriptions>
         </Row>
       </PageHeader>
-      <div style={{ display: 'flex' }}>
-        <div style={{ flexGrow: 1 }}>
-          <ReactMarkdown>{issue.description || ''}</ReactMarkdown>
-        </div>
-        <IssueGraph id={id} />
-      </div>
+      <ItemDetailsPage item={issue} graph={<IssueGraph id={id} />} />
     </>
   )
 }

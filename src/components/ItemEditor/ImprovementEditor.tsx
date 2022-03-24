@@ -3,7 +3,6 @@ import { ImprovementIcon } from '../ItemIcon'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
-  Improvement,
   ImprovementId,
   ImprovementStatus,
   NewImprovement
@@ -46,9 +45,9 @@ export const ImprovementEditor: React.FC<{
     resolver: zodResolver(NewImprovement)
   })
 
-  const onSuccess = async (improvement: Improvement | NewImprovement) => {
-    if ('id' in improvement) {
-      await updateItem(improvement)
+  const onSuccess = async (improvement: NewImprovement) => {
+    if (props.improvementId) {
+      await updateItem({ ...improvement, id: props.improvementId })
       message.success('Improvement updated')
     } else {
       const newId = await createItem(improvement)

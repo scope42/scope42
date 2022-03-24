@@ -2,7 +2,7 @@ import { Form, Input, message, Modal, Select, Tag } from 'antd'
 import { IssueIcon } from '../ItemIcon'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Issue, IssueId, IssueStatus, NewIssue } from '../../data/types'
+import { IssueId, IssueStatus, NewIssue } from '../../data/types'
 import { ISSUE_STATUS_UI } from '../Status'
 import { selectAllIssues, selectAllTags, useStore } from '../../data/store'
 import TextArea from 'antd/lib/input/TextArea'
@@ -29,9 +29,9 @@ export const IssueEditor: React.FC<{ issueId?: IssueId }> = props => {
     resolver: zodResolver(NewIssue)
   })
 
-  const onSuccess = async (issue: NewIssue | Issue) => {
-    if ('id' in issue) {
-      await updateItem(issue)
+  const onSuccess = async (issue: NewIssue) => {
+    if (props.issueId) {
+      await updateItem({ ...issue, id: props.issueId })
       message.success('Issue updated')
     } else {
       const newId = await createItem(issue)

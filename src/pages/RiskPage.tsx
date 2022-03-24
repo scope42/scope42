@@ -1,4 +1,3 @@
-import ReactMarkdown from 'react-markdown'
 import { Tag, Row, Descriptions, Button } from 'antd'
 import { useStore } from '../data/store'
 import { EditOutlined } from '@ant-design/icons'
@@ -10,9 +9,9 @@ import { PageHeader } from '../components/PageHeader'
 import Error404 from '../components/Error404'
 import { useEditorStore } from '../components/ItemEditor/ItemEditor'
 import { useParams } from 'react-router-dom'
-import { ItemLinkList } from '../components/ItemLink'
 import { TicketLink } from '../components/TicketLink'
 import { RiskId } from '../data/types'
+import { ItemDetailsPage } from '../features/items'
 
 const RiskPage = () => {
   const id = String(useParams().id) as RiskId
@@ -50,9 +49,6 @@ const RiskPage = () => {
             <Descriptions.Item label="Modified">
               {renderDate(risk.modified)}
             </Descriptions.Item>
-            <Descriptions.Item label="Cause">
-              <ItemLinkList ids={risk.causedBy} />
-            </Descriptions.Item>
             <Descriptions.Item label="Tags">
               {risk.tags.map(tag => (
                 <Tag key={tag}>{tag}</Tag>
@@ -66,12 +62,7 @@ const RiskPage = () => {
           </Descriptions>
         </Row>
       </PageHeader>
-      <div style={{ display: 'flex' }}>
-        <div style={{ flexGrow: 1 }}>
-          <ReactMarkdown>{risk.description || ''}</ReactMarkdown>
-        </div>
-        <RiskGraph id={id} />
-      </div>
+      <ItemDetailsPage item={risk} graph={<RiskGraph id={id} />} />
     </>
   )
 }
