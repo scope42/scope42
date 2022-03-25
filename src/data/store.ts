@@ -1,4 +1,4 @@
-import create from 'zustand'
+import create, { GetState, SetState } from 'zustand'
 import produce from 'immer'
 import {
   Improvement,
@@ -15,10 +15,12 @@ import {
 import { getIdFromSerial, getSerialFromId } from './util'
 import {
   loadItems,
+  LockError,
   writeItem,
   writeWorkspaceReadme,
   writeYaml
 } from './persistence'
+import { Modal } from 'antd'
 
 export type Items = Partial<
   Record<IssueId, Issue> &
@@ -84,7 +86,7 @@ export const useStore = create<AppState>((set, get) => ({
   createItem: async item => {
     const id = getNextId(get(), item.type)
     const newItem = { ...item, id } as Item
-    await writeItem(get().workspace.handle, newItem)
+    await tryWriteItem(set, get, newItem)
     set(
       produce(state => {
         state.items[id] = newItem
@@ -94,7 +96,7 @@ export const useStore = create<AppState>((set, get) => ({
   },
   updateItem: async item => {
     const updatedItem = { ...item, modified: new Date() }
-    await writeItem(get().workspace.handle, updatedItem)
+    await tryWriteItem(set, get, updatedItem)
     set(
       produce(state => {
         state.items[item.id] = updatedItem
@@ -102,6 +104,33 @@ export const useStore = create<AppState>((set, get) => ({
     )
   }
 }))
+
+async function tryWriteItem(
+  set: SetState<AppState>,
+  get: GetState<AppState>,
+  item: Item
+) {
+  const workspaceHandle = get().workspace.handle
+  try {
+    await writeItem(workspaceHandle, item)
+  } catch (error) {
+    if (error instanceof LockError) {
+      Modal.error({
+        title: 'Workspace is stale',
+        content: `The workspace has been written to from another scope42 instance.
+           If you did open it in another tab, you may want to close this one.
+           If you got incoming changes from someone else, you need to reload the workspace.`,
+        closable: false,
+        okText: 'Reload workspace',
+        onOk: () => {
+          get().closeWorkspace()
+          get().openWorkspace(workspaceHandle!!)
+        }
+      })
+      throw error
+    }
+  }
+}
 
 function getNextId(state: AppState, itemType: ItemType): ItemId {
   const existingIds = selectAllItems(state)
