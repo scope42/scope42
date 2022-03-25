@@ -10,6 +10,8 @@ export const Header: React.FC = () => {
   const workspaceName = useStore(state => state.workspace.name)
   const closeWorkspace = useStore(state => state.closeWorkspace)
 
+  const basePath = '/' + location.pathname.split('/')[1]
+
   const workspacePopover = (
     <>
       <p>
@@ -34,7 +36,7 @@ export const Header: React.FC = () => {
         <Menu
           theme="dark"
           mode="horizontal"
-          selectedKeys={[location.pathname]}
+          selectedKeys={[basePath]}
           style={{ width: 400 }}
         >
           <Menu.Item key="/">
