@@ -49,11 +49,12 @@ export async function writeItem(
   if (!workspaceDir) {
     return // this is allowed in demo mode
   }
+  await verifyLock(workspaceDir)
   const dir = await workspaceDir.getDirectoryHandle(DIRECTORIES[item.type], {
     create: true
   })
   const file = await dir.getFileHandle(`${item.id}.yml`, { create: true })
-  const fileContent = { ...item, id: undefined, type: undefined }
+  const { id, type, ...fileContent } = item
   await writeYaml(file, fileContent)
 }
 
@@ -85,6 +86,7 @@ interface Parser<T> {
 export async function loadItems(
   workspaceDir: FileSystemDirectoryHandle
 ): Promise<Pick<AppState, 'items'>> {
+  await claimLock(workspaceDir)
   const items = await Promise.all([
     parseItemsInDirectory(workspaceDir, 'issues', IssueId, Issue),
     parseItemsInDirectory(
@@ -149,4 +151,39 @@ async function parseItemFile<ITEM extends Item, ID extends ItemId>(
   } catch (error) {
     throw new Error(`Parsing '${fileHandle.name}' failed: ${error}`)
   }
+}
+
+//@ts-ignore
+const instanceId = crypto.randomUUID()
+
+const LOCK_FILE = 'scope42.lock'
+const LOCK_CONTENT = `# This lock file is created to prevevent concurrent writes to the workspace.
+# You should check this into version control to get notified of incoming changes.
+${instanceId}`
+
+export class LockError extends Error {}
+
+async function verifyLock(workspaceDir: FileSystemDirectoryHandle) {
+  let fileHandle: FileSystemFileHandle
+  try {
+    fileHandle = await workspaceDir.getFileHandle(LOCK_FILE)
+  } catch {
+    // if the file has been deleted in the meantime, re-create it gracefully
+    claimLock(workspaceDir)
+    return
+  }
+
+  const file = await fileHandle.getFile()
+  const fileContent = await file.text()
+
+  if (fileContent !== LOCK_CONTENT) {
+    throw new LockError()
+  }
+}
+
+async function claimLock(workspaceDir: FileSystemDirectoryHandle) {
+  const fileHandle = await workspaceDir.getFileHandle(LOCK_FILE, {
+    create: true
+  })
+  writeFile(fileHandle, LOCK_CONTENT)
 }
