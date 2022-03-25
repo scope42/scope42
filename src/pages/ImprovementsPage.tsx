@@ -2,7 +2,7 @@
 import { ImprovementStatus } from '../data/types'
 import { selectAllImprovements, useStore } from '../data/store'
 import { PageHeader } from '../components/PageHeader'
-import { ItemsTable } from '../components/ItemsTable'
+import { ItemsTable } from '../features/items/table/ItemsTable'
 import { IMPROVEMENT_STATUS_UI } from '../components/Status'
 
 const possibleStatuses = ImprovementStatus.options.map(status => ({
@@ -19,6 +19,7 @@ export default function ImprovementsPage() {
     <div>
       <PageHeader title="Improvements" />
       <ItemsTable
+        id="improvements"
         items={improvements}
         possibleStatuses={possibleStatuses}
         defaultVisibleStatuses={defaultVisibleStatuses}
