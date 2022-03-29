@@ -5,7 +5,6 @@ import { Header } from './components/Header'
 import { ItemEditor } from './components/ItemEditor/ItemEditor'
 import { WorkspaceSelection } from './components/WorkspaceSelection'
 import { useStore } from './data/store'
-import HomePage from './pages/HomePage'
 import Error404 from './components/Error404'
 import ImprovementsPage from './pages/ImprovementsPage'
 import IssuesPage from './pages/IssuesPage'
@@ -16,6 +15,7 @@ import ImprovementPage from './pages/ImprovementPage'
 import { GithubOutlined } from '@ant-design/icons'
 import { AboutPage } from './pages/AboutPage'
 import { ExternalLink } from './components/ExternalLink'
+import { IntroductionPage } from './pages/introduction'
 
 const { Content, Footer } = Layout
 
@@ -33,7 +33,7 @@ const App: React.VFC = () => {
         <ItemEditor />
         <Content style={{ backgroundColor: 'white', padding: '50px 50px' }}>
           <Routes>
-            <Route index element={<HomePage />} />
+            <Route index element={<IntroductionPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/issues" element={<IssuesPage />} />
             <Route path="/issues/:id" element={<IssuePage />} />

@@ -40,7 +40,7 @@ export const Header: React.FC = () => {
           style={{ width: 400 }}
         >
           <Menu.Item key="/">
-            <Link to="/">Dashboard</Link>
+            <Link to="/">Introduction</Link>
           </Menu.Item>
           <Menu.Item key="/issues">
             <Link to="/issues">Issues</Link>

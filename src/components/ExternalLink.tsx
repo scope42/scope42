@@ -21,6 +21,7 @@ const IconSvg = () => (
 interface ExternalLinkProps {
   url: string
   noIcon?: boolean
+  iconProps?: React.ComponentProps<typeof Icon>
 }
 
 export const ExternalLink: React.FC<ExternalLinkProps> = props => {
@@ -30,7 +31,7 @@ export const ExternalLink: React.FC<ExternalLinkProps> = props => {
       {props.noIcon ? null : (
         <>
           {' '}
-          <Icon component={IconSvg} />
+          <Icon {...props.iconProps} component={IconSvg} />
         </>
       )}
     </a>
