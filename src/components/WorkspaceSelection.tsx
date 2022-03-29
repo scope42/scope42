@@ -2,6 +2,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { Alert, Button, Card, Col, Modal, Row } from 'antd'
 import { useStore } from '../data/store'
 import 'liquid-loading'
+import { ExternalLink } from './ExternalLink'
 
 export const WorkspaceSelection: React.VFC = () => {
   const loading = useStore(state => state.workspace.loading)
@@ -132,13 +133,9 @@ const DirectoryPicker: React.VFC = () => {
             Your browser does not support access to the local file system yet.
             You can still try the demo but not persist any data.
             <br />
-            <a
-              href="https://caniuse.com/native-filesystem-api"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <ExternalLink url="https://caniuse.com/native-filesystem-api">
               List of supported browsers
-            </a>
+            </ExternalLink>
           </>
         }
         type="error"
