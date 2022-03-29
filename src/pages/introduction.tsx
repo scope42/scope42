@@ -59,15 +59,17 @@ export const IntroductionPage: React.VFC = () => {
             <>
               You opened scope42 in demo mode. You can play around in it but no
               data is persisted. <br /> Want to get an idea of how aim42 items
-              could look like?{' '}
-              <Button
-                type="primary"
-                onClick={() =>
-                  loadExampleData().then(() => navigate('/issues'))
-                }
-              >
-                Load example data
-              </Button>
+              could look like?
+              <div style={{ textAlign: 'center' }}>
+                <Button
+                  type="primary"
+                  onClick={() =>
+                    loadExampleData().then(() => navigate('/issues'))
+                  }
+                >
+                  Load example data
+                </Button>
+              </div>
             </>
           }
           type="info"
