@@ -3,6 +3,7 @@ import { Button } from 'antd'
 import React from 'react'
 import { ExternalLink } from '../components/ExternalLink'
 import { PageHeader } from '../components/PageHeader'
+import { Aim42Attribution } from '../features/aim42'
 
 export const AboutPage: React.VFC = () => {
   return (
@@ -41,18 +42,7 @@ export const AboutPage: React.VFC = () => {
         </p>
         <p>
           The data model and basic concepts are based on the{' '}
-          <ExternalLink url="https://aim42.github.io/">
-            aim42 Method Reference
-          </ExternalLink>{' '}
-          by{' '}
-          <ExternalLink url="https://www.gernotstarke.de/">
-            Gernot Starke
-          </ExternalLink>{' '}
-          and community contributors, used under{' '}
-          <ExternalLink url="https://creativecommons.org/licenses/by-sa/4.0/">
-            CC BY-SA
-          </ExternalLink>
-          .
+          <Aim42Attribution />.
         </p>
         <p>scope42 is not affiliated with aim42.</p>
       </div>
