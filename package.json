@@ -7,7 +7,7 @@
     "@ant-design/icons": "4.7.0",
     "@hookform/resolvers": "2.8.8",
     "@scope42/structured-aim42": "0.2.0",
-    "@testing-library/jest-dom": "5.16.2",
+    "@testing-library/jest-dom": "5.16.3",
     "@testing-library/react": "12.1.4",
     "@testing-library/user-event": "13.5.0",
     "@types/jest": "27.4.1",
