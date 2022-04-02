@@ -29,6 +29,7 @@ export interface ItemsTableProps {
   items: Item[]
   possibleStatuses: { text: string; value: string }[]
   defaultVisibleStatuses: string[]
+  onFilter?: (filterdItems: Item[]) => void
 }
 
 export const ItemsTable: React.VFC<ItemsTableProps> = props => {
@@ -41,9 +42,13 @@ export const ItemsTable: React.VFC<ItemsTableProps> = props => {
   const handleChange: TableProps<Item>['onChange'] = (
     pagination,
     filters,
-    sorter
+    sorter,
+    extra
   ) => {
     setTableState(props.id, { pagination, filters, sorter })
+    if (props.onFilter) {
+      props.onFilter(extra.currentDataSource)
+    }
   }
 
   const getSortOrder = (columnKey: string) => {

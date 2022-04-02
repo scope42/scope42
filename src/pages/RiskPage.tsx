@@ -1,7 +1,6 @@
 import { Tag, Row, Descriptions, Button } from 'antd'
 import { useStore } from '../data/store'
 import { EditOutlined } from '@ant-design/icons'
-import { RiskGraph } from '../components/Graph'
 import { RISK_STATUS_UI } from '../components/Status'
 import { renderDate } from '../data/util'
 import { RiskIcon } from '../components/ItemIcon'
@@ -62,7 +61,7 @@ const RiskPage = () => {
           </Descriptions>
         </Row>
       </PageHeader>
-      <ItemDetailsPage item={risk} graph={<RiskGraph id={id} />} />
+      <ItemDetailsPage item={risk} />
     </>
   )
 }

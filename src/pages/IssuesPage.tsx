@@ -2,8 +2,8 @@
 import { IssueStatus } from '../data/types'
 import { selectAllIssues, useStore } from '../data/store'
 import { PageHeader } from '../components/PageHeader'
-import { ItemsTable } from '../features/items/table/ItemsTable'
 import { ISSUE_STATUS_UI } from '../components/Status'
+import { ItemsTablePage } from '../features/items'
 
 const possibleStatuses = IssueStatus.options.map(status => ({
   value: status,
@@ -18,12 +18,12 @@ export default function IssuesPage() {
   return (
     <div>
       <PageHeader title="Issues" />
-      <ItemsTable
+      <ItemsTablePage
         id="issues"
         items={issues}
         possibleStatuses={possibleStatuses}
         defaultVisibleStatuses={defaultVisibleStatuses}
-      />
+      ></ItemsTablePage>
     </div>
   )
 }

@@ -1,1 +1,1 @@
-export * from './item-details-page.component'
+export * from './ItemDetailsPage'

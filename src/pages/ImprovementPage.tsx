@@ -1,7 +1,6 @@
 import { Tag, Row, Descriptions, Button } from 'antd'
 import { useStore } from '../data/store'
 import { EditOutlined } from '@ant-design/icons'
-import { ImprovementGraph } from '../components/Graph'
 import { IMPROVEMENT_STATUS_UI } from '../components/Status'
 import { renderDate } from '../data/util'
 import { ImprovementIcon } from '../components/ItemIcon'
@@ -62,10 +61,7 @@ const ImprovementPage = () => {
           </Descriptions>
         </Row>
       </PageHeader>
-      <ItemDetailsPage
-        item={improvement}
-        graph={<ImprovementGraph id={id} />}
-      />
+      <ItemDetailsPage item={improvement} />
     </>
   )
 }
