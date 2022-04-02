@@ -1,7 +1,7 @@
 import { Table, Tag } from 'antd'
 import { ColumnsType, TableProps } from 'antd/lib/table'
 import dayjs from 'dayjs'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { selectAllTags, useStore } from '../../../data/store'
 import { Item } from '../../../data/types'
 import { renderDate } from '../../../data/util'
@@ -29,26 +29,32 @@ export interface ItemsTableProps {
   items: Item[]
   possibleStatuses: { text: string; value: string }[]
   defaultVisibleStatuses: string[]
-  onFilter?: (filterdItems: Item[]) => void
 }
 
 export const ItemsTable: React.VFC<ItemsTableProps> = props => {
+  const { id, items, defaultVisibleStatuses, possibleStatuses } = props
   const allTags = useStore(selectAllTags)
-  const tableState: TableState<Item> = useTablesStore(
+  const tableState: TableState = useTablesStore(
     state => state.tableStates[props.id]
   )
   const setTableState = useTablesStore(state => state.setTableState)
 
+  useEffect(() => {
+    if (tableState === undefined) {
+      setTableState(id, {
+        pagination: { current: 1, pageSize: 10 },
+        filters: { tags: null, status: defaultVisibleStatuses },
+        sorter: { columnKey: 'modified', order: 'descend' }
+      })
+    }
+  }, [id, defaultVisibleStatuses, tableState, setTableState])
+
   const handleChange: TableProps<Item>['onChange'] = (
     pagination,
     filters,
-    sorter,
-    extra
+    sorter
   ) => {
-    setTableState(props.id, { pagination, filters, sorter })
-    if (props.onFilter) {
-      props.onFilter(extra.currentDataSource)
-    }
+    setTableState(id, { pagination, filters, sorter })
   }
 
   const getSortOrder = (columnKey: string) => {
@@ -56,6 +62,7 @@ export const ItemsTable: React.VFC<ItemsTableProps> = props => {
     return sorter?.columnKey === columnKey ? sorter.order : null
   }
 
+  // We expect filtered items as input, hence no `onFilter`
   const columns: ColumnsType<Item> = [
     {
       title: 'Title',
@@ -71,9 +78,7 @@ export const ItemsTable: React.VFC<ItemsTableProps> = props => {
       key: 'status',
       render: (_: any, item: Item) => <ItemStatus item={item} />,
       sorter: alphabeticSorter(item => item.status),
-      filters: props.possibleStatuses,
-      onFilter: (value, item) => item.status === value,
-      defaultFilteredValue: props.defaultVisibleStatuses,
+      filters: possibleStatuses,
       filteredValue: tableState?.filters.status ?? null,
       sortOrder: getSortOrder('status')
     },
@@ -83,7 +88,6 @@ export const ItemsTable: React.VFC<ItemsTableProps> = props => {
       key: 'tags',
       render: (tags: string[]) => tags.map(tag => <Tag key={tag}>{tag}</Tag>),
       filters: allTags.map(tag => ({ text: tag, value: tag })),
-      onFilter: (value, item) => item.tags.includes(value as string),
       filteredValue: tableState?.filters.tags ?? null
     },
     {
@@ -107,7 +111,7 @@ export const ItemsTable: React.VFC<ItemsTableProps> = props => {
 
   return (
     <Table
-      dataSource={props.items}
+      dataSource={items}
       columns={columns}
       rowKey="id"
       onChange={handleChange}
