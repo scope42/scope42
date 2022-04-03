@@ -20,6 +20,7 @@ export default function IssuesPage() {
       <PageHeader title="Issues" />
       <ItemsTablePage
         id="issues"
+        itemType="issue"
         items={issues}
         possibleStatuses={possibleStatuses}
         defaultVisibleStatuses={defaultVisibleStatuses}

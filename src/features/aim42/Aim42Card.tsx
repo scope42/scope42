@@ -23,7 +23,7 @@ export const Aim42Card: React.VFC<Aim42CardProps> = props => {
       >
         <Aim42Content html={content} />
       </Card>
-      <Typography.Text type="secondary">
+      <Typography.Text type="secondary" style={{ fontSize: '80%' }}>
         Source: <Aim42Attribution sectionId={attributionSectionId} />
       </Typography.Text>
     </>
