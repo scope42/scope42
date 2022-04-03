@@ -30,7 +30,7 @@ export function getOutgoingRelations(item: Item, pool: Items): Relation[] {
         ...resolve(item.modifies, 'modifies')
       ]
     case 'risk':
-      return [...resolve(item.causedBy, 'causes by')]
+      return [...resolve(item.causedBy, 'caused by')]
   }
 }
 

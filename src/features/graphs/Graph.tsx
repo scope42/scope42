@@ -1,19 +1,24 @@
-import { ElementDefinition, LayoutOptions, Stylesheet } from 'cytoscape'
+import { ElementDefinition, Stylesheet } from 'cytoscape'
 import { useEffect, useMemo, useState } from 'react'
 import { Items, useStore } from '../../data/store'
 import { Item } from '../../data/types'
 import { getIncomingRelations, getOutgoingRelations } from '../items'
 import Cytoscape from 'cytoscape'
-import CoseBilkent from 'cytoscape-cose-bilkent'
 import CytoscapeComponent from 'react-cytoscapejs'
+import FCose from 'cytoscape-fcose'
 
-Cytoscape.use(CoseBilkent)
+Cytoscape.use(FCose)
 
 const STYLESHEET: Stylesheet[] = [
   {
     selector: 'node[label]',
     style: {
-      label: 'data(label)'
+      label: 'data(label)',
+      'text-wrap': 'wrap',
+      'text-max-width': '150',
+      'text-outline-color': '#fff',
+      'text-outline-width': 1,
+      'font-weight': 'bold'
     }
   },
   {
@@ -21,8 +26,13 @@ const STYLESHEET: Stylesheet[] = [
     style: {
       label: 'data(label)',
       width: 3,
-      'target-arrow-shape': 'triangle',
-      'curve-style': 'bezier'
+      'target-arrow-shape': 'vee',
+      'curve-style': 'bezier',
+      'font-size': 12,
+      color: '#888',
+      'text-outline-color': '#fff',
+      'text-outline-width': 1,
+      'arrow-scale': 2
     }
   },
   {
@@ -48,9 +58,11 @@ const STYLESHEET: Stylesheet[] = [
   }
 ]
 
-const LAYOUT: LayoutOptions = {
-  name: 'cose-bilkent' as any,
-  nodeDimensionsIncludeLabels: true
+const LAYOUT = {
+  name: 'fcose',
+  nodeDimensionsIncludeLabels: true,
+  tile: false,
+  idealEdgeLength: () => 75
 }
 
 interface ItemsGraphProps {
@@ -121,7 +133,7 @@ export const Graph: React.VFC<ItemsGraphProps> = props => {
       layout={LAYOUT}
       style={{
         width: '100%',
-        ...(preview ? { aspectRatio: '16/9' } : { height: '80vh' })
+        ...(preview ? { aspectRatio: '16/9' } : { height: '75vh' })
       }}
       userZoomingEnabled={!preview}
       userPanningEnabled={!preview}
