@@ -5,16 +5,17 @@ import {
 } from 'antd/lib/table/interface'
 import produce from 'immer'
 import create from 'zustand'
+import { Item } from '../../../data/types'
 
-export interface TableState<RecordType> {
+export interface TableState {
   pagination: TablePaginationConfig
   filters: Record<string, FilterValue | null>
-  sorter: SorterResult<RecordType> | SorterResult<RecordType>[]
+  sorter: SorterResult<Item> | SorterResult<Item>[]
 }
 
 interface TablesState {
-  tableStates: Record<string, TableState<any>>
-  setTableState: (id: string, tableState: TableState<any>) => void
+  tableStates: Record<string, TableState>
+  setTableState: (id: string, tableState: TableState) => void
 }
 
 /**

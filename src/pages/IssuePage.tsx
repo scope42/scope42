@@ -1,7 +1,6 @@
 import { Tag, Row, Descriptions, Button } from 'antd'
 import { useStore } from '../data/store'
 import { EditOutlined, StopOutlined } from '@ant-design/icons'
-import { IssueGraph } from '../components/Graph'
 import { ISSUE_STATUS_UI } from '../components/Status'
 import { renderDate } from '../data/util'
 import { IssueIcon } from '../components/ItemIcon'
@@ -71,7 +70,7 @@ const IssuePage = () => {
           </Descriptions>
         </Row>
       </PageHeader>
-      <ItemDetailsPage item={issue} graph={<IssueGraph id={id} />} />
+      <ItemDetailsPage item={issue} />
     </>
   )
 }

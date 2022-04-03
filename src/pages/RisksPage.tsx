@@ -2,8 +2,8 @@
 import { RiskStatus } from '../data/types'
 import { selectAllRisks, useStore } from '../data/store'
 import { PageHeader } from '../components/PageHeader'
-import { ItemsTable } from '../features/items/table/ItemsTable'
 import { RISK_STATUS_UI } from '../components/Status'
+import { ItemsTablePage } from '../features/items'
 
 const possibleStatuses = RiskStatus.options.map(status => ({
   value: status,
@@ -18,12 +18,12 @@ export default function RisksPage() {
   return (
     <div>
       <PageHeader title="Risks" />
-      <ItemsTable
+      <ItemsTablePage
         id="risks"
         items={risks}
         possibleStatuses={possibleStatuses}
         defaultVisibleStatuses={defaultVisibleStatuses}
-      />
+      ></ItemsTablePage>
     </div>
   )
 }

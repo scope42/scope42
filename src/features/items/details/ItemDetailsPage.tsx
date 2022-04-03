@@ -1,16 +1,15 @@
 import { Col, Row } from 'antd'
-import { ReactNode } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { Item } from '../../../data/types'
+import { GraphCard } from '../../graphs'
 import { Relations } from './relations.conponent'
 
 export interface ItemDetailsPageProps {
   item: Item
-  graph: ReactNode
 }
 
 export const ItemDetailsPage: React.VFC<ItemDetailsPageProps> = props => {
-  const { item, graph } = props
+  const { item } = props
   return (
     <Row>
       <Col span={14}>
@@ -19,7 +18,7 @@ export const ItemDetailsPage: React.VFC<ItemDetailsPageProps> = props => {
       </Col>
       <Col span={10}>
         <h2>Relations</h2>
-        {graph}
+        <GraphCard items={[item]} alwaysShowRelatedItems />
         <Relations item={item} />
       </Col>
     </Row>
