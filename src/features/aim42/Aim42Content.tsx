@@ -34,6 +34,7 @@ const processingInstructions = [
         : href
       return (
         <ExternalLink
+          key={index}
           url={url}
           iconProps={{ style: { transform: 'translate(0, -3px)' } }}
         >

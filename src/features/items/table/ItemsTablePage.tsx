@@ -1,13 +1,22 @@
-import { Col, Row } from 'antd'
+import { Col, Row, Space } from 'antd'
 import { useMemo } from 'react'
+import { ItemType } from '../../../data/types'
 import { GraphCard } from '../../graphs'
+import { ItemDescriptionCard } from './ItemDescriptionCard'
 import { ItemsTable, ItemsTableProps } from './ItemsTable'
 import { useTablesStore } from './store'
 
-interface ItemsTablePageProps extends ItemsTableProps {}
+interface ItemsTablePageProps extends ItemsTableProps {
+  /**
+   * Set this, if the page is about a single item type. It adds the aim42
+   * description of this item type.
+   */
+  itemType?: ItemType
+}
 
 export const ItemsTablePage: React.VFC<ItemsTablePageProps> = props => {
-  const { id, items, possibleStatuses, defaultVisibleStatuses } = props
+  const { id, items, possibleStatuses, defaultVisibleStatuses, itemType } =
+    props
 
   // To be able to synchronize the table and graph, we have to do the filtering
   // manually here (see https://github.com/ant-design/ant-design/issues/24022).
@@ -37,7 +46,10 @@ export const ItemsTablePage: React.VFC<ItemsTablePageProps> = props => {
         />
       </Col>
       <Col span={6}>
-        <GraphCard items={filteredItems} />
+        <Space direction="vertical" size="large">
+          <GraphCard items={filteredItems} />
+          {itemType ? <ItemDescriptionCard type={itemType} /> : null}
+        </Space>
       </Col>
     </Row>
   )

@@ -20,6 +20,7 @@ export default function ImprovementsPage() {
       <PageHeader title="Improvements" />
       <ItemsTablePage
         id="improvements"
+        itemType="improvement"
         items={improvements}
         possibleStatuses={possibleStatuses}
         defaultVisibleStatuses={defaultVisibleStatuses}
