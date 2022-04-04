@@ -160,3 +160,11 @@ export const selectAllImprovements = (state: Pick<AppState, 'items'>) =>
 
 export const selectAllRisks = (state: Pick<AppState, 'items'>) =>
   selectAllItems(state).filter((i): i is Risk => i.type === 'risk')
+
+export const selectAllPersonNames = (state: AppState) => [
+  ...new Set(
+    selectAllItems(state)
+      .flatMap(i => i.comments)
+      .map(c => c.author)
+  )
+]

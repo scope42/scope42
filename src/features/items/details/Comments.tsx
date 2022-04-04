@@ -2,14 +2,14 @@ import { Item, Comment } from '../../../data/types'
 import {
   Comment as AntdComment,
   Form,
-  Input,
   message,
   Modal,
-  Button
+  Button,
+  AutoComplete
 } from 'antd'
 import ReactMarkdown from 'react-markdown'
 import { getDefaults, renderDateTime } from '../../../data/util'
-import { useStore } from '../../../data/store'
+import { selectAllPersonNames, useStore } from '../../../data/store'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import TextArea from 'antd/lib/input/TextArea'
@@ -60,6 +60,9 @@ const CommentEditor: React.VFC<{
 }> = props => {
   const { item, commentIndex, onClose } = props
   const updateItem = useStore(state => state.updateItem)
+  const allPersonNames = useStore(state =>
+    selectAllPersonNames(state).map(value => ({ value }))
+  )
 
   const isCreation = commentIndex < 0
 
@@ -108,7 +111,17 @@ const CommentEditor: React.VFC<{
           <Controller
             control={control}
             name="author"
-            render={({ field }) => <Input {...field} />}
+            render={({ field }) => (
+              <AutoComplete
+                options={allPersonNames}
+                filterOption={(inputValue, option) =>
+                  option!.value
+                    .toUpperCase()
+                    .indexOf(inputValue.toUpperCase()) !== -1
+                }
+                {...field}
+              />
+            )}
           />
         </Form.Item>
 
