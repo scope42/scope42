@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import { AppState } from './store'
 import { Improvement, Issue, Risk } from './types'
 
@@ -8,7 +9,15 @@ export const EXAMPLE_DATA: Pick<AppState, 'items'> = {
       id: 'issue-1',
       title: 'Issue 1',
       body: 'Das ist ein Test',
-      tags: ['frontend']
+      tags: ['frontend'],
+      comments: [
+        {
+          author: 'Erik',
+          content: 'This is a comment',
+          created: dayjs().subtract(1, 'day').toDate()
+        },
+        { author: 'Erik', content: 'This is another comment' }
+      ]
     }),
     'issue-2': Issue.parse({
       type: 'issue',

@@ -20,6 +20,7 @@
     "@xinra/prettier-config": "2.0.0",
     "antd": "4.19.3",
     "antd-button-color": "1.0.4",
+    "avvvatars-react": "^0.4.2",
     "copyfiles": "^2.4.1",
     "cytoscape": "3.21.0",
     "cytoscape-cose-bilkent": "4.1.0",

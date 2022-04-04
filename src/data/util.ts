@@ -25,6 +25,10 @@ export function renderDate(date: Date) {
   return dayjs(date).format('YYYY-MM-DD')
 }
 
+export function renderDateTime(date: Date) {
+  return dayjs(date).format('YYYY-MM-DD HH:mm')
+}
+
 /**
  * There is no simple way to get the default values of an item schema because
  * parsing fails if required properties are undefined. This function extracts
