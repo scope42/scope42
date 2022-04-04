@@ -33,6 +33,13 @@ const Tag = z.string().nonempty()
 export const ItemType = z.enum(['issue', 'risk', 'improvement'])
 export type ItemType = z.infer<typeof ItemType>
 
+export const Comment = z.object({
+  author: z.string().nonempty(),
+  created: DeserializableDate.default(() => new Date()),
+  content: z.string().nonempty()
+})
+export type Comment = z.infer<typeof Comment>
+
 /**
  * Common properties of all items.
  */
@@ -48,7 +55,8 @@ function Item<T extends ItemType, I extends z.ZodType<ItemId, any, any>>(
     tags: z.array(Tag).default([]),
     created: DeserializableDate.default(() => new Date()),
     modified: DeserializableDate.default(() => new Date()),
-    ticket: nullsafeOptional(z.string())
+    ticket: nullsafeOptional(z.string()),
+    comments: z.array(Comment).default([]) // TODO move to details
   })
 }
 export type Item = Issue | Risk | Improvement
