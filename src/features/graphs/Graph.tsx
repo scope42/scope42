@@ -59,7 +59,7 @@ const STYLESHEET: Stylesheet[] = [
   {
     selector: 'node[type="decision"]',
     style: {
-      shape: 'diamond',
+      shape: 'pentagon',
       backgroundColor: 'BlueViolet'
     }
   }

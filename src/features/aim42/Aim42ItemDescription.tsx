@@ -1,5 +1,5 @@
-import { Aim42ItemType } from '../../../data/types'
-import { Aim42Card } from '../../aim42'
+import { Aim42ItemType } from '../../data/types'
+import { Aim42Card } from '.'
 import { commonTerminology } from '@scope42/structured-aim42/lib/introduction/how-does-aim42-work/common-terminology'
 import { AtomicNode } from '@scope42/structured-aim42/lib/types'
 
@@ -35,7 +35,7 @@ function getTableValue(tableKey: string) {
   return value
 }
 
-export const ItemDescriptionCard: React.VFC<{ type: Aim42ItemType }> = ({
+export const Aim42ItemDescription: React.VFC<{ type: Aim42ItemType }> = ({
   type
 }) => {
   const tableKey = TABLE_KEY[type]

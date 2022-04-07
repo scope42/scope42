@@ -4,6 +4,7 @@ import { selectAllIssues, useStore } from '../data/store'
 import { PageHeader } from '../components/PageHeader'
 import { ISSUE_STATUS_UI } from '../components/Status'
 import { ItemsTablePage } from '../features/items'
+import { Aim42ItemDescription } from '../features/aim42'
 
 const possibleStatuses = IssueStatus.options.map(status => ({
   value: status,
@@ -20,11 +21,12 @@ export default function IssuesPage() {
       <PageHeader title="Issues" />
       <ItemsTablePage
         id="issues"
-        itemType="issue"
         items={issues}
         possibleStatuses={possibleStatuses}
         defaultVisibleStatuses={defaultVisibleStatuses}
-      ></ItemsTablePage>
+      >
+        <Aim42ItemDescription type="issue" />
+      </ItemsTablePage>
     </div>
   )
 }
