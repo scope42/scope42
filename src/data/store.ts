@@ -1,6 +1,8 @@
 import create, { GetState, SetState } from 'zustand'
 import produce from 'immer'
 import {
+  Decision,
+  DecisionId,
   Improvement,
   ImprovementId,
   Issue,
@@ -25,7 +27,8 @@ import { Modal } from 'antd'
 export type Items = Partial<
   Record<IssueId, Issue> &
     Record<ImprovementId, Improvement> &
-    Record<RiskId, Risk>
+    Record<RiskId, Risk> &
+    Record<DecisionId, Decision>
 >
 
 export interface AppState {
@@ -152,6 +155,9 @@ export const selectAllTags = (state: Pick<AppState, 'items'>) =>
 
 export const selectAllIssues = (state: Pick<AppState, 'items'>) =>
   selectAllItems(state).filter((i): i is Issue => i.type === 'issue')
+
+export const selectAllDecisions = (state: Pick<AppState, 'items'>) =>
+  selectAllItems(state).filter((i): i is Decision => i.type === 'decision')
 
 export const selectAllImprovements = (state: Pick<AppState, 'items'>) =>
   selectAllItems(state).filter(

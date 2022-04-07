@@ -14,6 +14,8 @@ export function getIdFromSerial(serial: number, type: ItemType): ItemId {
       return `improvement-${serial}`
     case 'risk':
       return `risk-${serial}`
+    case 'decision':
+      return `decision-${serial}`
   }
 }
 

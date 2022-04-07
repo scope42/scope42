@@ -55,6 +55,13 @@ const STYLESHEET: Stylesheet[] = [
       shape: 'ellipse',
       backgroundColor: 'green'
     }
+  },
+  {
+    selector: 'node[type="decision"]',
+    style: {
+      shape: 'diamond',
+      backgroundColor: 'BlueViolet'
+    }
   }
 ]
 

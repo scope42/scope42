@@ -1,6 +1,7 @@
 import {
   AppState,
   Items,
+  selectAllDecisions,
   selectAllImprovements,
   selectAllIssues,
   selectAllRisks
@@ -14,8 +15,9 @@ export interface Relation {
 }
 
 export function getOutgoingRelations(item: Item, pool: Items): Relation[] {
-  const resolve = (ids: ItemId[], label: string): Relation[] =>
+  const resolve = (ids: Array<ItemId | undefined>, label: string): Relation[] =>
     ids
+      .filter(exists)
       .map(id => pool[id])
       .filter(exists)
       .map(i => ({ item: i, label }))
@@ -31,6 +33,8 @@ export function getOutgoingRelations(item: Item, pool: Items): Relation[] {
       ]
     case 'risk':
       return [...resolve(item.causedBy, 'caused by')]
+    case 'decision':
+      return [...resolve([item.supersededBy], 'superseded by')]
   }
 }
 
@@ -59,6 +63,14 @@ export function getIncomingRelations(item: Item, pool: Items): Relation[] {
         ...resolve(selectAllImprovements, i => i.resolves, 'resolved by'),
         ...resolve(selectAllImprovements, i => i.creates, 'created by'),
         ...resolve(selectAllImprovements, i => i.modifies, 'modified by')
+      ]
+    case 'decision':
+      return [
+        ...resolve(
+          selectAllDecisions,
+          i => (i.supersededBy ? [i.supersededBy] : []),
+          'supersedes'
+        )
       ]
   }
 }

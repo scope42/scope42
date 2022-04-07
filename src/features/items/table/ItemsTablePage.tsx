@@ -1,6 +1,6 @@
 import { Col, Row, Space } from 'antd'
 import { useMemo } from 'react'
-import { ItemType } from '../../../data/types'
+import { Aim42ItemType } from '../../../data/types'
 import { GraphCard } from '../../graphs'
 import { ItemDescriptionCard } from './ItemDescriptionCard'
 import { ItemsTable, ItemsTableProps } from './ItemsTable'
@@ -11,7 +11,7 @@ interface ItemsTablePageProps extends ItemsTableProps {
    * Set this, if the page is about a single item type. It adds the aim42
    * description of this item type.
    */
-  itemType?: ItemType
+  itemType?: Aim42ItemType
 }
 
 export const ItemsTablePage: React.VFC<ItemsTablePageProps> = props => {
@@ -46,7 +46,7 @@ export const ItemsTablePage: React.VFC<ItemsTablePageProps> = props => {
         />
       </Col>
       <Col span={6}>
-        <Space direction="vertical" size="large">
+        <Space direction="vertical" size="large" style={{ width: '100%' }}>
           <GraphCard items={filteredItems} />
           {itemType ? <ItemDescriptionCard type={itemType} /> : null}
         </Space>

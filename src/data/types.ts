@@ -30,7 +30,10 @@ function nullsafeOptional<T extends ZodTypeAny>(schema: T) {
 
 const Tag = z.string().nonempty()
 
-export const ItemType = z.enum(['issue', 'risk', 'improvement'])
+export const Aim42ItemType = z.enum(['issue', 'risk', 'improvement'])
+export type Aim42ItemType = z.infer<typeof Aim42ItemType>
+
+export const ItemType = Aim42ItemType.or(z.enum(['decision']))
 export type ItemType = z.infer<typeof ItemType>
 
 export const Comment = z.object({
@@ -59,7 +62,7 @@ function Item<T extends ItemType, I extends z.ZodType<ItemId, any, any>>(
     comments: z.array(Comment).default([]) // TODO move to details
   })
 }
-export type Item = Issue | Risk | Improvement
+export type Item = Issue | Risk | Improvement | Decision
 
 function NewItem<T extends z.ZodRawShape>(item: z.ZodObject<T>) {
   return item.omit({ id: true })
@@ -107,7 +110,13 @@ export const ImprovementId = z
   .regex(/improvement-[1-9][0-9]{0,4}/)
   .transform(id => id as ImprovementId)
 
-export type ItemId = IssueId | RiskId | ImprovementId
+export type DecisionId = `decision-${Serial}`
+export const DecisionId = z
+  .string()
+  .regex(/decision-[1-9][0-9]{0,4}/)
+  .transform(id => id as DecisionId)
+
+export type ItemId = IssueId | RiskId | ImprovementId | DecisionId
 
 // #########
 // # Issue #
@@ -179,6 +188,33 @@ export type ImprovementFileContent = z.infer<typeof ImprovementFileContent>
 
 export const NewImprovement = NewItem(Improvement)
 export type NewImprovement = z.infer<typeof NewImprovement>
+
+// ############
+// # Decision #
+// ############
+
+export const DecisionStatus = z.enum([
+  'proposed',
+  'accepted',
+  'deprecated',
+  'superseded',
+  'discarded'
+])
+export type DecisionStatus = z.infer<typeof DecisionStatus>
+
+export const Decision = Item('decision', DecisionId).extend({
+  status: DecisionStatus.default('proposed'),
+  supersededBy: DecisionId.optional(),
+  deciders: z.array(z.string().nonempty()).default([]),
+  decided: DeserializableDate.optional()
+})
+export type Decision = z.infer<typeof Decision>
+
+export const DecisionFileContent = ItemFileContent(Decision)
+export type DecisionFileContent = z.infer<typeof DecisionFileContent>
+
+export const NewDecision = NewItem(Decision)
+export type NewDecision = z.infer<typeof NewDecision>
 
 // #############
 // # Workspace #

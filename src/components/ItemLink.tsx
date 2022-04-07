@@ -8,7 +8,8 @@ import { ItemIcon } from './ItemIcon'
 const PATHS: { [type in ItemType]: string } = {
   issue: 'issues',
   improvement: 'improvements',
-  risk: 'risks'
+  risk: 'risks',
+  decision: 'decisions'
 }
 
 export const ItemLink: React.VFC<{ id: ItemId }> = ({ id }) => {

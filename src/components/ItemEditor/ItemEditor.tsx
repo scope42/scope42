@@ -1,5 +1,6 @@
 import create from 'zustand'
-import { ImprovementId, IssueId, RiskId } from '../../data/types'
+import { DecisionId, ImprovementId, IssueId, RiskId } from '../../data/types'
+import { DecisionEditor } from './DecisionEditor'
 import { ImprovementEditor } from './ImprovementEditor'
 import { IssueEditor } from './IssueEditor'
 import { RiskEditor } from './RiskEditor'
@@ -10,12 +11,15 @@ interface EditorState {
     | { type: 'issue'; id?: IssueId }
     | { type: 'improvement'; id?: ImprovementId }
     | { type: 'risk'; id?: RiskId }
+    | { type: 'decision'; id?: DecisionId }
   createIssue: () => void
   createImprovement: () => void
   createRisk: () => void
+  createDecision: () => void
   editIssue: (id: IssueId) => void
   editImprovement: (id: ImprovementId) => void
   editRisk: (id: RiskId) => void
+  editDecision: (id: DecisionId) => void
   closeEditor: () => void
 }
 
@@ -24,9 +28,11 @@ export const useEditorStore = create<EditorState>(set => ({
   createIssue: () => set({ current: { type: 'issue' } }),
   createImprovement: () => set({ current: { type: 'improvement' } }),
   createRisk: () => set({ current: { type: 'risk' } }),
+  createDecision: () => set({ current: { type: 'decision' } }),
   editIssue: id => set({ current: { type: 'issue', id } }),
   editImprovement: id => set({ current: { type: 'improvement', id } }),
   editRisk: id => set({ current: { type: 'risk', id } }),
+  editDecision: id => set({ current: { type: 'decision', id } }),
   closeEditor: () => set({ current: null })
 }))
 
@@ -43,6 +49,10 @@ export const ItemEditor: React.FC = () => {
 
   if (current?.type === 'risk') {
     return <RiskEditor riskId={current.id} />
+  }
+
+  if (current?.type === 'decision') {
+    return <DecisionEditor decisionId={current.id} />
   }
 
   return null
