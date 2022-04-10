@@ -2,14 +2,15 @@ import { PlusOutlined } from '@ant-design/icons'
 import { Dropdown, Menu } from 'antd'
 import Button from 'antd-button-color'
 import { useEditorStore } from './ItemEditor/ItemEditor'
-import { ImprovementIcon, IssueIcon, RiskIcon } from './ItemIcon'
+import { DecisionIcon, ImprovementIcon, IssueIcon, RiskIcon } from './ItemIcon'
 
 export const AddItemButton: React.FC = () => {
   const editor = useEditorStore(
-    ({ createIssue, createImprovement, createRisk }) => ({
+    ({ createIssue, createImprovement, createRisk, createDecision }) => ({
       createIssue,
       createImprovement,
-      createRisk
+      createRisk,
+      createDecision
     })
   )
 
@@ -27,6 +28,13 @@ export const AddItemButton: React.FC = () => {
       </Menu.Item>
       <Menu.Item key="risk" icon={<RiskIcon />} onClick={editor.createRisk}>
         <span style={{ marginLeft: 8 }}>Risk</span>
+      </Menu.Item>
+      <Menu.Item
+        key="decision"
+        icon={<DecisionIcon />}
+        onClick={editor.createDecision}
+      >
+        <span style={{ marginLeft: 8 }}>Decision</span>
       </Menu.Item>
     </Menu>
   )

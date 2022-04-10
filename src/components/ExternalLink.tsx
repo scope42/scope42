@@ -12,7 +12,7 @@ const IconSvg = () => (
     <path
       fill="#FFF"
       stroke="#06D"
-      stroke-width="6"
+      strokeWidth="6"
       d="m43,35H5v60h60V57M45,5v10l10,10-30,30 20,20 30-30 10,10h10V5z"
     />
   </svg>

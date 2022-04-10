@@ -16,6 +16,8 @@ import { GithubOutlined } from '@ant-design/icons'
 import { AboutPage } from './pages/AboutPage'
 import { ExternalLink } from './components/ExternalLink'
 import { IntroductionPage } from './pages/introduction'
+import DecisionsTablePage from './pages/decisions-table'
+import DecisionDetailsPage from './pages/decision-details'
 
 const { Content, Footer } = Layout
 
@@ -41,6 +43,8 @@ const App: React.VFC = () => {
             <Route path="/improvements/:id" element={<ImprovementPage />} />
             <Route path="/risks" element={<RisksPage />} />
             <Route path="/risks/:id" element={<RiskPage />} />
+            <Route path="/decisions" element={<DecisionsTablePage />} />
+            <Route path="/decisions/:id" element={<DecisionDetailsPage />} />
             <Route path="*" element={<Error404 />} />
           </Routes>
         </Content>
@@ -50,7 +54,7 @@ const App: React.VFC = () => {
           <Divider type="vertical" />
           <GithubOutlined />{' '}
           <ExternalLink noIcon url="https://github.com/scope42/scope42">
-            Source Code
+            GitHub
           </ExternalLink>
         </Footer>
       </Layout>

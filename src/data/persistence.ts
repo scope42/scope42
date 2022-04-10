@@ -17,7 +17,8 @@ import { getTypeFromId } from './util'
 const DIRECTORIES: Record<ItemType, string> = {
   issue: 'issues',
   improvement: 'improvements',
-  risk: 'risks'
+  risk: 'risks',
+  decision: 'decisions'
 }
 
 export async function writeYaml(

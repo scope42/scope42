@@ -37,7 +37,7 @@ export const Header: React.FC = () => {
           theme="dark"
           mode="horizontal"
           selectedKeys={[basePath]}
-          style={{ width: 400 }}
+          style={{ width: 500 }}
         >
           <Menu.Item key="/">
             <Link to="/">Introduction</Link>
@@ -50,6 +50,9 @@ export const Header: React.FC = () => {
           </Menu.Item>
           <Menu.Item key="/risks">
             <Link to="/risks">Risks</Link>
+          </Menu.Item>
+          <Menu.Item key="/decisions">
+            <Link to="/decisions">Decisions</Link>
           </Menu.Item>
         </Menu>
       </div>

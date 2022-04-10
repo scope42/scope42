@@ -4,6 +4,7 @@ import { selectAllRisks, useStore } from '../data/store'
 import { PageHeader } from '../components/PageHeader'
 import { RISK_STATUS_UI } from '../components/Status'
 import { ItemsTablePage } from '../features/items'
+import { Aim42ItemDescription } from '../features/aim42'
 
 const possibleStatuses = RiskStatus.options.map(status => ({
   value: status,
@@ -20,11 +21,12 @@ export default function RisksPage() {
       <PageHeader title="Risks" />
       <ItemsTablePage
         id="risks"
-        itemType="risk"
         items={risks}
         possibleStatuses={possibleStatuses}
         defaultVisibleStatuses={defaultVisibleStatuses}
-      ></ItemsTablePage>
+      >
+        <Aim42ItemDescription type="risk" />
+      </ItemsTablePage>
     </div>
   )
 }

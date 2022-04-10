@@ -4,6 +4,7 @@ import { selectAllImprovements, useStore } from '../data/store'
 import { PageHeader } from '../components/PageHeader'
 import { IMPROVEMENT_STATUS_UI } from '../components/Status'
 import { ItemsTablePage } from '../features/items'
+import { Aim42ItemDescription } from '../features/aim42'
 
 const possibleStatuses = ImprovementStatus.options.map(status => ({
   value: status,
@@ -20,11 +21,12 @@ export default function ImprovementsPage() {
       <PageHeader title="Improvements" />
       <ItemsTablePage
         id="improvements"
-        itemType="improvement"
         items={improvements}
         possibleStatuses={possibleStatuses}
         defaultVisibleStatuses={defaultVisibleStatuses}
-      ></ItemsTablePage>
+      >
+        <Aim42ItemDescription type="improvement" />
+      </ItemsTablePage>
     </div>
   )
 }

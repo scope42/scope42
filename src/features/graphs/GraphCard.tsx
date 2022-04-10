@@ -1,20 +1,23 @@
 import { FullscreenOutlined } from '@ant-design/icons'
-import { Card, Modal, Switch } from 'antd'
+import { Card, CardProps, Modal, Switch } from 'antd'
 import { useState } from 'react'
 import { Item } from '../../data/types'
 import { Graph } from './Graph'
 
-export const GraphCard: React.VFC<{
+interface GraphCardProps extends CardProps {
   items: Item[]
   alwaysShowRelatedItems?: boolean
-}> = props => {
-  const { items, alwaysShowRelatedItems } = props
+}
+
+export const GraphCard: React.VFC<GraphCardProps> = props => {
+  const { items, alwaysShowRelatedItems, ...cardProps } = props
   const [expanded, setExpanded] = useState(false)
   const [showRelatedItems, setShowRelatedItems] = useState(false)
 
   return (
     <>
       <Card
+        {...cardProps}
         actions={[
           <FullscreenOutlined onClick={() => setExpanded(true)} key="expand" />
         ]}

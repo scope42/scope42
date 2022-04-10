@@ -49,6 +49,21 @@ export const ItemIcon: React.VFC<{ type: ItemType; size?: number }> = props => {
       return <RiskIcon size={props.size} />
     case 'improvement':
       return <ImprovementIcon size={props.size} />
+    case 'decision':
+      return <DecisionIcon size={props.size} />
   }
   // return nothing so typescript will complain if switch is not exaustive anymore
+}
+
+export const DecisionIcon: React.FC<{ size?: number }> = ({
+  size = DEFAULT_SIZE
+}) => {
+  return (
+    <img
+      src={process.env.PUBLIC_URL + '/decision.svg'}
+      alt="Decision"
+      height={size}
+      width={size}
+    />
+  )
 }

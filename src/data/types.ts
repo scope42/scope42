@@ -30,7 +30,10 @@ function nullsafeOptional<T extends ZodTypeAny>(schema: T) {
 
 const Tag = z.string().nonempty()
 
-export const ItemType = z.enum(['issue', 'risk', 'improvement'])
+export const Aim42ItemType = z.enum(['issue', 'risk', 'improvement'])
+export type Aim42ItemType = z.infer<typeof Aim42ItemType>
+
+export const ItemType = Aim42ItemType.or(z.enum(['decision']))
 export type ItemType = z.infer<typeof ItemType>
 
 export const Comment = z.object({
@@ -51,7 +54,6 @@ function Item<T extends ItemType, I extends z.ZodType<ItemId, any, any>>(
     type: z.literal(type).default(type as any),
     id: idSchema,
     title: z.string().nonempty(),
-    description: nullsafeOptional(z.string()), // TODO move to details
     tags: z.array(Tag).default([]),
     created: DeserializableDate.default(() => new Date()),
     modified: DeserializableDate.default(() => new Date()),
@@ -59,7 +61,7 @@ function Item<T extends ItemType, I extends z.ZodType<ItemId, any, any>>(
     comments: z.array(Comment).default([]) // TODO move to details
   })
 }
-export type Item = Issue | Risk | Improvement
+export type Item = Issue | Risk | Improvement | Decision
 
 function NewItem<T extends z.ZodRawShape>(item: z.ZodObject<T>) {
   return item.omit({ id: true })
@@ -107,7 +109,13 @@ export const ImprovementId = z
   .regex(/improvement-[1-9][0-9]{0,4}/)
   .transform(id => id as ImprovementId)
 
-export type ItemId = IssueId | RiskId | ImprovementId
+export type DecisionId = `decision-${Serial}`
+export const DecisionId = z
+  .string()
+  .regex(/decision-[1-9][0-9]{0,4}/)
+  .transform(id => id as DecisionId)
+
+export type ItemId = IssueId | RiskId | ImprovementId | DecisionId
 
 // #########
 // # Issue #
@@ -118,6 +126,7 @@ export type IssueStatus = z.infer<typeof IssueStatus>
 
 export const Issue = Item('issue', IssueId).extend({
   status: IssueStatus.default('current'),
+  description: nullsafeOptional(z.string()), // TODO move to details
   causedBy: z.array(IssueId).default([])
 })
 export type Issue = z.infer<typeof Issue>
@@ -144,6 +153,7 @@ export type RiskStatus = z.infer<typeof RiskStatus>
 // item type for now. This especially means the ID space is distinct from issues.
 export const Risk = Item('risk', RiskId).extend({
   status: RiskStatus.default('current'),
+  description: nullsafeOptional(z.string()), // TODO move to details
   causedBy: z.array(IssueId).default([])
 })
 export type Risk = z.infer<typeof Risk>
@@ -168,6 +178,7 @@ export type ImprovementStatus = z.infer<typeof ImprovementStatus>
 
 export const Improvement = Item('improvement', ImprovementId).extend({
   status: ImprovementStatus.default('proposed'),
+  description: nullsafeOptional(z.string()), // TODO move to details
   resolves: z.array(IssueId.or(RiskId)).min(1),
   modifies: z.array(RiskId).default([]),
   creates: z.array(RiskId).default([])
@@ -179,6 +190,71 @@ export type ImprovementFileContent = z.infer<typeof ImprovementFileContent>
 
 export const NewImprovement = NewItem(Improvement)
 export type NewImprovement = z.infer<typeof NewImprovement>
+
+// ############
+// # Decision #
+// ############
+
+export const DecisionStatus = z.enum([
+  'proposed',
+  'accepted',
+  'deprecated',
+  'superseded',
+  'discarded'
+])
+export type DecisionStatus = z.infer<typeof DecisionStatus>
+
+export const DecisionOption = z.object({
+  title: z.string().nonempty(),
+  description: z.string().optional(),
+  pros: z.string().optional(),
+  cons: z.string().optional()
+})
+export type DecisionOption = z.infer<typeof DecisionOption>
+
+export const DecisionOutcome = z.object({
+  optionIndex: z.number().int().min(0),
+  rationale: z.string().optional(),
+  positiveConsequences: z.string().optional(),
+  negativeConsequences: z.string().optional()
+})
+export type DecisionOutcome = z.infer<typeof DecisionOutcome>
+
+const DecisionSchema = Item('decision', DecisionId).extend({
+  status: DecisionStatus.default('proposed'),
+  supersededBy: DecisionId.optional(),
+  deciders: z.array(z.string().nonempty()).default([]),
+  decided: nullsafeOptional(DeserializableDate),
+  judges: z.array(ImprovementId).default([]),
+  context: z.string().nonempty(), // TODO move to details
+  drivers: nullsafeOptional(z.string()), // TODO move to details
+  options: z.array(DecisionOption).default([]), // TODO move to details
+  outcome: nullsafeOptional(DecisionOutcome) // TODO move to details
+})
+
+export const Decision = DecisionSchema.refine(
+  decision =>
+    !decision.outcome || decision.outcome.optionIndex < decision.options.length,
+  {
+    message: 'Chosen option index is out of bounds',
+    path: ['outcome', 'optionIndex']
+  }
+)
+
+export type Decision = z.infer<typeof Decision>
+
+export const DecisionFileContent = ItemFileContent(DecisionSchema).refine(
+  decision =>
+    !decision.outcome || decision.outcome.optionIndex < decision.options.length,
+  {
+    message: 'Chosen option index is out of bounds',
+    path: ['outcome', 'optionIndex']
+  }
+)
+export type DecisionFileContent = z.infer<typeof DecisionFileContent>
+
+export const NewDecision = NewItem(DecisionSchema)
+export type NewDecision = z.infer<typeof NewDecision>
 
 // #############
 // # Workspace #
