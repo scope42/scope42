@@ -7,7 +7,6 @@ import {
   Button,
   AutoComplete
 } from 'antd'
-import ReactMarkdown from 'react-markdown'
 import { getDefaults, renderDateTime } from '../../../data/util'
 import { selectAllPersonNames, useStore } from '../../../data/store'
 import { Controller, useForm } from 'react-hook-form'
@@ -17,6 +16,7 @@ import produce from 'immer'
 import { useState } from 'react'
 import { CommentOutlined } from '@ant-design/icons'
 import { Avatar } from '../../people'
+import { Markdown } from '../../markdown'
 
 export const Comments: React.VFC<{ item: Item }> = props => {
   const comments = [...props.item.comments].reverse()
@@ -38,7 +38,7 @@ export const Comments: React.VFC<{ item: Item }> = props => {
           author={comment.author}
           actions={[<span onClick={() => setEditingIndex(index)}>Edit</span>]}
           avatar={<Avatar name={comment.author} />}
-          content={<ReactMarkdown>{comment.content}</ReactMarkdown>}
+          content={<Markdown>{comment.content}</Markdown>}
           datetime={renderDateTime(comment.created)}
         />
       ))}
