@@ -1,1 +1,1 @@
-export * from './RenderedMarkdown'
+export * from './Markdown'

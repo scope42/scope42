@@ -26,7 +26,7 @@ import produce from 'immer'
 import TextArea from 'antd/lib/input/TextArea'
 import { useState } from 'react'
 import { red, green, blue } from '@ant-design/colors'
-import { RenderedMarkdown } from '../markdown'
+import { Markdown } from '../markdown'
 import { AvatarDiv, InfoBubble } from '../ui'
 
 /**
@@ -59,7 +59,7 @@ export const DecisionOutcome: React.VFC<{ decision: Decision }> = ({
             </Typography.Title>
           </div>
           {decision.outcome.rationale && (
-            <RenderedMarkdown>{decision.outcome.rationale}</RenderedMarkdown>
+            <Markdown>{decision.outcome.rationale}</Markdown>
           )}
           {(decision.outcome.positiveConsequences ||
             decision.outcome.negativeConsequences) && (
@@ -78,9 +78,7 @@ export const DecisionOutcome: React.VFC<{ decision: Decision }> = ({
                     }
                     tooltip="Positive"
                   >
-                    <RenderedMarkdown>
-                      {decision.outcome.positiveConsequences}
-                    </RenderedMarkdown>
+                    <Markdown>{decision.outcome.positiveConsequences}</Markdown>
                   </AvatarDiv>
                 </Col>
               )}
@@ -95,9 +93,7 @@ export const DecisionOutcome: React.VFC<{ decision: Decision }> = ({
                     }
                     tooltip="Negative"
                   >
-                    <RenderedMarkdown>
-                      {decision.outcome.negativeConsequences}
-                    </RenderedMarkdown>
+                    <Markdown>{decision.outcome.negativeConsequences}</Markdown>
                   </AvatarDiv>
                 </Col>
               )}

@@ -23,7 +23,7 @@ import {
   LikeOutlined,
   PlusCircleOutlined
 } from '@ant-design/icons'
-import { RenderedMarkdown } from '../markdown'
+import { Markdown } from '../markdown'
 import { red, green, blue } from '@ant-design/colors'
 import { AvatarDiv } from '../ui'
 
@@ -46,7 +46,7 @@ export const DecisionOptions: React.VFC<{ decision: Decision }> = ({
               >
                 <Typography.Title level={4}>{option.title}</Typography.Title>
                 {option.description && (
-                  <RenderedMarkdown>{option.description}</RenderedMarkdown>
+                  <Markdown>{option.description}</Markdown>
                 )}
                 <Typography.Text
                   type="secondary"
@@ -68,7 +68,7 @@ export const DecisionOptions: React.VFC<{ decision: Decision }> = ({
                   }
                   tooltip="Pros"
                 >
-                  <RenderedMarkdown>{option.pros}</RenderedMarkdown>
+                  <Markdown>{option.pros}</Markdown>
                 </AvatarDiv>
               )}
             </Col>
@@ -83,7 +83,7 @@ export const DecisionOptions: React.VFC<{ decision: Decision }> = ({
                   }
                   tooltip="Cons"
                 >
-                  <RenderedMarkdown>{option.cons}</RenderedMarkdown>
+                  <Markdown>{option.cons}</Markdown>
                 </AvatarDiv>
               )}
             </Col>
