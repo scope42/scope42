@@ -1,4 +1,4 @@
-import { Tag, Row, Descriptions, Button } from 'antd'
+import { Tag, Row, Descriptions, Button, Typography } from 'antd'
 import { useStore } from '../data/store'
 import { EditOutlined, StopOutlined } from '@ant-design/icons'
 import { ISSUE_STATUS_UI } from '../components/Status'
@@ -11,6 +11,7 @@ import { useParams } from 'react-router-dom'
 import { TicketLink } from '../components/TicketLink'
 import { IssueId } from '../data/types'
 import { ItemDetailsPage } from '../features/items'
+import { RenderedMarkdown } from '../features/markdown'
 
 const IssuePage = () => {
   const id = String(useParams().id) as IssueId
@@ -70,7 +71,14 @@ const IssuePage = () => {
           </Descriptions>
         </Row>
       </PageHeader>
-      <ItemDetailsPage item={issue} />
+      <ItemDetailsPage item={issue}>
+        {issue.description && (
+          <>
+            <Typography.Title level={2}>Description</Typography.Title>
+            <RenderedMarkdown>{issue.description}</RenderedMarkdown>
+          </>
+        )}
+      </ItemDetailsPage>
     </>
   )
 }

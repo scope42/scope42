@@ -54,7 +54,7 @@ const App: React.VFC = () => {
           <Divider type="vertical" />
           <GithubOutlined />{' '}
           <ExternalLink noIcon url="https://github.com/scope42/scope42">
-            Source Code
+            GitHub
           </ExternalLink>
         </Footer>
       </Layout>

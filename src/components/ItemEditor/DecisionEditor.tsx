@@ -4,14 +4,32 @@ import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { DecisionId, DecisionStatus, NewDecision } from '../../data/types'
 import { DECISION_STATUS_UI } from '../Status'
-import { selectAllDecisions, selectAllTags, useStore } from '../../data/store'
+import {
+  selectAllDecisions,
+  selectAllPersonNames,
+  selectAllTags,
+  useStore
+} from '../../data/store'
 import TextArea from 'antd/lib/input/TextArea'
 import { useEditorStore } from './ItemEditor'
 import { useNavigate } from 'react-router-dom'
 import { getDefaults } from '../../data/util'
+import React from 'react'
+import { NativeDatePicker } from '../../features/forms'
+import { InfoBubble } from '../../features/ui'
+
+/**
+ * Source: https://github.com/adr/madr/blob/main/template/adr-template.md (CC0)
+ */
+const help = {
+  context:
+    'Describe the context and problem statement, e.g., in free form using two to three sentences. You may want to articulate the problem in form of a question.',
+  drivers: 'For example forces, facing concerns, etc.'
+}
 
 export const DecisionEditor: React.FC<{ decisionId?: DecisionId }> = props => {
   const allTags = useStore(selectAllTags)
+  const allPersonNames = useStore(selectAllPersonNames)
   const allDecisions = useStore(selectAllDecisions)
   const createItem = useStore(state => state.createItem)
   const updateItem = useStore(state => state.updateItem)
@@ -52,6 +70,7 @@ export const DecisionEditor: React.FC<{ decisionId?: DecisionId }> = props => {
       visible={true}
       onOk={handleSubmit(onSuccess)}
       onCancel={closeEditor}
+      width={600}
     >
       <Form labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} autoComplete="off">
         <Form.Item
@@ -146,14 +165,67 @@ export const DecisionEditor: React.FC<{ decisionId?: DecisionId }> = props => {
         </Form.Item>
 
         <Form.Item
-          label="Description"
-          validateStatus={errors.description?.message ? 'error' : undefined}
-          help={errors.description?.message}
+          label="Deciders"
+          validateStatus={errors.deciders ? 'error' : undefined}
+          help={errors.deciders?.map(e => e.message).join(', ')}
+        >
+          <Controller
+            control={control}
+            name="deciders"
+            render={({ field }) => (
+              <Select {...field} mode="tags">
+                {allPersonNames.map(tag => (
+                  <Select.Option key={tag} value={tag}>
+                    {tag}
+                  </Select.Option>
+                ))}
+              </Select>
+            )}
+          />
+        </Form.Item>
+
+        <Form.Item
+          label="Decided"
+          validateStatus={errors.decided?.message ? 'error' : undefined}
+          help={errors.decided?.message}
+        >
+          <Controller
+            control={control}
+            name="decided"
+            render={({ field }) => <NativeDatePicker {...field} />}
+          />
+        </Form.Item>
+
+        <Form.Item
+          label={
+            <>
+              Context&nbsp;<InfoBubble>{help.context}</InfoBubble>
+            </>
+          }
+          required
+          validateStatus={errors.context?.message ? 'error' : undefined}
+          help={errors.context?.message}
+        >
+          <Controller
+            control={control}
+            name="context"
+            render={({ field }) => <TextArea rows={6} {...field} />}
+          />
+        </Form.Item>
+
+        <Form.Item
+          label={
+            <>
+              Decision Drivers&nbsp;<InfoBubble>{help.drivers}</InfoBubble>
+            </>
+          }
+          validateStatus={errors.drivers?.message ? 'error' : undefined}
+          help={errors.drivers?.message}
           style={{ marginBottom: 0 }}
         >
           <Controller
             control={control}
-            name="description"
+            name="drivers"
             render={({ field }) => <TextArea rows={6} {...field} />}
           />
         </Form.Item>

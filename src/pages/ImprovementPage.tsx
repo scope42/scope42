@@ -1,4 +1,4 @@
-import { Tag, Row, Descriptions, Button } from 'antd'
+import { Tag, Row, Descriptions, Button, Typography } from 'antd'
 import { useStore } from '../data/store'
 import { EditOutlined } from '@ant-design/icons'
 import { IMPROVEMENT_STATUS_UI } from '../components/Status'
@@ -11,6 +11,7 @@ import { useParams } from 'react-router-dom'
 import { TicketLink } from '../components/TicketLink'
 import { ImprovementId } from '../data/types'
 import { ItemDetailsPage } from '../features/items'
+import { RenderedMarkdown } from '../features/markdown'
 
 const ImprovementPage = () => {
   const id = String(useParams().id) as ImprovementId
@@ -61,7 +62,14 @@ const ImprovementPage = () => {
           </Descriptions>
         </Row>
       </PageHeader>
-      <ItemDetailsPage item={improvement} />
+      <ItemDetailsPage item={improvement}>
+        {improvement.description && (
+          <>
+            <Typography.Title level={2}>Description</Typography.Title>
+            <RenderedMarkdown>{improvement.description}</RenderedMarkdown>
+          </>
+        )}
+      </ItemDetailsPage>
     </>
   )
 }

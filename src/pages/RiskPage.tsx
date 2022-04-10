@@ -1,4 +1,4 @@
-import { Tag, Row, Descriptions, Button } from 'antd'
+import { Tag, Row, Descriptions, Button, Typography } from 'antd'
 import { useStore } from '../data/store'
 import { EditOutlined } from '@ant-design/icons'
 import { RISK_STATUS_UI } from '../components/Status'
@@ -11,6 +11,7 @@ import { useParams } from 'react-router-dom'
 import { TicketLink } from '../components/TicketLink'
 import { RiskId } from '../data/types'
 import { ItemDetailsPage } from '../features/items'
+import { RenderedMarkdown } from '../features/markdown'
 
 const RiskPage = () => {
   const id = String(useParams().id) as RiskId
@@ -61,7 +62,14 @@ const RiskPage = () => {
           </Descriptions>
         </Row>
       </PageHeader>
-      <ItemDetailsPage item={risk} />
+      <ItemDetailsPage item={risk}>
+        {risk.description && (
+          <>
+            <Typography.Title level={2}>Description</Typography.Title>
+            <RenderedMarkdown>{risk.description}</RenderedMarkdown>
+          </>
+        )}
+      </ItemDetailsPage>
     </>
   )
 }

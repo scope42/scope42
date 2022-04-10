@@ -1,5 +1,4 @@
 import { Col, Row, Typography } from 'antd'
-import ReactMarkdown from 'react-markdown'
 import { Item } from '../../../data/types'
 import { GraphCard } from '../../graphs'
 import { Comments } from './Comments'
@@ -11,13 +10,12 @@ export interface ItemDetailsPageProps {
   item: Item
 }
 
-export const ItemDetailsPage: React.VFC<ItemDetailsPageProps> = props => {
-  const { item } = props
+export const ItemDetailsPage: React.FC<ItemDetailsPageProps> = props => {
+  const { item, children } = props
   return (
     <Row gutter={16}>
       <Col span={14}>
-        <Title level={2}>Description</Title>
-        <ReactMarkdown>{item.description || ''}</ReactMarkdown>
+        {children}
         <Title level={2}>Comments</Title>
         <Comments item={item} />
       </Col>

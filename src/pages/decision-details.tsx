@@ -1,4 +1,4 @@
-import { Tag, Row, Descriptions, Button } from 'antd'
+import { Tag, Row, Descriptions, Button, Typography, Space } from 'antd'
 import { useStore } from '../data/store'
 import { EditOutlined } from '@ant-design/icons'
 import { DECISION_STATUS_UI } from '../components/Status'
@@ -11,6 +11,9 @@ import { useParams } from 'react-router-dom'
 import { TicketLink } from '../components/TicketLink'
 import { DecisionId } from '../data/types'
 import { ItemDetailsPage } from '../features/items'
+import { RenderedMarkdown } from '../features/markdown'
+import { Person } from '../features/people'
+import { DecisionOptions, DecisionOutcome } from '../features/decisions'
 
 const DecisionDetailsPage = () => {
   const id = String(useParams().id) as DecisionId
@@ -58,10 +61,33 @@ const DecisionDetailsPage = () => {
                 <TicketLink url={decision.ticket} />
               </Descriptions.Item>
             ) : null}
+            <Descriptions.Item label="Deciders">
+              <Space size="middle">
+                {decision.deciders.map(decider => (
+                  <Person key={decider} name={decider} />
+                ))}
+              </Space>
+            </Descriptions.Item>
+            <Descriptions.Item label="Decided">
+              {decision.decided && renderDate(decision.decided)}
+            </Descriptions.Item>
           </Descriptions>
         </Row>
       </PageHeader>
-      <ItemDetailsPage item={decision} />
+      <ItemDetailsPage item={decision}>
+        <Typography.Title level={2}>Context</Typography.Title>
+        <RenderedMarkdown>{decision.context}</RenderedMarkdown>
+        {decision.drivers && (
+          <>
+            <Typography.Title level={2}>Decision Drivers</Typography.Title>
+            <RenderedMarkdown>{decision.drivers}</RenderedMarkdown>
+          </>
+        )}
+        <Typography.Title level={2}>Considered Options</Typography.Title>
+        <DecisionOptions decision={decision} />
+        <Typography.Title level={2}>Outcome</Typography.Title>
+        <DecisionOutcome decision={decision} />
+      </ItemDetailsPage>
     </>
   )
 }

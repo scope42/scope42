@@ -168,9 +168,10 @@ export const selectAllRisks = (state: Pick<AppState, 'items'>) =>
   selectAllItems(state).filter((i): i is Risk => i.type === 'risk')
 
 export const selectAllPersonNames = (state: AppState) => [
-  ...new Set(
-    selectAllItems(state)
+  ...new Set([
+    ...selectAllItems(state)
       .flatMap(i => i.comments)
-      .map(c => c.author)
-  )
+      .map(c => c.author),
+    ...selectAllDecisions(state).flatMap(d => d.deciders)
+  ])
 ]
