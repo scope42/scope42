@@ -155,13 +155,13 @@ export const DecisionEditor: React.FC<{ decisionId?: DecisionId }> = props => {
         </Form.Item>
 
         <Form.Item
-          label="Judges"
-          validateStatus={errors.judges ? 'error' : undefined}
-          help={errors.judges?.map(e => e.message).join(', ')}
+          label="Assesses"
+          validateStatus={errors.assesses ? 'error' : undefined}
+          help={errors.assesses?.map(e => e.message).join(', ')}
         >
           <Controller
             control={control}
-            name="judges"
+            name="assesses"
             render={({ field }) => (
               <Select
                 {...field}

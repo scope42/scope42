@@ -94,7 +94,7 @@ export const EXAMPLE_DATA: Pick<AppState, 'items'> = {
       id: 'decision-1',
       title: 'Decision 1',
       deciders: ['Erik'],
-      judges: ['improvement-1', 'improvement-2'],
+      assesses: ['improvement-1', 'improvement-2'],
       context:
         'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.',
       options: [
