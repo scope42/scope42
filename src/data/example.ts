@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import { AppState } from './store'
-import { Improvement, Issue, Risk } from './types'
+import { Decision, Improvement, Issue, Risk } from './types'
 
 export const EXAMPLE_DATA: Pick<AppState, 'items'> = {
   items: {
@@ -88,6 +88,34 @@ export const EXAMPLE_DATA: Pick<AppState, 'items'> = {
       title: 'Improvement 6',
       body: 'Das ist ein Test',
       resolves: ['issue-2']
+    }),
+    'decision-1': Decision.parse({
+      type: 'decision',
+      id: 'decision-1',
+      title: 'Decision 1',
+      deciders: ['Erik'],
+      judges: ['improvement-1', 'improvement-2'],
+      context:
+        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.',
+      options: [
+        {
+          title: 'Improvement 1',
+          pros: '* good, because...\n* good, because...',
+          cons: '* bad, because...\n* bad, because...'
+        },
+        {
+          title: 'Improvement 2',
+          pros: '* good, because...\n* good, because...'
+        },
+        { title: 'Do nothing', cons: '* bad, because...\n* bad, because...' }
+      ],
+      outcome: {
+        optionIndex: 1,
+        rationale:
+          'Because ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.',
+        positiveConsequences: '* Foo\n* Bar',
+        negativeConsequences: '* Foo\n* Bar'
+      }
     })
   }
 }

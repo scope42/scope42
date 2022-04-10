@@ -78,7 +78,9 @@ export const DecisionOutcome: React.VFC<{ decision: Decision }> = ({
                     }
                     tooltip="Positive"
                   >
-                    {decision.outcome.positiveConsequences}
+                    <RenderedMarkdown>
+                      {decision.outcome.positiveConsequences}
+                    </RenderedMarkdown>
                   </AvatarDiv>
                 </Col>
               )}
@@ -93,7 +95,9 @@ export const DecisionOutcome: React.VFC<{ decision: Decision }> = ({
                     }
                     tooltip="Negative"
                   >
-                    {decision.outcome.negativeConsequences}
+                    <RenderedMarkdown>
+                      {decision.outcome.negativeConsequences}
+                    </RenderedMarkdown>
                   </AvatarDiv>
                 </Col>
               )}
