@@ -8,8 +8,6 @@ import { visit } from 'unist-util-visit'
 import remarkDirective from 'remark-directive'
 import { ItemLink } from '../../components/ItemLink'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-// @ts-ignore
-import { lucario } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { Typography } from 'antd'
 
 const remarkItemLink: Plugin<[], Root> = () => {
@@ -50,7 +48,6 @@ const COMPONENTS: Components = {
     return (
       <SyntaxHighlighter
         children={String(children).replace(/\n$/, '')}
-        style={lucario}
         language={language}
         PreTag="div"
         {...props}
