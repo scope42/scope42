@@ -19,7 +19,7 @@ import { Avatar } from '../../people'
 import { Markdown } from '../../markdown'
 
 export const Comments: React.VFC<{ item: Item }> = props => {
-  const comments = [...props.item.comments].reverse()
+  const { comments } = props.item
   const [editingIndex, setEditingIndex] = useState<number | null>(null)
   return (
     <>
@@ -32,16 +32,18 @@ export const Comments: React.VFC<{ item: Item }> = props => {
           Add Comment
         </Button>
       </p>
-      {comments.map((comment, index) => (
-        <AntdComment
-          key={index}
-          author={comment.author}
-          actions={[<span onClick={() => setEditingIndex(index)}>Edit</span>]}
-          avatar={<Avatar name={comment.author} />}
-          content={<Markdown>{comment.content}</Markdown>}
-          datetime={renderDateTime(comment.created)}
-        />
-      ))}
+      {comments
+        .map((comment, index) => (
+          <AntdComment
+            key={index}
+            author={comment.author}
+            actions={[<span onClick={() => setEditingIndex(index)}>Edit</span>]}
+            avatar={<Avatar name={comment.author} />}
+            content={<Markdown>{comment.content}</Markdown>}
+            datetime={renderDateTime(comment.created)}
+          />
+        ))
+        .reverse()}
       {editingIndex === null ? null : (
         <CommentEditor
           item={props.item}
