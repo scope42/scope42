@@ -9,6 +9,7 @@ import remarkDirective from 'remark-directive'
 import { ItemLink } from '../../components/ItemLink'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { Typography } from 'antd'
+import { Mermaid } from './Mermaid'
 
 const remarkItemLink: Plugin<[], Root> = () => {
   return tree => {
@@ -45,9 +46,15 @@ const COMPONENTS: Components = {
     }
     const match = /language-(\w+)/.exec(className || '')
     const language = match ? match[1] : 'text'
+    const code = String(children).replace(/\n$/, '')
+
+    if (language === 'mermaid') {
+      return <Mermaid>{code}</Mermaid>
+    }
+
     return (
       <SyntaxHighlighter
-        children={String(children).replace(/\n$/, '')}
+        children={code}
         language={language}
         PreTag="div"
         {...props}
