@@ -2,11 +2,15 @@ import ReactMarkdown, { Components } from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { ExternalLink } from '../../components/ExternalLink'
 import styles from './Markdown.module.css'
-import { Plugin } from 'unified'
-import { Root } from 'mdast'
+import type { Plugin } from 'unified'
+import type { Root } from 'mdast'
 import { visit } from 'unist-util-visit'
 import remarkDirective from 'remark-directive'
 import { ItemLink } from '../../components/ItemLink'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+// @ts-ignore
+import { lucario } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { Typography } from 'antd'
 
 const remarkItemLink: Plugin<[], Root> = () => {
   return tree => {
@@ -36,6 +40,22 @@ const COMPONENTS: Components = {
   // @ts-ignore
   'scope42-item-link'(props) {
     return <ItemLink id={props['item-id']} />
+  },
+  code({ node, inline, className, children, ...props }) {
+    if (inline) {
+      return <Typography.Text code>{children}</Typography.Text>
+    }
+    const match = /language-(\w+)/.exec(className || '')
+    const language = match ? match[1] : 'text'
+    return (
+      <SyntaxHighlighter
+        children={String(children).replace(/\n$/, '')}
+        style={lucario}
+        language={language}
+        PreTag="div"
+        {...props}
+      />
+    )
   }
 }
 
