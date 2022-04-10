@@ -225,6 +225,7 @@ const DecisionSchema = Item('decision', DecisionId).extend({
   supersededBy: DecisionId.optional(),
   deciders: z.array(z.string().nonempty()).default([]),
   decided: nullsafeOptional(DeserializableDate),
+  judges: z.array(ImprovementId).default([]),
   context: z.string().nonempty(), // TODO move to details
   drivers: nullsafeOptional(z.string()), // TODO move to details
   options: z.array(DecisionOption).default([]), // TODO move to details

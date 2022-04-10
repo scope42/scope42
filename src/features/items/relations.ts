@@ -34,7 +34,10 @@ export function getOutgoingRelations(item: Item, pool: Items): Relation[] {
     case 'risk':
       return [...resolve(item.causedBy, 'caused by')]
     case 'decision':
-      return [...resolve([item.supersededBy], 'superseded by')]
+      return [
+        ...resolve([item.supersededBy], 'superseded by'),
+        ...resolve(item.judges, 'judges')
+      ]
   }
 }
 
@@ -57,7 +60,7 @@ export function getIncomingRelations(item: Item, pool: Items): Relation[] {
         ...resolve(selectAllRisks, i => i.causedBy, 'causes')
       ]
     case 'improvement':
-      return []
+      return [...resolve(selectAllDecisions, i => i.judges, 'judged by')]
     case 'risk':
       return [
         ...resolve(selectAllImprovements, i => i.resolves, 'resolved by'),

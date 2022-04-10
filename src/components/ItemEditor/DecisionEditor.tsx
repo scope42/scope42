@@ -6,6 +6,7 @@ import { DecisionId, DecisionStatus, NewDecision } from '../../data/types'
 import { DECISION_STATUS_UI } from '../Status'
 import {
   selectAllDecisions,
+  selectAllImprovements,
   selectAllPersonNames,
   selectAllTags,
   useStore
@@ -31,6 +32,7 @@ export const DecisionEditor: React.FC<{ decisionId?: DecisionId }> = props => {
   const allTags = useStore(selectAllTags)
   const allPersonNames = useStore(selectAllPersonNames)
   const allDecisions = useStore(selectAllDecisions)
+  const allImprovements = useStore(selectAllImprovements)
   const createItem = useStore(state => state.createItem)
   const updateItem = useStore(state => state.updateItem)
   const navigate = useNavigate()
@@ -145,6 +147,32 @@ export const DecisionEditor: React.FC<{ decisionId?: DecisionId }> = props => {
                 {allDecisions.map(decision => (
                   <Select.Option key={decision.id} value={decision.id}>
                     <Tag>{decision.id}</Tag> {decision.title}
+                  </Select.Option>
+                ))}
+              </Select>
+            )}
+          />
+        </Form.Item>
+
+        <Form.Item
+          label="Judges"
+          validateStatus={errors.judges ? 'error' : undefined}
+          help={errors.judges?.map(e => e.message).join(', ')}
+        >
+          <Controller
+            control={control}
+            name="judges"
+            render={({ field }) => (
+              <Select
+                {...field}
+                allowClear
+                showSearch
+                optionFilterProp="children"
+                mode="multiple"
+              >
+                {allImprovements.map(improvement => (
+                  <Select.Option key={improvement.id} value={improvement.id}>
+                    <Tag>{improvement.id}</Tag> {improvement.title}
                   </Select.Option>
                 ))}
               </Select>
