@@ -1,5 +1,7 @@
 import { AppState, Items } from './store'
 import {
+  Decision,
+  DecisionId,
   Improvement,
   ImprovementId,
   Issue,
@@ -96,14 +98,16 @@ export async function loadItems(
       ImprovementId,
       Improvement
     ),
-    parseItemsInDirectory(workspaceDir, 'risks', RiskId, Risk)
+    parseItemsInDirectory(workspaceDir, 'risks', RiskId, Risk),
+    parseItemsInDirectory(workspaceDir, 'decisions', DecisionId, Decision)
   ])
 
   return {
     items: {
       ...items[0],
       ...items[1],
-      ...items[2]
+      ...items[2],
+      ...items[3]
     }
   }
 }
