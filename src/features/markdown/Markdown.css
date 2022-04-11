@@ -10,3 +10,8 @@
   border-collapse: collapse;
   margin-bottom: 1em;
 }
+
+.markdown ul.contains-task-list {
+  list-style: none;
+  padding-left: 0;
+}

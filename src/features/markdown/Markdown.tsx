@@ -1,7 +1,7 @@
 import ReactMarkdown, { Components } from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { ExternalLink } from '../../components/ExternalLink'
-import styles from './Markdown.module.css'
+import './Markdown.css'
 import type { Plugin } from 'unified'
 import type { Root } from 'mdast'
 import { visit } from 'unist-util-visit'
@@ -66,7 +66,7 @@ const COMPONENTS: Components = {
 export const Markdown: React.FC<{ children: string }> = props => {
   return (
     <ReactMarkdown
-      className={styles.markdown}
+      className="markdown"
       remarkPlugins={[remarkGfm, remarkDirective, remarkItemLink]}
       components={COMPONENTS}
     >
