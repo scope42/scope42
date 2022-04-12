@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 
 let serial = 0
 
-export const Mermaid: React.FC<{ children: string }> = ({ children }) => {
+const Mermaid: React.FC<{ children: string }> = ({ children }) => {
   const [renderResult, setRenderResult] = useState<string>()
 
   useEffect(() => {
@@ -16,3 +16,5 @@ export const Mermaid: React.FC<{ children: string }> = ({ children }) => {
 
   return <div dangerouslySetInnerHTML={{ __html: renderResult }}></div>
 }
+
+export default Mermaid

@@ -7,9 +7,8 @@ import type { Root } from 'mdast'
 import { visit } from 'unist-util-visit'
 import remarkDirective from 'remark-directive'
 import { ItemLink } from '../../components/ItemLink'
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { Typography } from 'antd'
-import { Mermaid } from './Mermaid'
+import { Spin, Typography } from 'antd'
+import { lazy, Suspense } from 'react'
 
 const remarkItemLink: Plugin<[], Root> = () => {
   return tree => {
@@ -49,16 +48,17 @@ const COMPONENTS: Components = {
     const code = String(children).replace(/\n$/, '')
 
     if (language === 'mermaid') {
-      return <Mermaid>{code}</Mermaid>
+      return (
+        <Suspense fallback={<Spin />}>
+          <LazyMermaid>{code}</LazyMermaid>
+        </Suspense>
+      )
     }
 
     return (
-      <SyntaxHighlighter
-        children={code}
-        language={language}
-        PreTag="div"
-        {...props}
-      />
+      <Suspense fallback={<pre>{code}</pre>}>
+        <LazyCode children={code} language={language} {...props} />
+      </Suspense>
     )
   }
 }
@@ -74,3 +74,6 @@ export const Markdown: React.FC<{ children: string }> = props => {
     </ReactMarkdown>
   )
 }
+
+const LazyMermaid = lazy(() => import('./Mermaid'))
+const LazyCode = lazy(() => import('./Code'))
