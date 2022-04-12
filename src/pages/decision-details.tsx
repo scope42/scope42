@@ -11,7 +11,7 @@ import { useParams } from 'react-router-dom'
 import { TicketLink } from '../components/TicketLink'
 import { DecisionId } from '../data/types'
 import { ItemDetailsPage } from '../features/items'
-import { RenderedMarkdown } from '../features/markdown'
+import { Markdown } from '../features/markdown'
 import { Person } from '../features/people'
 import { DecisionOptions, DecisionOutcome } from '../features/decisions'
 
@@ -76,11 +76,11 @@ const DecisionDetailsPage = () => {
       </PageHeader>
       <ItemDetailsPage item={decision}>
         <Typography.Title level={2}>Context</Typography.Title>
-        <RenderedMarkdown>{decision.context}</RenderedMarkdown>
+        <Markdown>{decision.context}</Markdown>
         {decision.drivers && (
           <>
             <Typography.Title level={2}>Decision Drivers</Typography.Title>
-            <RenderedMarkdown>{decision.drivers}</RenderedMarkdown>
+            <Markdown>{decision.drivers}</Markdown>
           </>
         )}
         <Typography.Title level={2}>Considered Options</Typography.Title>

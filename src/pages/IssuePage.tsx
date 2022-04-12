@@ -11,7 +11,7 @@ import { useParams } from 'react-router-dom'
 import { TicketLink } from '../components/TicketLink'
 import { IssueId } from '../data/types'
 import { ItemDetailsPage } from '../features/items'
-import { RenderedMarkdown } from '../features/markdown'
+import { Markdown } from '../features/markdown'
 
 const IssuePage = () => {
   const id = String(useParams().id) as IssueId
@@ -75,7 +75,7 @@ const IssuePage = () => {
         {issue.description && (
           <>
             <Typography.Title level={2}>Description</Typography.Title>
-            <RenderedMarkdown>{issue.description}</RenderedMarkdown>
+            <Markdown>{issue.description}</Markdown>
           </>
         )}
       </ItemDetailsPage>

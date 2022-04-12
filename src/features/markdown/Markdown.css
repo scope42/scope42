@@ -1,0 +1,17 @@
+.markdown :is(table, th, td) {
+  border: 1px solid #d9d9d9;
+}
+
+.markdown :is(td, th) {
+  padding: 8px;
+}
+
+.markdown table {
+  border-collapse: collapse;
+  margin-bottom: 1em;
+}
+
+.markdown ul.contains-task-list {
+  list-style: none;
+  padding-left: 0;
+}

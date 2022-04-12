@@ -206,23 +206,23 @@ export type DecisionStatus = z.infer<typeof DecisionStatus>
 
 export const DecisionOption = z.object({
   title: z.string().nonempty(),
-  description: z.string().optional(),
-  pros: z.string().optional(),
-  cons: z.string().optional()
+  description: nullsafeOptional(z.string()),
+  pros: nullsafeOptional(z.string()),
+  cons: nullsafeOptional(z.string())
 })
 export type DecisionOption = z.infer<typeof DecisionOption>
 
 export const DecisionOutcome = z.object({
   optionIndex: z.number().int().min(0),
-  rationale: z.string().optional(),
-  positiveConsequences: z.string().optional(),
-  negativeConsequences: z.string().optional()
+  rationale: nullsafeOptional(z.string()),
+  positiveConsequences: nullsafeOptional(z.string()),
+  negativeConsequences: nullsafeOptional(z.string())
 })
 export type DecisionOutcome = z.infer<typeof DecisionOutcome>
 
 const DecisionSchema = Item('decision', DecisionId).extend({
   status: DecisionStatus.default('proposed'),
-  supersededBy: DecisionId.optional(),
+  supersededBy: nullsafeOptional(DecisionId),
   deciders: z.array(z.string().nonempty()).default([]),
   decided: nullsafeOptional(DeserializableDate),
   assesses: z.array(ImprovementId).default([]),
