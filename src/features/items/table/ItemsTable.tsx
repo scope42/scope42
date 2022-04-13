@@ -28,7 +28,7 @@ export interface ItemsTableProps {
   id: string
   items: Item[]
   possibleStatuses: { text: string; value: string }[]
-  defaultVisibleStatuses: string[]
+  defaultVisibleStatuses: string[] | null
 }
 
 export const ItemsTable: React.VFC<ItemsTableProps> = props => {

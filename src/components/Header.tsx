@@ -1,9 +1,10 @@
-import { Button, Input, Layout, Menu, Popover } from 'antd'
+import { Button, Layout, Menu, Popover } from 'antd'
 import styles from './Header.module.css'
 import { AddItemButton } from './AddItemButton'
 import { LogoutOutlined, SettingOutlined } from '@ant-design/icons'
 import { useStore } from '../data/store'
 import { Link, useLocation } from 'react-router-dom'
+import { SearchInput } from '../features/search'
 
 export const Header: React.FC = () => {
   const location = useLocation()
@@ -54,18 +55,14 @@ export const Header: React.FC = () => {
           <Menu.Item key="/decisions">
             <Link to="/decisions">Decisions</Link>
           </Menu.Item>
+          <Menu.Item key="/search">
+            <Link to="/search">Search</Link>
+          </Menu.Item>
         </Menu>
       </div>
       <AddItemButton />
       <div className={styles.right}>
-        <Input.Search
-          placeholder="Search"
-          onSearch={() => {}}
-          size="large"
-          style={{ width: 300 }}
-          enterButton
-          disabled
-        />
+        <SearchInput />
         <Popover
           placement="bottomRight"
           title="Workspace"

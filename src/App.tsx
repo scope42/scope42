@@ -18,6 +18,7 @@ import { ExternalLink } from './components/ExternalLink'
 import { IntroductionPage } from './pages/introduction'
 import DecisionsTablePage from './pages/decisions-table'
 import DecisionDetailsPage from './pages/decision-details'
+import SearchPage from './pages/search'
 
 const { Content, Footer } = Layout
 
@@ -45,6 +46,7 @@ const App: React.VFC = () => {
             <Route path="/risks/:id" element={<RiskPage />} />
             <Route path="/decisions" element={<DecisionsTablePage />} />
             <Route path="/decisions/:id" element={<DecisionDetailsPage />} />
+            <Route path="/search" element={<SearchPage />} />
             <Route path="*" element={<Error404 />} />
           </Routes>
         </Content>

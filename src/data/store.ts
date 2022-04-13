@@ -23,6 +23,7 @@ import {
   writeYaml
 } from './persistence'
 import { Modal } from 'antd'
+import { addToSearchIndex } from '../features/search'
 
 export type Items = Partial<
   Record<IssueId, Issue> &
@@ -85,6 +86,7 @@ export const useStore = create<AppState>((set, get) => ({
   loadExampleData: async () => {
     const { EXAMPLE_DATA } = await import('./example')
     set(EXAMPLE_DATA)
+    selectAllItems(EXAMPLE_DATA).map(addToSearchIndex) // don't wait
   },
   createItem: async item => {
     const id = getNextId(get(), item.type)
