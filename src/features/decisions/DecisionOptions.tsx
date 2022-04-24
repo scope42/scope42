@@ -35,29 +35,19 @@ export const DecisionOptions: React.VFC<{ decision: Decision }> = ({
     <>
       {decision.options.map((option, index) => (
         <div key={option.title}>
+          <AvatarDiv
+            avatar={
+              <AntdAvatar style={{ backgroundColor: blue.primary }}>
+                <b>{`${index + 1}`}</b>
+              </AntdAvatar>
+            }
+          >
+            <Typography.Title level={4}>{option.title}</Typography.Title>
+            {option.description && <Markdown>{option.description}</Markdown>}
+          </AvatarDiv>
           <Row gutter={16}>
-            <Col span={8}>
-              <AvatarDiv
-                avatar={
-                  <AntdAvatar style={{ backgroundColor: blue.primary }}>
-                    <b>{`${index + 1}`}</b>
-                  </AntdAvatar>
-                }
-              >
-                <Typography.Title level={4}>{option.title}</Typography.Title>
-                {option.description && (
-                  <Markdown>{option.description}</Markdown>
-                )}
-                <Typography.Text
-                  type="secondary"
-                  onClick={() => setEditingIndex(index)}
-                  style={{ cursor: 'pointer' }}
-                >
-                  Edit
-                </Typography.Text>
-              </AvatarDiv>
-            </Col>
-            <Col span={8}>
+            <Col span={2}>{/* spacer */}</Col>
+            <Col span={11}>
               {option.pros && (
                 <AvatarDiv
                   avatar={
@@ -72,7 +62,7 @@ export const DecisionOptions: React.VFC<{ decision: Decision }> = ({
                 </AvatarDiv>
               )}
             </Col>
-            <Col span={8}>
+            <Col span={11}>
               {option.cons && (
                 <AvatarDiv
                   avatar={
@@ -88,6 +78,13 @@ export const DecisionOptions: React.VFC<{ decision: Decision }> = ({
               )}
             </Col>
           </Row>
+          <Typography.Text
+            type="secondary"
+            onClick={() => setEditingIndex(index)}
+            style={{ cursor: 'pointer' }}
+          >
+            Edit
+          </Typography.Text>
           <Divider />
         </div>
       ))}
