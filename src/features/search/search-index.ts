@@ -1,6 +1,6 @@
 import { Index } from 'flexsearch'
 import { Item, ItemId, ItemType } from '../../data/types'
-import { getIdFromSerial, getSerialFromId } from '../../data/util'
+import { exists, getIdFromSerial, getSerialFromId } from '../../data/util'
 
 /**
  * flexsearch strongly recommends using numeric IDs. To achieve this, we
@@ -33,11 +33,11 @@ function getItemId(indexId: number) {
 }
 
 export async function addToSearchIndex(item: Item) {
-  return index.addAsync(getIndexId(item), item.title)
+  return index.addAsync(getIndexId(item), getItemContent(item))
 }
 
 export async function updateSearchIndex(item: Item) {
-  return index.updateAsync(getIndexId(item), item.title)
+  return index.updateAsync(getIndexId(item), getItemContent(item))
 }
 
 export function resetSearchIndex() {
@@ -52,4 +52,37 @@ export async function search(query: string): Promise<ItemId[]> {
 export async function suggest(query: string): Promise<ItemId[]> {
   const result = await index.searchAsync(query, { suggest: true, limit: 5 })
   return result.map(indexId => getItemId(indexId as number))
+}
+
+function getItemContent(item: Item): string {
+  return [
+    item.id,
+    item.title,
+    ...item.tags,
+    ...item.comments.map(c => c.content),
+    ...getSpecificItemContents(item)
+  ]
+    .filter(exists)
+    .join(' ')
+}
+
+function getSpecificItemContents(item: Item): Array<string | undefined> {
+  switch (item.type) {
+    case 'issue':
+    case 'risk':
+    case 'improvement':
+      return [item.description]
+    case 'decision':
+      return [
+        item.context,
+        ...item.options.flatMap(o => [o.description, o.title, o.pros, o.cons]),
+        ...(item.outcome
+          ? [
+              item.outcome.rationale,
+              item.outcome.positiveConsequences,
+              item.outcome.positiveConsequences
+            ]
+          : [])
+      ]
+  }
 }
