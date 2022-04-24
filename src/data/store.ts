@@ -23,7 +23,11 @@ import {
   writeYaml
 } from './persistence'
 import { Modal } from 'antd'
-import { addToSearchIndex } from '../features/search'
+import {
+  addToSearchIndex,
+  resetSearchIndex,
+  updateSearchIndex
+} from '../features/search'
 
 export type Items = Partial<
   Record<IssueId, Issue> &
@@ -82,6 +86,7 @@ export const useStore = create<AppState>((set, get) => ({
   },
   closeWorkspace: () => {
     set(INITIAL_STATE)
+    resetSearchIndex()
   },
   loadExampleData: async () => {
     const { EXAMPLE_DATA } = await import('./example')
@@ -97,6 +102,7 @@ export const useStore = create<AppState>((set, get) => ({
         state.items[id] = newItem
       })
     )
+    addToSearchIndex(newItem) // don't await
     return id
   },
   updateItem: async item => {
@@ -107,6 +113,7 @@ export const useStore = create<AppState>((set, get) => ({
         state.items[item.id] = updatedItem
       })
     )
+    updateSearchIndex(updatedItem) // don't await
   }
 }))
 

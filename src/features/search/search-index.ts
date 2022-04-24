@@ -13,7 +13,11 @@ const ID_SUFFIX: Record<ItemType, number> = {
   decision: 3
 }
 
-const index = new Index({ tokenize: 'forward' })
+function createIndex() {
+  return new Index({ tokenize: 'forward' })
+}
+
+let index = createIndex()
 
 function getIndexId(item: Item): number {
   return getSerialFromId(item.id) * 10 + ID_SUFFIX[item.type]
@@ -32,8 +36,16 @@ export async function addToSearchIndex(item: Item) {
   return index.addAsync(getIndexId(item), item.title)
 }
 
+export async function updateSearchIndex(item: Item) {
+  return index.updateAsync(getIndexId(item), item.title)
+}
+
+export function resetSearchIndex() {
+  index = createIndex()
+}
+
 export async function search(query: string): Promise<ItemId[]> {
-  const result = await index.searchAsync(query, { suggest: true })
+  const result = await index.searchAsync(query)
   return result.map(indexId => getItemId(indexId as number))
 }
 
