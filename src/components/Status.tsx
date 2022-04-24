@@ -5,6 +5,7 @@ import {
   ImprovementStatus,
   IssueStatus,
   Item,
+  ItemType,
   RiskStatus
 } from '../data/types'
 
@@ -65,4 +66,39 @@ export const ItemStatus: React.VFC<{ item: Item }> = props => {
     case 'decision':
       return <>{DECISION_STATUS_UI[props.item.status].component}</>
   }
+}
+
+export const POSSIBLE_STATUSES: Record<
+  ItemType,
+  Array<{ value: string; text: string }>
+> = {
+  issue: IssueStatus.options.map(status => ({
+    value: status,
+    text: ISSUE_STATUS_UI[status].label
+  })),
+  improvement: ImprovementStatus.options.map(status => ({
+    value: status,
+    text: IMPROVEMENT_STATUS_UI[status].label
+  })),
+  risk: RiskStatus.options.map(status => ({
+    value: status,
+    text: RISK_STATUS_UI[status].label
+  })),
+  decision: DecisionStatus.options.map(status => ({
+    value: status,
+    text: DECISION_STATUS_UI[status].label
+  }))
+}
+
+export function getAllPossibleStatuses() {
+  const possibleStatuses: Array<{ value: string; text: string }> = []
+  // ensure unique entries
+  Object.values(POSSIBLE_STATUSES)
+    .flatMap(s => s)
+    .forEach(status => {
+      if (!possibleStatuses.some(s => s.value === status.value)) {
+        possibleStatuses.push(status)
+      }
+    })
+  return possibleStatuses
 }

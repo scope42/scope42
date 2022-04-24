@@ -1,15 +1,10 @@
 import { DecisionStatus } from '../data/types'
 import { selectAllDecisions, useStore } from '../data/store'
 import { PageHeader } from '../components/PageHeader'
-import { DECISION_STATUS_UI } from '../components/Status'
+import { POSSIBLE_STATUSES } from '../components/Status'
 import { ItemsTablePage } from '../features/items'
 import { AttributionCard } from '../features/ui'
 import { ExternalLink } from '../components/ExternalLink'
-
-const possibleStatuses = DecisionStatus.options.map(status => ({
-  value: status,
-  text: DECISION_STATUS_UI[status].label
-}))
 
 const defaultVisibleStatuses: DecisionStatus[] = ['proposed', 'accepted']
 
@@ -22,7 +17,7 @@ export default function DecisionsTablePage() {
       <ItemsTablePage
         id="decisions"
         items={decisions}
-        possibleStatuses={possibleStatuses}
+        possibleStatuses={POSSIBLE_STATUSES.decision}
         defaultVisibleStatuses={defaultVisibleStatuses}
       >
         <AttributionCard
