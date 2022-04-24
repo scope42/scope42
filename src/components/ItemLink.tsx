@@ -5,7 +5,7 @@ import { useStore } from '../data/store'
 import { ItemId, ItemType } from '../data/types'
 import { ItemIcon } from './ItemIcon'
 
-const PATHS: { [type in ItemType]: string } = {
+export const PATHS: { [type in ItemType]: string } = {
   issue: 'issues',
   improvement: 'improvements',
   risk: 'risks',

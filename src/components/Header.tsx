@@ -4,7 +4,7 @@ import { AddItemButton } from './AddItemButton'
 import { LogoutOutlined, SettingOutlined } from '@ant-design/icons'
 import { useStore } from '../data/store'
 import { Link, useLocation } from 'react-router-dom'
-import { SearchInput } from '../features/search'
+import { HeaderSearch } from '../features/search'
 
 export const Header: React.FC = () => {
   const location = useLocation()
@@ -62,7 +62,7 @@ export const Header: React.FC = () => {
       </div>
       <AddItemButton />
       <div className={styles.right}>
-        <SearchInput />
+        <HeaderSearch />
         <Popover
           placement="bottomRight"
           title="Workspace"

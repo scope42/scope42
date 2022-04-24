@@ -34,6 +34,10 @@ export async function addToSearchIndex(item: Item) {
 
 export async function search(query: string): Promise<ItemId[]> {
   const result = await index.searchAsync(query, { suggest: true })
-  console.log(result)
+  return result.map(indexId => getItemId(indexId as number))
+}
+
+export async function suggest(query: string): Promise<ItemId[]> {
+  const result = await index.searchAsync(query, { suggest: true, limit: 5 })
   return result.map(indexId => getItemId(indexId as number))
 }
