@@ -72,7 +72,9 @@ export const useStore = create<AppState>((set, get) => ({
   openWorkspace: async dirHandle => {
     set({ workspace: { present: false, loading: true } })
     try {
-      set(await loadItems(dirHandle))
+      const items = await loadItems(dirHandle)
+      set(items)
+      selectAllItems(items).forEach(addToSearchIndex) // don't await
     } catch (error) {
       set({ workspace: { present: false, error } })
       return
@@ -91,7 +93,7 @@ export const useStore = create<AppState>((set, get) => ({
   loadExampleData: async () => {
     const { EXAMPLE_DATA } = await import('./example')
     set(EXAMPLE_DATA)
-    selectAllItems(EXAMPLE_DATA).map(addToSearchIndex) // don't wait
+    selectAllItems(EXAMPLE_DATA).forEach(addToSearchIndex) // don't await
   },
   createItem: async item => {
     const id = getNextId(get(), item.type)
