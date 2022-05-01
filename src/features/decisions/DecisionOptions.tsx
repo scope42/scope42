@@ -15,7 +15,6 @@ import { getDefaults } from '../../data/util'
 import { useStore } from '../../data/store'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import TextArea from 'antd/lib/input/TextArea'
 import produce from 'immer'
 import { useState } from 'react'
 import {
@@ -23,7 +22,7 @@ import {
   LikeOutlined,
   PlusCircleOutlined
 } from '@ant-design/icons'
-import { Markdown } from '../markdown'
+import { Markdown, MarkdownEditor } from '../markdown'
 import { red, green, blue } from '@ant-design/colors'
 import { AvatarDiv } from '../ui'
 
@@ -175,7 +174,7 @@ const OptionEditor: React.VFC<{
           <Controller
             control={control}
             name="description"
-            render={({ field }) => <TextArea rows={6} {...field} />}
+            render={({ field }) => <MarkdownEditor {...field} />}
           />
         </Form.Item>
 
@@ -187,7 +186,7 @@ const OptionEditor: React.VFC<{
           <Controller
             control={control}
             name="pros"
-            render={({ field }) => <TextArea rows={6} {...field} />}
+            render={({ field }) => <MarkdownEditor {...field} />}
           />
         </Form.Item>
 
@@ -200,7 +199,7 @@ const OptionEditor: React.VFC<{
           <Controller
             control={control}
             name="cons"
-            render={({ field }) => <TextArea rows={6} {...field} />}
+            render={({ field }) => <MarkdownEditor {...field} />}
           />
         </Form.Item>
       </Form>

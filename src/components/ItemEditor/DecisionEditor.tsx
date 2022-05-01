@@ -11,13 +11,13 @@ import {
   selectAllTags,
   useStore
 } from '../../data/store'
-import TextArea from 'antd/lib/input/TextArea'
 import { useEditorStore } from './ItemEditor'
 import { useNavigate } from 'react-router-dom'
 import { getDefaults } from '../../data/util'
 import React from 'react'
 import { NativeDatePicker } from '../../features/forms'
 import { InfoBubble } from '../../features/ui'
+import { MarkdownEditor } from '../../features/markdown'
 
 /**
  * Source: https://github.com/adr/madr/blob/main/template/adr-template.md (CC0)
@@ -237,7 +237,7 @@ export const DecisionEditor: React.FC<{ decisionId?: DecisionId }> = props => {
           <Controller
             control={control}
             name="context"
-            render={({ field }) => <TextArea rows={6} {...field} />}
+            render={({ field }) => <MarkdownEditor {...field} />}
           />
         </Form.Item>
 
@@ -254,7 +254,7 @@ export const DecisionEditor: React.FC<{ decisionId?: DecisionId }> = props => {
           <Controller
             control={control}
             name="drivers"
-            render={({ field }) => <TextArea rows={6} {...field} />}
+            render={({ field }) => <MarkdownEditor {...field} />}
           />
         </Form.Item>
       </Form>

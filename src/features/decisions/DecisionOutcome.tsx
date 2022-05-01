@@ -23,10 +23,9 @@ import {
 } from '../../data/types'
 import { getDefaults } from '../../data/util'
 import produce from 'immer'
-import TextArea from 'antd/lib/input/TextArea'
 import { useState } from 'react'
 import { red, green, blue } from '@ant-design/colors'
-import { Markdown } from '../markdown'
+import { Markdown, MarkdownEditor } from '../markdown'
 import { AvatarDiv, InfoBubble } from '../ui'
 
 /**
@@ -195,7 +194,7 @@ const OutcomeEditor: React.VFC<{
           <Controller
             control={control}
             name="rationale"
-            render={({ field }) => <TextArea rows={6} {...field} />}
+            render={({ field }) => <MarkdownEditor {...field} />}
           />
         </Form.Item>
 
@@ -214,7 +213,7 @@ const OutcomeEditor: React.VFC<{
           <Controller
             control={control}
             name="positiveConsequences"
-            render={({ field }) => <TextArea rows={6} {...field} />}
+            render={({ field }) => <MarkdownEditor {...field} />}
           />
         </Form.Item>
 
@@ -234,7 +233,7 @@ const OutcomeEditor: React.VFC<{
           <Controller
             control={control}
             name="negativeConsequences"
-            render={({ field }) => <TextArea rows={6} {...field} />}
+            render={({ field }) => <MarkdownEditor {...field} />}
           />
         </Form.Item>
       </Form>

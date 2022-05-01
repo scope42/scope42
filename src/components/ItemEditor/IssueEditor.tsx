@@ -5,10 +5,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { IssueId, IssueStatus, NewIssue } from '../../data/types'
 import { ISSUE_STATUS_UI } from '../Status'
 import { selectAllIssues, selectAllTags, useStore } from '../../data/store'
-import TextArea from 'antd/lib/input/TextArea'
 import { useEditorStore } from './ItemEditor'
 import { useNavigate } from 'react-router-dom'
 import { getDefaults } from '../../data/util'
+import { MarkdownEditor } from '../../features/markdown'
 
 export const IssueEditor: React.FC<{ issueId?: IssueId }> = props => {
   const allTags = useStore(selectAllTags)
@@ -155,7 +155,7 @@ export const IssueEditor: React.FC<{ issueId?: IssueId }> = props => {
           <Controller
             control={control}
             name="description"
-            render={({ field }) => <TextArea rows={6} {...field} />}
+            render={({ field }) => <MarkdownEditor {...field} />}
           />
         </Form.Item>
       </Form>

@@ -10,10 +10,10 @@ import {
   selectAllTags,
   useStore
 } from '../../data/store'
-import TextArea from 'antd/lib/input/TextArea'
 import { useEditorStore } from './ItemEditor'
 import { useNavigate } from 'react-router-dom'
 import { getDefaults } from '../../data/util'
+import { MarkdownEditor } from '../../features/markdown'
 
 export const RiskEditor: React.FC<{ riskId?: RiskId }> = props => {
   const allTags = useStore(selectAllTags)
@@ -161,7 +161,7 @@ export const RiskEditor: React.FC<{ riskId?: RiskId }> = props => {
           <Controller
             control={control}
             name="description"
-            render={({ field }) => <TextArea rows={6} {...field} />}
+            render={({ field }) => <MarkdownEditor {...field} />}
           />
         </Form.Item>
       </Form>

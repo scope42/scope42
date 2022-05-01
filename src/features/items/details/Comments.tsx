@@ -11,12 +11,11 @@ import { getDefaults, renderDateTime } from '../../../data/util'
 import { selectAllPersonNames, useStore } from '../../../data/store'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import TextArea from 'antd/lib/input/TextArea'
 import produce from 'immer'
 import { useState } from 'react'
 import { CommentOutlined } from '@ant-design/icons'
 import { Avatar } from '../../people'
-import { Markdown } from '../../markdown'
+import { Markdown, MarkdownEditor } from '../../markdown'
 
 export const Comments: React.VFC<{ item: Item }> = props => {
   const { comments } = props.item
@@ -137,7 +136,7 @@ const CommentEditor: React.VFC<{
           <Controller
             control={control}
             name="content"
-            render={({ field }) => <TextArea rows={6} {...field} />}
+            render={({ field }) => <MarkdownEditor {...field} />}
           />
         </Form.Item>
       </Form>
