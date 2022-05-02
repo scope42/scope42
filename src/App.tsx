@@ -1,8 +1,5 @@
-import { Divider, Layout } from 'antd'
 import React from 'react'
-import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom'
-import { Header } from './components/Header'
-import { ItemEditor } from './components/ItemEditor/ItemEditor'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { WorkspaceSelection } from './components/WorkspaceSelection'
 import { useStore } from './data/store'
 import Error404 from './components/Error404'
@@ -12,15 +9,12 @@ import IssuePage from './pages/IssuePage'
 import RisksPage from './pages/RisksPage'
 import RiskPage from './pages/RiskPage'
 import ImprovementPage from './pages/ImprovementPage'
-import { GithubOutlined } from '@ant-design/icons'
 import { AboutPage } from './pages/AboutPage'
-import { ExternalLink } from './components/ExternalLink'
 import { IntroductionPage } from './pages/introduction'
 import DecisionsTablePage from './pages/decisions-table'
 import DecisionDetailsPage from './pages/decision-details'
 import SearchPage from './pages/search'
-
-const { Content, Footer } = Layout
+import { DefaultLayout } from './features/layout'
 
 const App: React.VFC = () => {
   const workspacePresent = useStore(state => state.workspace.present)
@@ -31,35 +25,22 @@ const App: React.VFC = () => {
 
   return (
     <Router>
-      <Layout style={{ minHeight: '100%' }}>
-        <Header />
-        <ItemEditor />
-        <Content style={{ backgroundColor: 'white', padding: '50px 50px' }}>
-          <Routes>
-            <Route index element={<IntroductionPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/issues" element={<IssuesPage />} />
-            <Route path="/issues/:id" element={<IssuePage />} />
-            <Route path="/improvements" element={<ImprovementsPage />} />
-            <Route path="/improvements/:id" element={<ImprovementPage />} />
-            <Route path="/risks" element={<RisksPage />} />
-            <Route path="/risks/:id" element={<RiskPage />} />
-            <Route path="/decisions" element={<DecisionsTablePage />} />
-            <Route path="/decisions/:id" element={<DecisionDetailsPage />} />
-            <Route path="/search" element={<SearchPage />} />
-            <Route path="*" element={<Error404 />} />
-          </Routes>
-        </Content>
-        <Footer style={{ textAlign: 'center' }}>
-          Version 0.0.0 <Divider type="vertical" />
-          <Link to="/about">About</Link>
-          <Divider type="vertical" />
-          <GithubOutlined />{' '}
-          <ExternalLink noIcon url="https://github.com/scope42/scope42">
-            GitHub
-          </ExternalLink>
-        </Footer>
-      </Layout>
+      <DefaultLayout>
+        <Routes>
+          <Route index element={<IntroductionPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/issues" element={<IssuesPage />} />
+          <Route path="/issues/:id" element={<IssuePage />} />
+          <Route path="/improvements" element={<ImprovementsPage />} />
+          <Route path="/improvements/:id" element={<ImprovementPage />} />
+          <Route path="/risks" element={<RisksPage />} />
+          <Route path="/risks/:id" element={<RiskPage />} />
+          <Route path="/decisions" element={<DecisionsTablePage />} />
+          <Route path="/decisions/:id" element={<DecisionDetailsPage />} />
+          <Route path="/search" element={<SearchPage />} />
+          <Route path="*" element={<Error404 />} />
+        </Routes>
+      </DefaultLayout>
     </Router>
   )
 }

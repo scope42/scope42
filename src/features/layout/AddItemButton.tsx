@@ -1,8 +1,13 @@
 import { PlusOutlined } from '@ant-design/icons'
 import { Dropdown, Menu } from 'antd'
 import Button from 'antd-button-color'
-import { useEditorStore } from './ItemEditor/ItemEditor'
-import { DecisionIcon, ImprovementIcon, IssueIcon, RiskIcon } from './ItemIcon'
+import { useEditorStore } from '../../components/ItemEditor/ItemEditor'
+import {
+  DecisionIcon,
+  ImprovementIcon,
+  IssueIcon,
+  RiskIcon
+} from '../../components/ItemIcon'
 
 export const AddItemButton: React.FC = () => {
   const editor = useEditorStore(
