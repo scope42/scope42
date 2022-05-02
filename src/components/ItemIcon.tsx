@@ -1,69 +1,83 @@
 import { ItemType } from '../data/types'
+import Icon from '@ant-design/icons'
 
-const DEFAULT_SIZE = 20
+type IconProps = React.ComponentProps<typeof Icon>
 
-export const IssueIcon: React.FC<{ size?: number }> = ({
-  size = DEFAULT_SIZE
-}) => {
-  return (
-    <img
-      src={process.env.PUBLIC_URL + '/issue.svg'}
-      alt="Issue"
-      height={size}
-      width={size}
-    />
-  )
-}
+const IssueSvg = () => (
+  <svg
+    width="1em"
+    height="1em"
+    viewBox="0 0 100 100"
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <polygon points="0 50 50 100 100 50 50 0" fill="red" />
+  </svg>
+)
 
-export const ImprovementIcon: React.FC<{ size?: number }> = ({
-  size = DEFAULT_SIZE
-}) => {
-  return (
-    <img
-      src={process.env.PUBLIC_URL + '/improvement.svg'}
-      alt="Improvement"
-      height={size}
-      width={size}
-    />
-  )
-}
+const ImprovementSvg = () => (
+  <svg
+    width="1em"
+    height="1em"
+    viewBox="0 0 100 100"
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle cx="50" cy="50" r="50" fill="green" />
+  </svg>
+)
 
-export const RiskIcon: React.FC<{ size?: number }> = ({
-  size = DEFAULT_SIZE
-}) => {
-  return (
-    <img
-      src={process.env.PUBLIC_URL + '/risk.svg'}
-      alt="Risk"
-      height={size}
-      width={size}
-    />
-  )
-}
+const RiskSvg = () => (
+  <svg
+    width="1em"
+    height="1em"
+    viewBox="0 0 100 100"
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <polygon points="0 100 50 0 100 100" fill="orange" />
+  </svg>
+)
 
-export const ItemIcon: React.VFC<{ type: ItemType; size?: number }> = props => {
-  switch (props.type) {
+const DecisionSvg = () => (
+  <svg
+    width="1em"
+    height="1em"
+    viewBox="0 0 100 100"
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <polygon points="50 0 2 35 21 90 79 90 98 35 50 0" fill="BlueViolet" />
+  </svg>
+)
+
+export const IssueIcon: React.FC<IconProps> = props => (
+  <Icon {...props} component={IssueSvg} />
+)
+
+export const ImprovementIcon: React.FC<IconProps> = props => (
+  <Icon {...props} component={ImprovementSvg} />
+)
+
+export const RiskIcon: React.FC<IconProps> = props => (
+  <Icon {...props} component={RiskSvg} />
+)
+
+export const DecisionIcon: React.FC<IconProps> = props => (
+  <Icon {...props} component={DecisionSvg} />
+)
+
+export const ItemIcon: React.VFC<{ type: ItemType } & IconProps> = props => {
+  const { type, ...restProps } = props
+  switch (type) {
     case 'issue':
-      return <IssueIcon size={props.size} />
+      return <IssueIcon {...restProps} />
     case 'risk':
-      return <RiskIcon size={props.size} />
+      return <RiskIcon {...restProps} />
     case 'improvement':
-      return <ImprovementIcon size={props.size} />
+      return <ImprovementIcon {...restProps} />
     case 'decision':
-      return <DecisionIcon size={props.size} />
+      return <DecisionIcon {...restProps} />
   }
   // return nothing so typescript will complain if switch is not exaustive anymore
-}
-
-export const DecisionIcon: React.FC<{ size?: number }> = ({
-  size = DEFAULT_SIZE
-}) => {
-  return (
-    <img
-      src={process.env.PUBLIC_URL + '/decision.svg'}
-      alt="Decision"
-      height={size}
-      width={size}
-    />
-  )
 }

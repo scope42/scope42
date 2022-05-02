@@ -21,23 +21,8 @@ export const ItemLink: React.VFC<{ id: ItemId }> = ({ id }) => {
 
   return (
     <>
-      <span style={{ position: 'relative', top: -2, marginRight: 8 }}>
-        <ItemIcon type={item.type} size={16} />
-      </span>
+      <ItemIcon type={item.type} />{' '}
       <Link to={`/${PATHS[item.type]}/${id}`}>{item.title}</Link>
-    </>
-  )
-}
-
-export const ItemLinkList: React.VFC<{ ids: ItemId[] }> = ({ ids }) => {
-  return (
-    <>
-      {ids.map((id, index) => (
-        <>
-          {index === 0 ? null : <span style={{ marginRight: 8 }}>,</span>}
-          <ItemLink id={id} />
-        </>
-      ))}
     </>
   )
 }
