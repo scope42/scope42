@@ -6,7 +6,7 @@
   "dependencies": {
     "@ant-design/icons": "4.7.0",
     "@hookform/resolvers": "2.8.8",
-    "@scope42/structured-aim42": "0.2.0",
+    "@scope42/structured-aim42": "0.3.0",
     "@testing-library/jest-dom": "5.16.4",
     "@testing-library/react": "12.1.5",
     "@testing-library/user-event": "14.1.1",
