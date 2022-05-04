@@ -1,0 +1,87 @@
+title: Backend technology
+tags:
+  - backend
+created: 2022-05-02T10:22:36.212Z
+modified: 2022-05-02T17:42:05.330Z
+ticket: null
+comments: []
+status: accepted
+supersededBy: null
+deciders:
+  - John Doe
+  - Jane Doe
+decided: 2022-05-01T13:52:12.262Z
+assesses: []
+context: >-
+  As discussed in the solution strategy and the building block view (TODO: add
+  links to docs), the core of the system is a backend application. Because this
+  is a greenfield project, we have to decide on a technology stack.
+
+
+  Skill matrix of the development team:
+
+
+  |        | Java | Kotlin | Go | JavaScript |
+
+  |--------|:----:|:------:|:--:|:----------:|
+
+  | Amelia |   ✔  |    ✔   |  ❌ |      ✔     |
+
+  | Noah   |   ✔  |    ❌   |  ✔ |      ❌     |
+
+  | Emma   |   ✔  |    ❌   |  ❌ |      ✔     |
+
+  | James  |   ✔  |    ✔   |  ❌ |      ❌     |
+
+  | Olivia |   ✔  |    ❌   |  ❌ |      ❌     |
+
+  | Liam   |   ✔  |    ✔   |  ❌ |      ❌     |
+
+
+  For the frontend, JavaScript is used as per :link{#decision-2}.
+drivers: |-
+  * Maturity of the technology stack
+  * Performance
+  * Language features and DX
+  * Existing developer know-how => mainly Java with Spring Boot
+options:
+  - title: Java with Spring Boot
+    description: null
+    pros: |-
+      * Mature and focus on compatibility
+      * Well-known among the team
+    cons: "* Limited language features (recently getting better)"
+  - title: Kotlin with Spring Boot
+    description: null
+    pros: >-
+      * Modern language
+
+      * Based in the JVM and usable with the Spring Framework -> much of the existing know-how can be applied
+    cons: |-
+      * Langauge itself is not well-known among developers
+      * In practice a lock-in to JetBrains tooling
+  - title: Go
+    description: Framework?
+    pros: |-
+      * Modern language
+      * Native performance
+    cons: "* Low existing know-how of language and frameworks"
+  - title: JavaScript with Node.js
+    description: null
+    pros: |-
+      * Modern language
+      * Same language is used for frontend and backend
+    cons: |-
+      * Not well-known among developers
+      * Performance at scale?
+outcome:
+  optionIndex: 1
+  rationale: Combining the experience of developers with the JVM and Spring boot
+    with a modern language.
+  positiveConsequences: |-
+    * We do not have to conduct training on the basic technology stack
+    * We can start quickly with the implementation of the prototype
+  negativeConsequences: >-
+    * We have to conduct basic Kotlin training
+
+    * We have to setup a project structure with Kotlin for the backend and JavaScript for the frontend

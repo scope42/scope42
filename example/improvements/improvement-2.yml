@@ -1,0 +1,31 @@
+title: Use Flow to type-check frontend code
+tags:
+  - frontend
+created: 2022-05-02T11:06:25.363Z
+modified: 2022-05-02T12:08:59.048Z
+ticket: null
+comments: []
+status: discarded
+description: >-
+  [Flow](https://flow.org/) is a static type checker for JavaScript code. It
+  works by placing comments instead of changing the language systax. Example:
+
+
+  ```js
+
+  // @flow
+
+  function square(n: number): number {
+    return n * n;
+  }
+
+
+  square("2"); // Error!
+
+  ```
+
+  Source: https://flow.org/en/docs/getting-started/
+resolves:
+  - issue-2
+modifies: []
+creates: []

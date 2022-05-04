@@ -1,0 +1,16 @@
+title: Performance issues for high number of concurrent users
+tags:
+  - backend
+created: 2022-05-03T13:43:27.214Z
+modified: 2022-05-03T13:43:27.214Z
+ticket: null
+comments: []
+status: current
+description: >-
+  Currently, we can only scale the application vertically which is sufficient
+  now. For a growing number of users, at a certain point, horizontal scaling
+  becomes necessary.
+
+  If we do not take care of this in time, we will run into performance issues.
+causedBy:
+  - issue-4
