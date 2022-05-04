@@ -62,7 +62,7 @@ export const DecisionOutcome: React.VFC<{ decision: Decision }> = ({
           )}
           {(decision.outcome.positiveConsequences ||
             decision.outcome.negativeConsequences) && (
-            <Row style={{ marginBottom: '1em' }}>
+            <Row style={{ marginBottom: '1em' }} gutter={16}>
               <Col span={24}>
                 <Typography.Title level={4}>Consequences</Typography.Title>
               </Col>
