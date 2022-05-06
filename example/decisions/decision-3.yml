@@ -1,0 +1,38 @@
+title: Frontend type checking
+tags:
+  - frontend
+created: 2022-05-02T11:18:19.043Z
+modified: 2022-05-02T11:37:58.370Z
+ticket: null
+comments: []
+status: superseded
+supersededBy: decision-4
+deciders:
+  - John Doe
+  - Jane Doe
+decided: null
+assesses: []
+context: Should we use static type checking for the frontend JavaScript code?
+drivers: ""
+options:
+  - title: Use vanilla JavaScript
+    description: null
+    pros: |-
+      * Easy setup
+      * High development velocity for the MVP
+    cons: "* May become hard to maintain later"
+  - title: Use static type checking
+    description: null
+    pros: |-
+      * Catch typing errors at build-time
+      * More robust to refactoring
+    cons: |-
+      * Needs some extra setup work
+      * Developers need to learn this on top of JavaScript
+outcome:
+  optionIndex: 0
+  rationale: Based on the schedule for delivering the first prototype of the
+    system and the fact that developers already need to learn JavaScript as a
+    new language, we decide to go with vanilla JavaScript for now.
+  positiveConsequences: null
+  negativeConsequences: null

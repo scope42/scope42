@@ -1,0 +1,16 @@
+title: Use ShedLock to lock scheduled tasks through the database
+tags:
+  - backend
+created: 2022-05-04T07:22:03.316Z
+modified: 2022-05-04T07:22:03.316Z
+ticket: null
+comments: []
+status: proposed
+description: The library [ShedLock](https://github.com/lukas-krecan/ShedLock)
+  provides an easy way to lock scheduled tasks through the database. It makes
+  sure that each task is only executed by one instance of the application at a
+  time.
+resolves:
+  - issue-5
+modifies: []
+creates: []

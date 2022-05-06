@@ -1,0 +1,23 @@
+title: Upgrade Spring Boot version
+tags:
+  - backend
+  - urgent
+  - security
+created: 2022-05-02T17:25:16.909Z
+modified: 2022-05-02T18:09:42.952Z
+ticket: https://github.com/scope42/scope42/issues/91
+comments:
+  - author: Jane Doe
+    created: 2022-05-02T17:27:17.630Z
+    content: Accepted and placed into the fast lane on the board.
+  - author: John Doe
+    created: 2022-05-02T17:29:32.065Z
+    content: Implemented and deployed as a hotfix release.
+status: implemented
+description: The current version of Spring Boot upgrades dependencies to secure
+  versions of Log4j.
+resolves:
+  - issue-3
+modifies:
+  - risk-1
+creates: []

@@ -159,7 +159,7 @@ async function parseItemFile<ITEM extends Item, ID extends ItemId>(
 }
 
 //@ts-ignore
-const instanceId = crypto.randomUUID()
+const instanceId = typeof crypto !== 'undefined' ? crypto.randomUUID() : 'local'
 
 const LOCK_FILE = 'scope42.lock'
 const LOCK_CONTENT = `# This lock file is created to prevevent concurrent writes to the workspace.

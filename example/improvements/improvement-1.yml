@@ -1,0 +1,17 @@
+title: Switch to TypeScript for frontend development
+tags:
+  - frontend
+created: 2022-05-02T10:55:05.358Z
+modified: 2022-05-02T12:04:20.417Z
+ticket: https://github.com/scope42/scope42/issues/91
+comments:
+  - author: Jane Doe
+    created: 2022-05-02T12:01:21.571Z
+    content: This improvement has been accepted. It is scheduled for implementation
+      in the next sprint. See linked ticket.
+status: accepted
+description: null
+resolves:
+  - issue-2
+modifies: []
+creates: []

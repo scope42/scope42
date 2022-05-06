@@ -1,0 +1,45 @@
+title: Frontend type checking (revisited)
+tags:
+  - frontend
+created: 2022-05-02T11:37:14.017Z
+modified: 2022-05-02T18:10:46.295Z
+ticket: null
+comments:
+  - author: John Doe
+    created: 2022-05-02T11:43:57.276Z
+    content: |-
+      We asked the devlopment team on there opinion on this. Results:
+
+      ```mermaid
+      pie title Preference among developers
+          "TypeScript" : 5
+          "Flow" : 2
+      ```
+status: accepted
+supersededBy: null
+deciders:
+  - Development Team
+decided: null
+assesses:
+  - improvement-1
+  - improvement-2
+context: Because of :link{#issue-2} we have to reconsider :link{#decision-3}. In
+  fact, it is now evident that we need static type cheking for the frontend. The
+  decision now is which technology to use.
+drivers: null
+options:
+  - title: TypeScript
+    description: :link{#improvement-1}
+    pros: null
+    cons: null
+  - title: Flow
+    description: :link{#improvement-2}
+    pros: null
+    cons: null
+outcome:
+  optionIndex: 0
+  rationale: From an architecture standpoint, we do not have a strong opinion on
+    this. Both options are suitable. Because of this, we go with the preference
+    of the development team.
+  positiveConsequences: null
+  negativeConsequences: null

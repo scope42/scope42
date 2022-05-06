@@ -1,0 +1,78 @@
+title: Frontend paradigm
+tags:
+  - frontend
+created: 2022-05-02T10:38:21.136Z
+modified: 2022-05-04T07:26:34.425Z
+ticket: null
+comments: []
+status: accepted
+supersededBy: null
+deciders:
+  - John Doe
+  - Jane Doe
+decided: 2022-05-01T07:26:30.261Z
+assesses: []
+context: There are two major architectural styles for building web applications,
+  the traditional *server-side rendering* (SSR) and the more modern *client-side
+  rendering* (CSR).
+drivers: null
+options:
+  - title: Server-side rendering
+    description: >-
+      The initial request is sent when the browser navigates to the application,
+      e.g. by clicking on a link from an external site. In the case of
+      server-side rendering, the server produces an HTML document that is sent
+      back to the client and displayed to the user. When the user performs an
+      action, data can be sent to the server e.g. via form POST[^http-post]
+      request. The server renders the updated page and sends it back as
+      response. The browser then replaces the entire page by the new one.
+
+
+      ```mermaid
+
+      sequenceDiagram
+          Client->>Server: Initial Request
+          Server-->>Client: HTML
+          Client->>Server: Form POST
+          Server-->>Client: HTML
+          Note left of Client: Page reload
+      ```
+
+
+      [^http-post]: The HTTP *verb* for sending data to the server.
+    pros: null
+    cons: null
+  - title: Client-side rendering
+    description: >-
+      For client-side rendering, the initial request also returns an HTML
+      document. It is usually mostly empty and includes JavaScript that then
+      creates the actual UI at run-time. When the user performs an action, a
+      so-called Ajax[^ajax] request is made to the server. A browser API enables
+      HTTP requests that are run asynchronously in the background. The response
+      is typically data instead of HTML, for example in JSON[^json] format. The
+      UI is then updated dynamically based on the received data.
+
+
+      ```mermaid
+
+      sequenceDiagram
+          Client->>Server: Initial Request
+          Server-->>Client: HTML
+          Client->>Server: Ajax
+          Server-->>Client: JSON
+          Note left of Client: Update
+      ```
+
+
+      [^ajax]: Asynchronous JavaScript and XML, term that refers to sending requests via JavaScript, not necessarily using XML for serialization.
+
+      [^json]: JavaScript Object Notation, common data serialization format.
+    pros: null
+    cons: null
+outcome:
+  optionIndex: 1
+  rationale: null
+  positiveConsequences: "* We can implement a dynamic user interface with advanced UX"
+  negativeConsequences: |-
+    * Some developers need to be trained with JavaScript
+    * We have to implement an API for communication between frontend and backend

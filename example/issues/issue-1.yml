@@ -1,0 +1,16 @@
+title: Frontend is hard to maintain
+tags:
+  - frontend
+created: 2022-05-02T10:40:17.473Z
+modified: 2022-05-02T11:03:27.070Z
+ticket: https://github.com/scope42/scope42/issues/91
+comments: []
+status: current
+description: >-
+  This is a sentiment among the development team. It also manifests in a growing
+  time-to-market metric for fontend-heavy features.
+
+
+  See linked issues for identified causes.
+causedBy:
+  - issue-2

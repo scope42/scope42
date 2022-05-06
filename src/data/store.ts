@@ -28,6 +28,7 @@ import {
   resetSearchIndex,
   updateSearchIndex
 } from '../features/search'
+import superjson from 'superjson'
 
 export type Items = Partial<
   Record<IssueId, Issue> &
@@ -91,9 +92,10 @@ export const useStore = create<AppState>((set, get) => ({
     resetSearchIndex()
   },
   loadExampleData: async () => {
-    const { EXAMPLE_DATA } = await import('./example')
-    set(EXAMPLE_DATA)
-    selectAllItems(EXAMPLE_DATA).forEach(addToSearchIndex) // don't await
+    const exampleJson = await fetch('/example.json').then(r => r.text())
+    const exampleData = superjson.parse(exampleJson) as Pick<AppState, 'items'>
+    set(exampleData)
+    selectAllItems(exampleData).forEach(addToSearchIndex) // don't await
   },
   createItem: async item => {
     const id = getNextId(get(), item.type)

@@ -1,0 +1,13 @@
+title: Vulnerable version of Log4j
+tags:
+  - backend
+  - urgent
+  - security
+created: 2022-05-02T17:16:45.945Z
+modified: 2022-05-02T18:09:30.643Z
+ticket: null
+comments: []
+status: resolved
+description: We are using version of Log4j that is vulnerable to
+  [Log4Shell](https://en.wikipedia.org/wiki/Log4Shell).
+causedBy: []

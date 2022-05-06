@@ -1,0 +1,18 @@
+title: Dynamic typing in frontend
+tags:
+  - frontend
+created: 2022-05-02T10:44:10.833Z
+modified: 2022-05-02T11:03:56.422Z
+ticket: https://github.com/scope42/scope42/issues/91
+comments: []
+status: current
+description: >-
+  In the frontend, vanilla JavaScript is used as programming language. This has
+  worked fine in the beginning and led to rapid development of the MVP.
+
+
+  Now that the project has grown larger, it became hard to maintain. Changing something in the frontend code often leads to breaking code in other placed which is only discovered at runtime.
+
+
+  Due to this, developers are also not confident to refactor. This leads to increasing technical debt.
+causedBy: []
