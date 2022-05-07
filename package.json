@@ -18,7 +18,7 @@
     "@types/react-dom": "17.0.16",
     "@types/wicg-file-system-access": "2020.9.5",
     "@xinra/prettier-config": "2.0.0",
-    "antd": "4.19.5",
+    "antd": "4.20.2",
     "antd-button-color": "1.0.4",
     "avvvatars-react": "^0.4.2",
     "copyfiles": "^2.4.1",
