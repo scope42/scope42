@@ -91,6 +91,6 @@
     "@types/flexsearch": "^0.7.3",
     "@types/mermaid": "^8.2.9",
     "@types/react-syntax-highlighter": "^13.5.2",
-    "ts-node": "^10.7.0"
+    "ts-node": "10.8.0"
   }
 }
