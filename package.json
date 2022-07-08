@@ -28,7 +28,7 @@
     "dayjs": "1.11.3",
     "eslint": "8.18.0",
     "flexsearch": "^0.7.21",
-    "html-to-react": "^1.4.8",
+    "html-to-react": "1.5.0",
     "immer": "9.0.15",
     "js-yaml": "4.1.0",
     "liquid-loading": "1.0.0",
