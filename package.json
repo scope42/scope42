@@ -9,7 +9,7 @@
     "@scope42/structured-aim42": "1.0.0",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "12.1.5",
-    "@testing-library/user-event": "14.3.0",
+    "@testing-library/user-event": "14.4.3",
     "@types/jest": "28.1.6",
     "@types/js-yaml": "4.0.5",
     "@types/node": "16.11.47",
