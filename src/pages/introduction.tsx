@@ -38,7 +38,7 @@ export const IntroductionPage: React.VFC = () => {
         >
           <Title level={2}>Welcome to scope42 ✨</Title>
           <p>
-            Use the top navigation to explore <b>issues</b>, <b>improvements</b>{' '}
+            Use the side navigation to explore <b>issues</b>, <b>improvements</b>{' '}
             and <b>risks</b> in this workspace.
           </p>
           <p>
