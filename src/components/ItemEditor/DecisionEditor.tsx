@@ -69,6 +69,7 @@ export const DecisionEditor: React.FC<{ decisionId?: DecisionId }> = props => {
           <span>{props.decisionId ? 'Edit' : 'Create'} Decision</span>
         </div>
       }
+      maskClosable={false}
       visible={true}
       onOk={handleSubmit(onSuccess)}
       onCancel={closeEditor}

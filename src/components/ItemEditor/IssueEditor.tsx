@@ -49,6 +49,7 @@ export const IssueEditor: React.FC<{ issueId?: IssueId }> = props => {
           <span>{props.issueId ? 'Edit' : 'Create'} Issue</span>
         </div>
       }
+      maskClosable={false}
       visible={true}
       onOk={handleSubmit(onSuccess)}
       onCancel={closeEditor}

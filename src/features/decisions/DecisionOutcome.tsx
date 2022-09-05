@@ -160,6 +160,7 @@ const OutcomeEditor: React.VFC<{
     <Modal
       title={`${isCreation ? 'Create' : 'Edit'} Option`}
       visible={true}
+      maskClosable={false}
       onOk={handleSubmit(onSuccess)}
       onCancel={onClose}
       width={800}

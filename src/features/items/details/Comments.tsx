@@ -98,6 +98,7 @@ const CommentEditor: React.VFC<{
   return (
     <Modal
       title={`${isCreation ? 'Create' : 'Edit'} Comment`}
+      maskClosable={false}
       visible={true}
       onOk={handleSubmit(onSuccess)}
       onCancel={onClose}

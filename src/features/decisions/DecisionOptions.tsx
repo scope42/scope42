@@ -148,6 +148,7 @@ const OptionEditor: React.VFC<{
   return (
     <Modal
       title={`${isCreation ? 'Create' : 'Edit'} Option`}
+      maskClosable={false}
       visible={true}
       onOk={handleSubmit(onSuccess)}
       onCancel={onClose}
