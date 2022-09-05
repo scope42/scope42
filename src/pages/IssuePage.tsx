@@ -29,13 +29,16 @@ const IssuePage = () => {
         icon={<IssueIcon size={24} />}
         backButton
         extra={
-          <Button
-            type="primary"
-            icon={<EditOutlined />}
-            onClick={() => edit(id)}
-          >
-            Edit
-          </Button>
+          <>
+            <Tag>{issue.id}</Tag>
+            <Button
+              type="primary"
+              icon={<EditOutlined />}
+              onClick={() => edit(id)}
+            >
+              Edit
+            </Button>
+          </>
         }
         tags={
           issue.causedBy.length === 0 ? (
