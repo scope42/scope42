@@ -86,7 +86,13 @@ export const WorkspaceSelection: React.VFC = () => {
             </Col>
           </Row>
         </Card>
-        <Button block type="primary" ghost onClick={openDemoWorkspace}>
+        <Button
+          block
+          type="primary"
+          ghost
+          onClick={openDemoWorkspace}
+          disabled={loading}
+        >
           Open Demo (no data persistence)
         </Button>
       </div>

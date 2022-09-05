@@ -48,9 +48,8 @@ export interface AppState {
   }
   createWorkspace: (dirHandle: FileSystemDirectoryHandle) => Promise<void>
   openWorkspace: (dirHandle: FileSystemDirectoryHandle) => Promise<void>
-  openDemoWorkspace: () => void
+  openDemoWorkspace: () => Promise<void>
   closeWorkspace: () => void
-  loadExampleData: () => Promise<void>
   createItem: (item: Omit<Item, 'id'>) => Promise<ItemId>
   updateItem: (item: Item) => Promise<void>
 }
@@ -84,18 +83,17 @@ export const useStore = create<AppState>((set, get) => ({
       workspace: { present: true, name: dirHandle.name, handle: dirHandle }
     })
   },
-  openDemoWorkspace: () => {
+  openDemoWorkspace: async () => {
+    set({ workspace: { present: false, loading: true } })
+    const exampleJson = await fetch('/example.json').then(r => r.text())
+    const exampleData = superjson.parse(exampleJson) as Pick<AppState, 'items'>
+    set(exampleData)
     set({ workspace: { present: true, name: 'Demo' } })
+    selectAllItems(exampleData).forEach(addToSearchIndex) // don't await
   },
   closeWorkspace: () => {
     set(INITIAL_STATE)
     resetSearchIndex()
-  },
-  loadExampleData: async () => {
-    const exampleJson = await fetch('/example.json').then(r => r.text())
-    const exampleData = superjson.parse(exampleJson) as Pick<AppState, 'items'>
-    set(exampleData)
-    selectAllItems(exampleData).forEach(addToSearchIndex) // don't await
   },
   createItem: async item => {
     const id = getNextId(get(), item.type)

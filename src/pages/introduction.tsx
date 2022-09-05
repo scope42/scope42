@@ -2,19 +2,16 @@ import React from 'react'
 import { Aim42SectionCard } from '../features/aim42'
 import { Narrow } from '../features/ui'
 import { howDoesAim42WorkAtomic } from '@scope42/structured-aim42/lib/introduction/how-does-aim42-work/atomic'
-import { Alert, Avatar, Button, Typography } from 'antd'
+import { Alert, Avatar, Typography } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import { PageHeader } from '../components/PageHeader'
 import { useStore } from '../data/store'
-import { useNavigate } from 'react-router-dom'
 import { ExternalLink } from '../components/ExternalLink'
 
 const { Title } = Typography
 
 export const IntroductionPage: React.VFC = () => {
   const demoMode = useStore(state => state.workspace.handle === undefined)
-  const loadExampleData = useStore(state => state.loadExampleData)
-  const navigate = useNavigate()
 
   return (
     <Narrow>
@@ -55,23 +52,7 @@ export const IntroductionPage: React.VFC = () => {
       {demoMode ? (
         <Alert
           message="Demo Mode"
-          description={
-            <>
-              You opened scope42 in demo mode. You can play around in it but no
-              data is persisted. <br /> Want to get an idea of how aim42 items
-              could look like?
-              <div style={{ textAlign: 'center' }}>
-                <Button
-                  type="primary"
-                  onClick={() =>
-                    loadExampleData().then(() => navigate('/issues'))
-                  }
-                >
-                  Load example data
-                </Button>
-              </div>
-            </>
-          }
+          description="You opened scope42 in demo mode. You can play around in it but no data is persisted."
           type="info"
           showIcon
           style={{ marginBottom: 16 }}
