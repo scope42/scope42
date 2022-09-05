@@ -31,13 +31,16 @@ const DecisionDetailsPage = () => {
         icon={<DecisionIcon size={24} />}
         backButton
         extra={
-          <Button
-            type="primary"
-            icon={<EditOutlined />}
-            onClick={() => edit(id)}
-          >
-            Edit
-          </Button>
+          <>
+            <Tag>{decision.id}</Tag>
+            <Button
+              type="primary"
+              icon={<EditOutlined />}
+              onClick={() => edit(id)}
+            >
+              Edit
+            </Button>
+          </>
         }
       >
         <Row>
