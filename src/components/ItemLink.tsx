@@ -46,7 +46,7 @@ export const ItemLink: React.VFC<{ id: ItemId; noPopover?: boolean }> = ({
     <Popover
       content={
         <Descriptions
-          style={{ width: 350 }}
+          style={{ width: 400 }}
           contentStyle={{ flexWrap: 'wrap' }}
           size="small"
           column={2}
@@ -57,15 +57,15 @@ export const ItemLink: React.VFC<{ id: ItemId; noPopover?: boolean }> = ({
           <Descriptions.Item label="Created">
             {renderDate(item.created)}
           </Descriptions.Item>
-          <Descriptions.Item label="Modified">
-            {renderDate(item.modified)}
-          </Descriptions.Item>
-          <Descriptions.Item label="Tags">
+          <Descriptions.Item label={item.tags.length > 0 ? 'Tags' : undefined}>
             {item.tags.map(tag => (
               <Tag key={tag} style={{ marginBottom: 2 }}>
                 {tag}
               </Tag>
             ))}
+          </Descriptions.Item>
+          <Descriptions.Item label="Modified">
+            {renderDate(item.modified)}
           </Descriptions.Item>
         </Descriptions>
       }
