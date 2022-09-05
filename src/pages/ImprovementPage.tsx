@@ -29,13 +29,16 @@ const ImprovementPage = () => {
         icon={<ImprovementIcon size={24} />}
         backButton
         extra={
-          <Button
-            type="primary"
-            icon={<EditOutlined />}
-            onClick={() => edit(id)}
-          >
-            Edit
-          </Button>
+          <>
+            <Tag>{improvement.id}</Tag>
+            <Button
+              type="primary"
+              icon={<EditOutlined />}
+              onClick={() => edit(id)}
+            >
+              Edit
+            </Button>
+          </>
         }
       >
         <Row>
