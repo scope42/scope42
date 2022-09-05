@@ -68,7 +68,7 @@ export const ItemsTable: React.VFC<ItemsTableProps> = props => {
       title: 'Title',
       dataIndex: 'title',
       key: 'title',
-      render: (_: string, item: Item) => <ItemLink id={item.id} />,
+      render: (_: string, item: Item) => <ItemLink id={item.id} noPopover />,
       sorter: alphabeticSorter(item => item.title),
       sortOrder: getSortOrder('title')
     },

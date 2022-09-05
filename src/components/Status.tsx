@@ -9,45 +9,100 @@ import {
   RiskStatus
 } from '../data/types'
 
-type StatusUi = { label: string; component: React.ReactNode }
+type StatusUi = { label: string; component: React.ReactNode; active: boolean }
 
 export const ISSUE_STATUS_UI: { [status in IssueStatus]: StatusUi } = {
-  current: { label: 'Current', component: <Tag color="red">Current</Tag> },
-  resolved: { label: 'Resolved', component: <Tag color="green">Resolved</Tag> },
-  discarded: { label: 'Discarded', component: <Tag>Discarded</Tag> }
+  current: {
+    label: 'Current',
+    component: <Tag color="red">Current</Tag>,
+    active: true
+  },
+  resolved: {
+    label: 'Resolved',
+    component: <Tag color="green">Resolved</Tag>,
+    active: false
+  },
+  discarded: {
+    label: 'Discarded',
+    component: <Tag>Discarded</Tag>,
+    active: false
+  }
 }
 
 export const IMPROVEMENT_STATUS_UI: {
   [status in ImprovementStatus]: StatusUi
 } = {
-  proposed: { label: 'Proposed', component: <Tag color="cyan">Proposed</Tag> },
-  accepted: { label: 'Accepted', component: <Tag color="blue">Accepted</Tag> },
+  proposed: {
+    label: 'Proposed',
+    component: <Tag color="cyan">Proposed</Tag>,
+    active: true
+  },
+  accepted: {
+    label: 'Accepted',
+    component: <Tag color="blue">Accepted</Tag>,
+    active: true
+  },
   implemented: {
     label: 'Implemented',
-    component: <Tag color="green">Implemented</Tag>
+    component: <Tag color="green">Implemented</Tag>,
+    active: false
   },
-  discarded: { label: 'Discarded', component: <Tag>Discarded</Tag> }
+  discarded: {
+    label: 'Discarded',
+    component: <Tag>Discarded</Tag>,
+    active: false
+  }
 }
 
 export const RISK_STATUS_UI: { [status in RiskStatus]: StatusUi } = {
   potential: {
     label: 'Potential',
-    component: <Tag color="orange">Potential</Tag>
+    component: <Tag color="orange">Potential</Tag>,
+    active: true
   },
-  current: { label: 'Current', component: <Tag color="red">Current</Tag> },
+  current: {
+    label: 'Current',
+    component: <Tag color="red">Current</Tag>,
+    active: true
+  },
   mitigated: {
     label: 'Mitigated',
-    component: <Tag color="green">Mitigated</Tag>
+    component: <Tag color="green">Mitigated</Tag>,
+    active: false
   },
-  discarded: { label: 'Discarded', component: <Tag>Discarded</Tag> }
+  discarded: {
+    label: 'Discarded',
+    component: <Tag>Discarded</Tag>,
+    active: true
+  }
 }
 
 export const DECISION_STATUS_UI: { [status in DecisionStatus]: StatusUi } = {
-  proposed: { label: 'Proposed', component: <Tag color="cyan">Proposed</Tag> },
-  accepted: { label: 'Accepted', component: <Tag color="blue">Accepted</Tag> },
-  deprecated: { label: 'Deprecated', component: <Tag>Deprecated</Tag> },
-  discarded: { label: 'Discarded', component: <Tag>Discarded</Tag> },
-  superseded: { label: 'Superseded', component: <Tag>Superseded</Tag> }
+  proposed: {
+    label: 'Proposed',
+    component: <Tag color="cyan">Proposed</Tag>,
+    active: true
+  },
+  accepted: {
+    label: 'Accepted',
+    component: <Tag color="blue">Accepted</Tag>,
+    active: true
+  },
+  deprecated: {
+    label: 'Deprecated',
+    component: <Tag>Deprecated</Tag>,
+    active: false
+  },
+  discarded: {
+    label: 'Discarded',
+    component: <Tag>Discarded</Tag>,
+    active: false
+  },
+  superseded: {
+    label: 'Superseded',
+    component: <Tag>Superseded</Tag>,
+    active: false
+  }
 }
 
 export type ItemStatusProps =
@@ -101,4 +156,17 @@ export function getAllPossibleStatuses() {
       }
     })
   return possibleStatuses
+}
+
+export function isActive(item: Item): boolean {
+  switch (item.type) {
+    case 'issue':
+      return ISSUE_STATUS_UI[item.status].active
+    case 'risk':
+      return RISK_STATUS_UI[item.status].active
+    case 'improvement':
+      return IMPROVEMENT_STATUS_UI[item.status].active
+    case 'decision':
+      return DECISION_STATUS_UI[item.status].active
+  }
 }
