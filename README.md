@@ -20,9 +20,37 @@ scope42 is a Progressive Web App that runs entirely inside your browser. Click t
 
 ## Features
 
-- Management of items with a fancy UI
-- Graphs for visualizing the relationship between items
-- Docs-as-Code principle and full data ownership
+<h3 align="center">✨ Management of items with a fancy UI</h3>
+
+<img src="docs/screenshot-table.png" width="100%" alt="Screenshot of item table">
+
+<h3 align="center">💑 Graphs for visualizing the relationships between items</h3>
+
+<img src="docs/screenshot-graph.png" width="100%" alt="Screenshot of item graph">
+
+<h3 align="center">📝 Docs-as-Code principle and full data ownership</h3>
+
+```yaml
+title: Upgrade Spring Boot version
+created: 2022-05-02T17:25:16.909Z
+modified: 2022-05-02T18:09:42.952Z
+status: implemented
+tags:
+  - backend
+  - urgent
+  - security
+ticket: https://github.com/scope42/scope42/issues/91
+description: The current version of Spring Boot upgrades dependencies to secure
+  versions of Log4j.
+resolves:
+  - issue-3
+modifies:
+  - risk-1
+comments:
+  - author: Jane Doe
+    created: 2022-05-02T17:27:17.630Z
+    content: Accepted and placed into the fast lane on the board.
+```
 
 ## Roadmap
 
@@ -57,6 +85,7 @@ Launches the test runner in the interactive watch mode.
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ## License
+
 scope42 is published under the [GNU General Public License v3.0](https://github.com/scope42/scope42/blob/main/LICENSE).
 
 The data model and basic concepts are based on the [aim42 Method Reference](https://aim42.github.io/) by [Gernot Starke](https://www.gernotstarke.de/) and community contributors, used under [CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/).
