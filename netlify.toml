@@ -1,5 +1,5 @@
 [build]
-  command = "npm run prepare-resources && npm run build"
+  command = "npm run prepare-resources && npm run prepare-example && npm run build"
   publish = "/build"
   base = "/"
 
