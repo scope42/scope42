@@ -169,6 +169,9 @@ ${instanceId}`
 export class LockError extends Error {}
 
 async function verifyLock(workspaceDir: FileSystemDirectoryHandle) {
+  if (true) {
+    return // Locking is currently disabled, see https://github.com/scope42/scope42/issues/186
+  }
   let fileHandle: FileSystemFileHandle
   try {
     fileHandle = await workspaceDir.getFileHandle(LOCK_FILE)
@@ -187,6 +190,9 @@ async function verifyLock(workspaceDir: FileSystemDirectoryHandle) {
 }
 
 async function claimLock(workspaceDir: FileSystemDirectoryHandle) {
+  if (true) {
+    return // Locking is currently disabled, see https://github.com/scope42/scope42/issues/186
+  }
   const fileHandle = await workspaceDir.getFileHandle(LOCK_FILE, {
     create: true
   })
