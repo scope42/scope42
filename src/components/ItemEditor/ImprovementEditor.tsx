@@ -65,6 +65,7 @@ export const ImprovementEditor: React.FC<{
           <span>{props.improvementId ? 'Edit' : 'Create'} Improvement</span>
         </div>
       }
+      maskClosable={false}
       visible={true}
       onOk={handleSubmit(onSuccess)}
       onCancel={closeEditor}

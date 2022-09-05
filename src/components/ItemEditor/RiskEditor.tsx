@@ -55,6 +55,7 @@ export const RiskEditor: React.FC<{ riskId?: RiskId }> = props => {
           <span>{props.riskId ? 'Edit' : 'Create'} Risk</span>
         </div>
       }
+      maskClosable={false}
       visible={true}
       onOk={handleSubmit(onSuccess)}
       onCancel={closeEditor}
