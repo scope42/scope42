@@ -22,11 +22,11 @@ scope42 is a Progressive Web App that runs entirely inside your browser. Click t
 
 <h3 align="center">✨ Management of items with a fancy UI</h3>
 
-<img src="docs/screenshot-table.png" width="100%" alt="Screenshot of item table">
+<img src="docs/screenshot-table.png" alt="Screenshot of item table">
 
 <h3 align="center">💑 Graphs for visualizing the relationships between items</h3>
 
-<img src="docs/screenshot-graph.png" width="100%" alt="Screenshot of item graph">
+<img src="docs/screenshot-graph.png" alt="Screenshot of item graph">
 
 <h3 align="center">📝 Docs-as-Code principle and full data ownership</h3>
 
