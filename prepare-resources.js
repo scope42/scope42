@@ -13,7 +13,7 @@ const aim42Css = fs.readFileSync(
 )
 
 // The imported Google Font is removed to protect privacy.
-// If we want to use it, we need to include in the app directly.
+// If we want to use it, we need to include it in the app directly.
 const aim42WithoutImports = aim42Css.replace(/@import url\(.*\);/g, '')
 
 const scopedAsciidocCss = scope(aim42WithoutImports, '.aim42-container')

@@ -22,13 +22,24 @@ scope42 is a Progressive Web App that runs entirely inside your browser. Click t
 
 <h3 align="center">✨ Management of items with a fancy UI</h3>
 
+<p align="center">
+  Filtering • Sorting • Full text search • Learn about aim42
+</p>
+
 <img src="docs/screenshot-table.png" alt="Screenshot of item table">
 
 <h3 align="center">💑 Graphs for visualizing the relationships between items</h3>
 
+<p align="center">
+  Quickly grasp connections • Drag & Drop • Navigate
+</p>
+
 <img src="docs/screenshot-graph.png" alt="Screenshot of item graph">
 
 <h3 align="center">📝 Docs-as-Code principle and full data ownership</h3>
+<p align="center">
+  Human-readable • Check into version control • Easy processing • No vendor lock-in
+</p>
 <br />
 
 ```yaml
@@ -53,16 +64,16 @@ comments:
     content: Accepted and placed into the fast lane on the board.
 ```
 
-## Roadmap
+## Planned Features
 
-- Dashboard
-- Advanced graphs
-- Advanced filters for tables
-- Full text search
-- Integration of aim42 content
+- WYSIWYG markdown editor
+- Support for requirements (new item type)
+- Support for prose documentation of existing architecture (based on arc42)
 - Support for media files
-- Comments on items
-- Support for documenting the existing architecture (based on arc42)
+- Customizable Dashboard
+- Export structured data (convenience library)
+- Export static site
+- Export markdown
 
 ## Tech Stack
 
