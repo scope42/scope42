@@ -29,6 +29,7 @@ scope42 is a Progressive Web App that runs entirely inside your browser. Click t
 <img src="docs/screenshot-graph.png" alt="Screenshot of item graph">
 
 <h3 align="center">📝 Docs-as-Code principle and full data ownership</h3>
+<br />
 
 ```yaml
 title: Upgrade Spring Boot version
