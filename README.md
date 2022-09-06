@@ -8,7 +8,6 @@
 [![Matrix](https://img.shields.io/matrix/scope42:matrix.org)](https://matrix.to/#/#scope42:matrix.org)
 [![Twitter Follow](https://img.shields.io/twitter/follow/scope42_org?style=social)](https://twitter.com/scope42_org)
 [![Mastodon Follow](https://img.shields.io/mastodon/follow/108202636664253561?domain=https%3A%2F%2Ffloss.social&style=social)](https://floss.social/@scope42)
-![Architecture Documentation](https://img.shields.io/badge/%F0%9F%93%96%20architecture-scope42-blue)
 
 This tool helps you to keep track of issues, arising risks and possible improvements of your existing architecture. The terminology and concepts are based on [aim42, the Architecture Improvement Method](https://www.aim42.org/).
 
@@ -20,20 +19,70 @@ scope42 is a Progressive Web App that runs entirely inside your browser. Click t
 
 ## Features
 
-- Management of items with a fancy UI
-- Graphs for visualizing the relationship between items
-- Docs-as-Code principle and full data ownership
+<h3 align="center">✨ Management of items with a fancy UI</h3>
 
-## Roadmap
+<p align="center">
+  Filtering • Sorting • Full text search • Learn about aim42
+</p>
 
-- Dashboard
-- Advanced graphs
-- Advanced filters for tables
-- Full text search
-- Integration of aim42 content
+<img src="docs/screenshot-table.png" alt="Screenshot of item table">
+
+<h3 align="center">💑 Graphs for visualizing the relationships between items</h3>
+
+<p align="center">
+  Quickly grasp connections • Drag & Drop • Navigate
+</p>
+
+<img src="docs/screenshot-graph.png" alt="Screenshot of item graph">
+
+<h3 align="center">📝 Docs-as-Code principle and full data ownership</h3>
+<p align="center">
+  Human-readable • Check into version control • Easy processing • No vendor lock-in
+</p>
+<br />
+
+```yaml
+title: Upgrade Spring Boot version
+created: 2022-05-02T17:25:16.909Z
+modified: 2022-05-02T18:09:42.952Z
+status: implemented
+tags:
+  - backend
+  - urgent
+  - security
+ticket: https://github.com/scope42/scope42/issues/91
+description: The current version of Spring Boot upgrades dependencies to secure
+  versions of Log4j.
+resolves:
+  - issue-3
+modifies:
+  - risk-1
+comments:
+  - author: Jane Doe
+    created: 2022-05-02T17:27:17.630Z
+    content: Accepted and placed into the fast lane on the board.
+```
+
+## Planned Features
+
+- WYSIWYG markdown editor
+- Support for requirements (new item type)
+- Support for prose documentation of existing architecture (based on arc42)
 - Support for media files
-- Comments on items
-- Support for documenting the existing architecture (based on arc42)
+- Customizable Dashboard
+- Export structured data (convenience library)
+- Export static site
+- Export markdown
+
+## Badge
+
+[![Architecture Documentation](https://img.shields.io/badge/%F0%9F%93%96%20architecture-scope42-blue)](https://github.com/scope42/scope42/tree/main/example)
+
+If you use scope42 in your project, you can add this badge to your README. This way, people visiting your repository can quickly find the architecture documentation. Simply copy the code below and change the link to point to an export (coming soon) or the workspace of your scope42 data.
+
+```md
+[![Architecture Documentation](https://img.shields.io/badge/%F0%9F%93%96%20architecture-scope42-blue)](https://github.com/scope42/scope42/tree/main/example)
+```
 
 ## Tech Stack
 
@@ -57,6 +106,7 @@ Launches the test runner in the interactive watch mode.
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ## License
+
 scope42 is published under the [GNU General Public License v3.0](https://github.com/scope42/scope42/blob/main/LICENSE).
 
 The data model and basic concepts are based on the [aim42 Method Reference](https://aim42.github.io/) by [Gernot Starke](https://www.gernotstarke.de/) and community contributors, used under [CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/).
