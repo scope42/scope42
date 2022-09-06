@@ -8,7 +8,6 @@
 [![Matrix](https://img.shields.io/matrix/scope42:matrix.org)](https://matrix.to/#/#scope42:matrix.org)
 [![Twitter Follow](https://img.shields.io/twitter/follow/scope42_org?style=social)](https://twitter.com/scope42_org)
 [![Mastodon Follow](https://img.shields.io/mastodon/follow/108202636664253561?domain=https%3A%2F%2Ffloss.social&style=social)](https://floss.social/@scope42)
-![Architecture Documentation](https://img.shields.io/badge/%F0%9F%93%96%20architecture-scope42-blue)
 
 This tool helps you to keep track of issues, arising risks and possible improvements of your existing architecture. The terminology and concepts are based on [aim42, the Architecture Improvement Method](https://www.aim42.org/).
 
@@ -74,6 +73,16 @@ comments:
 - Export structured data (convenience library)
 - Export static site
 - Export markdown
+
+## Badge
+
+[![Architecture Documentation](https://img.shields.io/badge/%F0%9F%93%96%20architecture-scope42-blue)](https://github.com/scope42/scope42/tree/main/example)
+
+If you use scope42 in your project, you can add this badge to your README. This way, people visiting your repository can quickly find the architecture documentation. Simply copy the code below and change the link to point to an export (coming soon) or the workspace of your scope42 data.
+
+```md
+[![Architecture Documentation](https://img.shields.io/badge/%F0%9F%93%96%20architecture-scope42-blue)](https://github.com/scope42/scope42/tree/main/example)
+```
 
 ## Tech Stack
 
