@@ -30,14 +30,14 @@ scope42 is a Progressive Web App that runs entirely inside your browser. Click t
 <h3 align="center">💑 Graphs for visualizing the relationships between items</h3>
 
 <p align="center">
-  Quickly grasp connections • Drag & Drop • Navigate
+  Quick overview • Drag & Drop • Navigate
 </p>
 
 <img src="docs/screenshot-graph.png" alt="Screenshot of item graph">
 
 <h3 align="center">📝 Docs-as-Code principle and full data ownership</h3>
 <p align="center">
-  Human-readable • Check into version control • Easy processing • No vendor lock-in
+  Human-readable • Check into version control • Process programatically • No vendor lock-in
 </p>
 <br />
 
