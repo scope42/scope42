@@ -5,6 +5,7 @@
 [![Build](https://github.com/scope42/scope42/actions/workflows/build.yml/badge.svg)](https://github.com/scope42/scope42/actions/workflows/build.yml)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL--3.0-informational.svg)](https://github.com/scope42/scope42/blob/main/LICENSE)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat)](https://github.com/semantic-release/semantic-release)
 [![Matrix](https://img.shields.io/matrix/scope42:matrix.org)](https://matrix.to/#/#scope42:matrix.org)
 [![Twitter Follow](https://img.shields.io/twitter/follow/scope42_org?style=social)](https://twitter.com/scope42_org)
 [![Mastodon Follow](https://img.shields.io/mastodon/follow/108202636664253561?domain=https%3A%2F%2Ffloss.social&style=social)](https://floss.social/@scope42)
