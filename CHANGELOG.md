@@ -1,3 +1,10 @@
+# [1.0.0-beta.2](https://github.com/scope42/scope42/compare/v1.0.0-beta.1...v1.0.0-beta.2) (2022-09-13)
+
+
+### Features
+
+* display version in footer and about page ([2f46fe4](https://github.com/scope42/scope42/commit/2f46fe416d979b54fc1d85a9641ef5ce0f94619b))
+
 # 1.0.0-beta.1 (2022-09-13)
 
 
