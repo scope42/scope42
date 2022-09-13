@@ -91,6 +91,7 @@
   "devDependencies": {
     "@semantic-release/changelog": "6.0.1",
     "@semantic-release/git": "10.0.1",
+    "@semantic-release/npm": "9.0.1",
     "@types/flexsearch": "0.7.3",
     "@types/mermaid": "8.2.9",
     "@types/react-syntax-highlighter": "13.5.2",
