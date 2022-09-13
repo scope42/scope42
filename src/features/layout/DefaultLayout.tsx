@@ -19,7 +19,7 @@ export const DefaultLayout: React.FC = props => {
           {props.children}
         </Layout.Content>
         <Layout.Footer style={{ textAlign: 'center' }}>
-          Version 0.0.0 <Divider type="vertical" />
+          Version {process.env.REACT_APP_VERSION} <Divider type="vertical" />
           <Link to="/about">About</Link>
           <Divider type="vertical" />
           <GithubOutlined />{' '}

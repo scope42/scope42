@@ -24,7 +24,7 @@ export const AboutPage: React.VFC = () => {
             margin: '32px 0'
           }}
         >
-          <h2>Version 0.0.0</h2>
+          <h2>Version {process.env.REACT_APP_VERSION}</h2>
           <ExternalLink url="https://github.com/scope42/scope42/issues" noIcon>
             <Button icon={<BugOutlined />}>Report Issue</Button>
           </ExternalLink>
