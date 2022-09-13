@@ -12,10 +12,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@master
-
     - name: Deploy
-      uses: netlify/actions/build@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: jsmrcaga/action-netlify-deploy@master
+      with:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        NETLIFY_DEPLOY_MESSAGE: "Prod deploy v${{ github.ref }}"
+        NETLIFY_DEPLOY_TO_PROD: true
         
