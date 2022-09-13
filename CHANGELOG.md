@@ -1,3 +1,10 @@
+# [1.0.0-beta.4](https://github.com/scope42/scope42/compare/v1.0.0-beta.3...v1.0.0-beta.4) (2022-09-13)
+
+
+### Features
+
+* try to trigger deploy ([39b2a97](https://github.com/scope42/scope42/commit/39b2a978dcc6669e2d4bd50f4ae835179cb57f45))
+
 # [1.0.0-beta.3](https://github.com/scope42/scope42/compare/v1.0.0-beta.2...v1.0.0-beta.3) (2022-09-13)
 
 
