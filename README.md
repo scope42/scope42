@@ -2,13 +2,16 @@
 
 <h1 align="center">Improve your software architecture with precision!</h1>
 
-[![Build](https://github.com/scope42/scope42/actions/workflows/build.yml/badge.svg)](https://github.com/scope42/scope42/actions/workflows/build.yml)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
-[![License: GPL v3](https://img.shields.io/badge/License-GPL--3.0-informational.svg)](https://github.com/scope42/scope42/blob/main/LICENSE)
-[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat)](https://github.com/semantic-release/semantic-release)
-[![Matrix](https://img.shields.io/matrix/scope42:matrix.org)](https://matrix.to/#/#scope42:matrix.org)
-[![Twitter Follow](https://img.shields.io/twitter/follow/scope42_org?style=social)](https://twitter.com/scope42_org)
-[![Mastodon Follow](https://img.shields.io/mastodon/follow/108202636664253561?domain=https%3A%2F%2Ffloss.social&style=social)](https://floss.social/@scope42)
+<p align="center">
+  <a href="https://github.com/scope42/scope42/actions/workflows/build.yml"><img src="https://github.com/scope42/scope42/actions/workflows/build.yml/badge.svg" alt="Build"></a>
+  <a href="http://makeapullrequest.com"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome"></a>
+  <a href="https://github.com/scope42/scope42/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-GPL--3.0-informational.svg" alt="License: GPL v3"></a>
+  <a href="https://github.com/semantic-release/semantic-release"><img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat" alt="semantic-release"></a>
+  <br />
+  <a href="https://matrix.to/#/#scope42:matrix.org"><img src="https://img.shields.io/matrix/scope42:matrix.org" alt="Matrix"></a>
+  <a href="https://twitter.com/scope42_org"><img src="https://img.shields.io/twitter/follow/scope42_org?style=social" alt="Twitter Follow"></a>
+  <a href="https://floss.social/@scope42"><img src="https://img.shields.io/mastodon/follow/108202636664253561?domain=https%3A%2F%2Ffloss.social&amp;style=social" alt="Mastodon Follow"></a>
+</p>
 
 This tool helps you to keep track of issues, arising risks and possible improvements of your existing architecture. The terminology and concepts are based on [aim42, the Architecture Improvement Method](https://www.aim42.org/).
 
