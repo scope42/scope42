@@ -1,3 +1,10 @@
+# [1.0.0-beta.3](https://github.com/scope42/scope42/compare/v1.0.0-beta.2...v1.0.0-beta.3) (2022-09-13)
+
+
+### Features
+
+* bump version to see what netlify does ([e228e5b](https://github.com/scope42/scope42/commit/e228e5b3beb71f38f9d87f05d4b3737e6f34d742))
+
 # [1.0.0-beta.2](https://github.com/scope42/scope42/compare/v1.0.0-beta.1...v1.0.0-beta.2) (2022-09-13)
 
 
