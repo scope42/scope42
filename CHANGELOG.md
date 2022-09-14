@@ -1,3 +1,10 @@
+# [1.0.0-beta.5](https://github.com/scope42/scope42/compare/v1.0.0-beta.4...v1.0.0-beta.5) (2022-09-14)
+
+
+### Bug Fixes
+
+* use bot token to push release changes ([c5a253f](https://github.com/scope42/scope42/commit/c5a253f7e256cf958eb1a0fd2060aa2418a20b11))
+
 # [1.0.0-beta.4](https://github.com/scope42/scope42/compare/v1.0.0-beta.3...v1.0.0-beta.4) (2022-09-13)
 
 
