@@ -79,7 +79,7 @@ export const WorkspaceSelection: React.VFC = () => {
                   <Alert
                     style={{ marginTop: 16 }}
                     type="warning"
-                    message="⚠ This project is currently in alpha stage. Breaking changes to the data format can happen without notice."
+                    message="⚠ This project is currently in beta stage. Breaking changes to the data format are not planned but may happen with short notice."
                   />
                 </>
               )}
