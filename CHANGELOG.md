@@ -1,3 +1,10 @@
+# [1.0.0-beta.6](https://github.com/scope42/scope42/compare/v1.0.0-beta.5...v1.0.0-beta.6) (2022-09-15)
+
+
+### Bug Fixes
+
+* change warning hints from alpha to beta ([62cad97](https://github.com/scope42/scope42/commit/62cad9764fd30c12e4bb5c57ff6644c1bfded00f))
+
 # [1.0.0-beta.5](https://github.com/scope42/scope42/compare/v1.0.0-beta.4...v1.0.0-beta.5) (2022-09-14)
 
 
