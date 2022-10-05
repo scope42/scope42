@@ -29,10 +29,12 @@ const remarkItemLink: Plugin<[], Root> = () => {
 
 const COMPONENTS: Components = {
   a({ node, children, href, ...restProps }) {
-    return href ? (
+    return href && !href.startsWith('#') ? (
       <ExternalLink url={href}>{children}</ExternalLink>
     ) : (
-      <a {...restProps}>{children}</a>
+      <a href={href} {...restProps}>
+        {children}
+      </a>
     )
   },
   // @ts-ignore
