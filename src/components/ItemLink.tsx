@@ -24,14 +24,19 @@ export const ItemLink: React.VFC<{ id: ItemId; noPopover?: boolean }> = ({
     return <Typography.Text type="danger">{id}</Typography.Text>
   }
 
+  const titleStyle = {
+    textDecoration: isActive(item) ? 'none' : 'line-through'
+  }
+  const titleWords = item.title.split(' ')
+
   const link = (
     <Link to={`/${PATHS[item.type]}/${id}`}>
-      <ItemIcon type={item.type} />{' '}
-      <span
-        style={{ textDecoration: isActive(item) ? 'none' : 'line-through' }}
-      >
-        {item.title}
-      </span>{' '}
+      <span style={{ whiteSpace: 'nowrap' }}>
+        <ItemIcon type={item.type} />{' '}
+        <span style={titleStyle}>{titleWords[0]}</span>
+      </span>
+      <span style={titleStyle}>{titleWords.slice(1).join(' ')}</span>
+      &nbsp;
       <Typography.Text type="secondary">
         #{getSerialFromId(item.id)}
       </Typography.Text>
