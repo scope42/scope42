@@ -1,3 +1,12 @@
+# [1.0.0-beta.7](https://github.com/scope42/scope42/compare/v1.0.0-beta.6...v1.0.0-beta.7) (2022-10-06)
+
+
+### Bug Fixes
+
+* add style for blockquotes in rendered markdown ([f584472](https://github.com/scope42/scope42/commit/f584472889a89aef12e56b6fd4f6d9bb9447b693)), closes [#195](https://github.com/scope42/scope42/issues/195)
+* prevent line break before and after title in item links ([9c3e3f8](https://github.com/scope42/scope42/commit/9c3e3f8d7267428600c43bb230567ee8c535040f))
+* render local links in markdown correctly ([5ab0f15](https://github.com/scope42/scope42/commit/5ab0f155bf7a9f43fb96aeadc95604ce34eceb36)), closes [#92](https://github.com/scope42/scope42/issues/92)
+
 # [1.0.0-beta.6](https://github.com/scope42/scope42/compare/v1.0.0-beta.5...v1.0.0-beta.6) (2022-09-15)
 
 
