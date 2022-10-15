@@ -6,7 +6,6 @@
   <a href="https://github.com/scope42/scope42/actions/workflows/build.yml"><img src="https://github.com/scope42/scope42/actions/workflows/build.yml/badge.svg" alt="Build"></a>
   <a href="http://makeapullrequest.com"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome"></a>
   <a href="https://github.com/scope42/scope42/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-GPL--3.0-informational.svg" alt="License: GPL v3"></a>
-  <a href="https://github.com/semantic-release/semantic-release"><img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat" alt="semantic-release"></a>
   <br />
   <a href="https://matrix.to/#/#scope42:matrix.org"><img src="https://img.shields.io/matrix/scope42:matrix.org" alt="Matrix"></a>
   <a href="https://twitter.com/scope42_org"><img src="https://img.shields.io/twitter/follow/scope42_org?style=social" alt="Twitter Follow"></a>

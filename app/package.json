@@ -66,8 +66,7 @@
     "fix": "npm-run-all fix:**",
     "gen": "npm-run-all gen:*",
     "gen:resources": "node ./prepare-resources.js",
-    "gen:example": "ts-node example/export.ts",
-    "release": "semantic-release"
+    "gen:example": "ts-node example/export.ts"
   },
   "eslintConfig": {
     "extends": [
@@ -89,13 +88,9 @@
   },
   "prettier": "@xinra/prettier-config",
   "devDependencies": {
-    "@semantic-release/changelog": "6.0.1",
-    "@semantic-release/git": "10.0.1",
-    "@semantic-release/npm": "9.0.1",
     "@types/flexsearch": "0.7.3",
     "@types/mermaid": "9.1.0",
     "@types/react-syntax-highlighter": "13.5.2",
-    "semantic-release": "19.0.5",
     "ts-node": "10.9.1"
   }
 }
