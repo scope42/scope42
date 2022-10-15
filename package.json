@@ -10,10 +10,13 @@
     "build": "turbo run build",
     "test": "turbo run test",
     "lint": "turbo run lint",
-    "dev": "turbo run dev"
+    "dev": "turbo run dev",
+    "changeset": "changeset",
+    "release": "turbo run build && changeset publish"
   },
   "prettier": "@xinra/prettier-config",
   "devDependencies": {
+    "@changesets/cli": "2.25.0",
     "@xinra/prettier-config": "2.0.0",
     "turbo": "1.5.6"
   }
