@@ -1,5 +1,11 @@
 # @scope42/app
 
+## 0.1.2
+
+### Patch Changes
+
+- fb6abf7: Trigger workflow
+
 ## 0.1.1
 
 ### Patch Changes
