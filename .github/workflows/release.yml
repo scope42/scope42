@@ -43,8 +43,6 @@ jobs:
         with:
           cmd: echo '${{ steps.changesets.outputs.publishedPackages }}' | jq '.[] | select(.name == "@scope42/app") | .version' -r
 
-      - run: echo ${{ steps.app-version.outputs.value }}
-
       - name: Deploy App
         if: steps.app-version.outputs.value
         uses: jsmrcaga/action-netlify-deploy@master
