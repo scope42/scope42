@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/scope42/scope42/main/public/logo.svg" width="100%" alt="scope42 logo">
+<img src="https://raw.githubusercontent.com/scope42/scope42/main/app/public/logo.svg" width="100%" alt="scope42 logo">
 
 <h1 align="center">Improve your software architecture with precision!</h1>
 
