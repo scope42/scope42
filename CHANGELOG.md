@@ -1,3 +1,10 @@
+# [1.0.0-beta.8](https://github.com/scope42/scope42/compare/v1.0.0-beta.7...v1.0.0-beta.8) (2022-10-15)
+
+
+### Bug Fixes
+
+* **deps:** downgrade flexsearch to 0.7.21 ([54a0a8a](https://github.com/scope42/scope42/commit/54a0a8a9ecf2ae7a3d69f391fac69cc282bfca35))
+
 # [1.0.0-beta.7](https://github.com/scope42/scope42/compare/v1.0.0-beta.6...v1.0.0-beta.7) (2022-10-06)
 
 
