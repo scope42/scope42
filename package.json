@@ -6,9 +6,15 @@
   "workspaces": [
     "app"
   ],
-  "scripts": {},
+  "scripts": {
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "dev": "turbo run dev"
+  },
   "prettier": "@xinra/prettier-config",
   "devDependencies": {
-    "@xinra/prettier-config": "2.0.0"
+    "@xinra/prettier-config": "2.0.0",
+    "turbo": "1.5.6"
   }
 }

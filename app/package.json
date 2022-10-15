@@ -55,8 +55,8 @@
     "zustand": "4.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "dev": "npm run gen && rreact-scripts start",
+    "build": "npm run gen && react-scripts build",
     "test": "react-scripts test",
     "lint:prettier": "prettier --check \"src/**/*\"",
     "fix:prettier": "prettier --write \"src/**/*\"",
@@ -64,9 +64,9 @@
     "fix:eslint": "eslint --fix \"src/**/*.{ts,tsx,js,jsx}\"",
     "lint": "npm-run-all lint:**",
     "fix": "npm-run-all fix:**",
-    "prepare-resources": "node ./prepare-resources.js",
-    "prepare-example": "ts-node example/export.ts",
-    "postinstall": "npm-run-all prepare-resources prepare-example",
+    "gen": "npm-run-all gen:*",
+    "gen:resources": "node ./prepare-resources.js",
+    "gen:example": "ts-node example/export.ts",
     "release": "semantic-release"
   },
   "eslintConfig": {
