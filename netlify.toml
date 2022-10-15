@@ -1,6 +1,6 @@
 [build]
-  command = "npm run prepare-resources && npm run prepare-example && npm run build"
-  publish = "/build"
+  command = "npm run build"
+  publish = "/app/build"
   base = "/"
 
 [[redirects]]
