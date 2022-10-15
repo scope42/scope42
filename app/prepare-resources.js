@@ -28,6 +28,6 @@ copyfiles(
     modulesBase + '/@scope42/structured-aim42/resources/images/**',
     'public/aim42'
   ],
-  4,
+  5,
   () => {}
 )
