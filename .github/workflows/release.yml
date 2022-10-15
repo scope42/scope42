@@ -41,7 +41,7 @@ jobs:
         id: app-version
         uses: sergeysova/jq-action@v2
         with:
-          cmd: echo '"${{ steps.changesets.outputs.publishedPackages }}' | jq '.[] | select(.name == "@scope42/app") | .version' -r
+          cmd: echo '${{ steps.changesets.outputs.publishedPackages }}' | jq '.[] | select(.name == "@scope42/app") | .version' -r
 
       - run: echo ${{ steps.app-version.outputs.value }}
 
