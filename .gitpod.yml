@@ -2,7 +2,7 @@ image: gitpod/workspace-node-lts
 
 tasks:
   - init: npm install
-    command: npm run start
+    command: npm run dev
 
 ports:
   - port: 3000
