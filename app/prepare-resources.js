@@ -2,13 +2,15 @@ const fs = require('fs')
 const scope = require('scope-css')
 const copyfiles = require('copyfiles')
 
+const modulesBase = '../node_modules'
+
 // The aim42 content we include has been rendered using asciidoctor.js. To
 // display it correctly, we need to include the related CSS. By default, it
 // would conflict with our own styles. To avoid this, we scope it to only apply
 // whithin a certain class.
 
 const aim42Css = fs.readFileSync(
-  'node_modules/@scope42/structured-aim42/resources/css/aim42.css',
+  modulesBase + '/@scope42/structured-aim42/resources/css/aim42.css',
   'utf8'
 )
 
@@ -23,7 +25,7 @@ fs.writeFileSync('src/features/aim42/aim42.css', scopedAsciidocCss, 'utf8')
 // We also need to copy over the images of aim42.
 copyfiles(
   [
-    'node_modules/@scope42/structured-aim42/resources/images/**',
+    modulesBase + '/@scope42/structured-aim42/resources/images/**',
     'public/aim42'
   ],
   4,
