@@ -32,16 +32,25 @@ jobs:
         with:
           # This expects you to have a script called release which does a build for your packages and calls changeset publish
           publish: npm run release
+          title: Release
         env:
           GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Extract App Version
+        id: app-version
+        uses: sergeysova/jq-action@v2
+        with:
+          cmd: echo ${{ steps.changesets.outputs.publishedPackages }} | jq '.[] | select(.name == "@scope42/app") | .version' -r
+
+      - run: echo ${{ steps.app-version.outputs.value }}
+
       - name: Deploy App
-        if: contains(steps.changesets.outputs.publishedPackages, '"@scope42/app"')
+        if: steps.app-version.outputs.value
         uses: jsmrcaga/action-netlify-deploy@master
         with:
           build_directory: app/build
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-          NETLIFY_DEPLOY_MESSAGE: "Prod deploy v${{ github.ref }}"
+          NETLIFY_DEPLOY_MESSAGE: "Prod deploy v${{ steps.app-version.outputs.value }}"
           NETLIFY_DEPLOY_TO_PROD: true
