@@ -11,6 +11,7 @@
     "test": "turbo run test",
     "lint": "turbo run lint",
     "dev": "turbo run dev",
+    "verify": "turbo run lint build test",
     "changeset": "changeset",
     "release": "turbo run build && changeset publish"
   },

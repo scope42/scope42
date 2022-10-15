@@ -57,7 +57,7 @@
   "scripts": {
     "dev": "npm run gen && rreact-scripts start",
     "build": "npm run gen && react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --watchAll=false",
     "lint:prettier": "prettier --check \"src/**/*\"",
     "fix:prettier": "prettier --write \"src/**/*\"",
     "lint:eslint": "eslint \"src/**/*.{ts,tsx,js,jsx}\"",
