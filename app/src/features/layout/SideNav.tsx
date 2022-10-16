@@ -1,12 +1,7 @@
 import { HomeOutlined, SearchOutlined } from '@ant-design/icons'
 import { Menu, Layout } from 'antd'
 import { Link, useLocation } from 'react-router-dom'
-import {
-  DecisionIcon,
-  ImprovementIcon,
-  IssueIcon,
-  RiskIcon
-} from '../../components/ItemIcon'
+import { DecisionIcon, ImprovementIcon, IssueIcon, RiskIcon } from '../items'
 
 export const SideNav: React.FC = () => {
   const location = useLocation()

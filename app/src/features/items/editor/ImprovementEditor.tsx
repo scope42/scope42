@@ -1,5 +1,5 @@
 import { Form, Input, message, Modal, Select, Tag } from 'antd'
-import { ImprovementIcon } from '../../../components/ItemIcon'
+import { ImprovementIcon } from '../ItemIcon'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {

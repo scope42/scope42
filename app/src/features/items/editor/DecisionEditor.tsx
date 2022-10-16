@@ -1,5 +1,5 @@
 import { Form, Input, message, Modal, Select, Tag } from 'antd'
-import { DecisionIcon } from '../../../components/ItemIcon'
+import { DecisionIcon } from '../ItemIcon'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { DecisionId, DecisionStatus, NewDecision } from '../../../data/types'
