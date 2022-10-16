@@ -1,8 +1,8 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { Alert, Button, Card, Col, Modal, Row } from 'antd'
-import { useStore } from '../data/store'
+import { useStore } from '../../data/store'
 import 'liquid-loading'
-import { ExternalLink } from './ExternalLink'
+import { ExternalLink } from '../ui'
 
 export const WorkspaceSelection: React.FC = () => {
   const loading = useStore(state => state.workspace.loading)

@@ -1,4 +1,4 @@
-import { ExternalLink } from '../../components/ExternalLink'
+import { ExternalLink } from '../ui'
 
 export const Aim42Attribution: React.FC<{ sectionId?: string }> = ({
   sectionId

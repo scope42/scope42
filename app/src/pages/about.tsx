@@ -1,8 +1,8 @@
 import { BugOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
 import React from 'react'
-import { ExternalLink } from '../components/ExternalLink'
-import { PageHeader } from '../components/PageHeader'
+import { ExternalLink } from '../features/ui'
+import { PageHeader } from '../features/layout'
 import { Aim42Attribution } from '../features/aim42'
 
 export const AboutPage: React.FC = () => {

@@ -1,14 +1,14 @@
 /* eslint-disable react/display-name */
 import { ImprovementStatus } from '../data/types'
 import { selectAllImprovements, useStore } from '../data/store'
-import { PageHeader } from '../components/PageHeader'
-import { POSSIBLE_STATUSES } from '../components/Status'
+import { PageHeader } from '../features/layout'
+import { POSSIBLE_STATUSES } from '../features/items'
 import { ItemsTablePage } from '../features/items'
 import { Aim42ItemDescription } from '../features/aim42'
 
 const defaultVisibleStatuses: ImprovementStatus[] = ['proposed', 'accepted']
 
-export default function ImprovementsPage() {
+export default function ImprovementsTablePage() {
   const improvements = useStore(selectAllImprovements)
 
   return (

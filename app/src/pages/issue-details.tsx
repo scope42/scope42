@@ -1,19 +1,17 @@
 import { Tag, Row, Descriptions, Button, Typography } from 'antd'
 import { useStore } from '../data/store'
 import { EditOutlined, StopOutlined } from '@ant-design/icons'
-import { ISSUE_STATUS_UI } from '../components/Status'
+import { ISSUE_STATUS_UI } from '../features/items'
 import { renderDate } from '../data/util'
-import { IssueIcon } from '../components/ItemIcon'
-import { PageHeader } from '../components/PageHeader'
-import Error404 from '../components/Error404'
-import { useEditorStore } from '../components/ItemEditor/ItemEditor'
+import { IssueIcon } from '../features/items'
+import { PageHeader } from '../features/layout'
+import { Error404, TicketLink } from '../features/ui'
 import { useParams } from 'react-router-dom'
-import { TicketLink } from '../components/TicketLink'
 import { IssueId } from '../data/types'
-import { ItemDetailsPage } from '../features/items'
+import { ItemDetailsPage, useEditorStore } from '../features/items'
 import { Markdown } from '../features/markdown'
 
-const IssuePage = () => {
+const IssueDetailsPage = () => {
   const id = String(useParams().id) as IssueId
   const issue = useStore(state => state.items[id])
   const edit = useEditorStore(state => state.editIssue)
@@ -86,4 +84,4 @@ const IssuePage = () => {
   )
 }
 
-export default IssuePage
+export default IssueDetailsPage

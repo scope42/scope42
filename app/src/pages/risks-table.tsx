@@ -1,14 +1,14 @@
 /* eslint-disable react/display-name */
 import { RiskStatus } from '../data/types'
 import { selectAllRisks, useStore } from '../data/store'
-import { PageHeader } from '../components/PageHeader'
-import { POSSIBLE_STATUSES } from '../components/Status'
+import { PageHeader } from '../features/layout'
+import { POSSIBLE_STATUSES } from '../features/items'
 import { ItemsTablePage } from '../features/items'
 import { Aim42ItemDescription } from '../features/aim42'
 
 const defaultVisibleStatuses: RiskStatus[] = ['potential', 'current']
 
-export default function RisksPage() {
+export default function RisksTablePage() {
   const risks = useStore(selectAllRisks)
 
   return (
