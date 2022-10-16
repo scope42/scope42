@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import { WorkspaceSelection } from './components/WorkspaceSelection'
+import { WorkspaceSelection } from './features/workspace'
 import { useStore } from './data/store'
 import Error404 from './components/Error404'
 import ImprovementsPage from './pages/ImprovementsPage'
