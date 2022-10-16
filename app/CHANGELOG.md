@@ -1,5 +1,11 @@
 # @scope42/app
 
+## 0.1.3
+
+### Patch Changes
+
+- daa77e9: Fix missing space in item links
+
 ## 0.1.2
 
 ### Patch Changes
