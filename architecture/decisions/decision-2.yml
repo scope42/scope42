@@ -1,0 +1,25 @@
+title: Data storage format
+tags: []
+created: 2022-10-16T17:14:15.359Z
+modified: 2022-10-16T17:18:56.505Z
+comments: []
+status: accepted
+deciders:
+  - erikhofer
+decided: 2021-06-19T17:15:17.525Z
+assesses: []
+context: How should the data be stored?
+drivers: |-
+  * Human-readability
+  * Machine-readability
+  * Implementation effort
+options:
+  - title: Database (e.g. SQLite)
+  - title: JSON files
+  - title: Markdown files with frontmatter
+  - title: YAML files
+outcome:
+  optionIndex: 3
+  rationale: Because they are more human-readable and versionable (e.g. with Git)
+    than JSON files. Markdown is also suitable and open to re-consideration.
+  positiveConsequences: "* Open data format for interoperability"
