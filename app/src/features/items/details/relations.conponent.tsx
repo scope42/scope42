@@ -1,6 +1,6 @@
 import Table, { ColumnsType } from 'antd/lib/table'
 import { getIncomingRelations, getOutgoingRelations, Relation } from '..'
-import { ItemLink } from '../../../components/ItemLink'
+import { ItemLink } from '../ItemLink'
 import { useStore } from '../../../data/store'
 import { Item } from '../../../data/types'
 

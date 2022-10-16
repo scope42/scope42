@@ -6,7 +6,7 @@ import type { Plugin } from 'unified'
 import type { Root } from 'mdast'
 import { visit } from 'unist-util-visit'
 import remarkDirective from 'remark-directive'
-import { ItemLink } from '../../components/ItemLink'
+import { ItemLink } from '../items'
 import { Spin, Typography } from 'antd'
 import { lazy, Suspense } from 'react'
 

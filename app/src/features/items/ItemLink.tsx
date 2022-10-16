@@ -1,11 +1,11 @@
 import { Descriptions, Popover, Tag, Typography } from 'antd'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { useStore } from '../data/store'
-import { ItemId, ItemType } from '../data/types'
-import { getSerialFromId, renderDate } from '../data/util'
-import { ItemIcon } from '../features/items'
-import { isActive, ItemStatus } from './Status'
+import { useStore } from '../../data/store'
+import { ItemId, ItemType } from '../../data/types'
+import { getSerialFromId, renderDate } from '../../data/util'
+import { ItemIcon } from '.'
+import { isActive, ItemStatus } from '../../components/Status'
 
 export const PATHS: { [type in ItemType]: string } = {
   issue: 'issues',

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { PATHS } from '../../components/ItemLink'
+import { PATHS } from './ItemLink'
 import { ItemId } from '../../data/types'
 import { getTypeFromId } from '../../data/util'
 
