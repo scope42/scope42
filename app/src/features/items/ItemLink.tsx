@@ -35,7 +35,9 @@ export const ItemLink: React.FC<{ id: ItemId; noPopover?: boolean }> = ({
         <ItemIcon type={item.type} />{' '}
         <span style={titleStyle}>{titleWords[0]}</span>
       </span>
-      <span style={titleStyle}>{titleWords.slice(1).join(' ')}</span>
+      {titleWords.length > 1 ? (
+        <span style={titleStyle}> {titleWords.slice(1).join(' ')}</span>
+      ) : null}
       &nbsp;
       <Typography.Text type="secondary">
         #{getSerialFromId(item.id)}
