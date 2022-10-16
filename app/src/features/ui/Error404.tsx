@@ -15,5 +15,3 @@ export const Error404: React.FC = () => {
     />
   )
 }
-
-export default Error404
