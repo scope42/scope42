@@ -1,7 +1,7 @@
 import { Input } from 'antd'
 import { useEffect, useMemo, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { PageHeader } from '../components/PageHeader'
+import { PageHeader } from '../features/layout'
 import { getAllPossibleStatuses } from '../components/Status'
 import { selectAllItems, useStore } from '../data/store'
 import { Item } from '../data/types'

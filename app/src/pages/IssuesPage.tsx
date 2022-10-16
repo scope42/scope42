@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 import { IssueStatus } from '../data/types'
 import { selectAllIssues, useStore } from '../data/store'
-import { PageHeader } from '../components/PageHeader'
+import { PageHeader } from '../features/layout'
 import { POSSIBLE_STATUSES } from '../components/Status'
 import { ItemsTablePage } from '../features/items'
 import { Aim42ItemDescription } from '../features/aim42'

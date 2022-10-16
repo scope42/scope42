@@ -1,6 +1,6 @@
 import { DecisionStatus } from '../data/types'
 import { selectAllDecisions, useStore } from '../data/store'
-import { PageHeader } from '../components/PageHeader'
+import { PageHeader } from '../features/layout'
 import { POSSIBLE_STATUSES } from '../components/Status'
 import { ItemsTablePage } from '../features/items'
 import { AttributionCard } from '../features/ui'

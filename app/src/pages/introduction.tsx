@@ -4,7 +4,7 @@ import { Narrow } from '../features/ui'
 import { howDoesAim42WorkAtomic } from '@scope42/structured-aim42/lib/introduction/how-does-aim42-work/atomic'
 import { Alert, Avatar, Typography } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
-import { PageHeader } from '../components/PageHeader'
+import { PageHeader } from '../features/layout'
 import { useStore } from '../data/store'
 import { ExternalLink } from '../features/ui'
 

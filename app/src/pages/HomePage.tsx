@@ -1,5 +1,5 @@
 import { Card, Col, Row, Skeleton } from 'antd'
-import { PageHeader } from '../components/PageHeader'
+import { PageHeader } from '../features/layout'
 
 export default function HomePage() {
   return (
