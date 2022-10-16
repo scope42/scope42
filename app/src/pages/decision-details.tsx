@@ -1,7 +1,7 @@
 import { Tag, Row, Descriptions, Button, Typography, Space } from 'antd'
 import { useStore } from '../data/store'
 import { EditOutlined } from '@ant-design/icons'
-import { DECISION_STATUS_UI } from '../components/Status'
+import { DECISION_STATUS_UI } from '../features/items'
 import { renderDate } from '../data/util'
 import { DecisionIcon } from '../features/items'
 import { PageHeader } from '../features/layout'

@@ -7,7 +7,7 @@ import {
   ImprovementStatus,
   NewImprovement
 } from '../../../data/types'
-import { IMPROVEMENT_STATUS_UI } from '../../../components/Status'
+import { IMPROVEMENT_STATUS_UI } from '../Status'
 import {
   selectAllImprovements,
   selectAllIssues,

@@ -3,7 +3,7 @@ import { DecisionIcon } from '../ItemIcon'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { DecisionId, DecisionStatus, NewDecision } from '../../../data/types'
-import { DECISION_STATUS_UI } from '../../../components/Status'
+import { DECISION_STATUS_UI } from '../Status'
 import {
   selectAllDecisions,
   selectAllImprovements,

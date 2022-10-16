@@ -1,7 +1,7 @@
 import { Tag, Row, Descriptions, Button, Typography } from 'antd'
 import { useStore } from '../data/store'
 import { EditOutlined } from '@ant-design/icons'
-import { RISK_STATUS_UI } from '../components/Status'
+import { RISK_STATUS_UI } from '../features/items'
 import { renderDate } from '../data/util'
 import { RiskIcon } from '../features/items'
 import { PageHeader } from '../features/layout'

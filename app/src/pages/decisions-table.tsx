@@ -1,7 +1,7 @@
 import { DecisionStatus } from '../data/types'
 import { selectAllDecisions, useStore } from '../data/store'
 import { PageHeader } from '../features/layout'
-import { POSSIBLE_STATUSES } from '../components/Status'
+import { POSSIBLE_STATUSES } from '../features/items'
 import { ItemsTablePage } from '../features/items'
 import { AttributionCard } from '../features/ui'
 import { ExternalLink } from '../features/ui'

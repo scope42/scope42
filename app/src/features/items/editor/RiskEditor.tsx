@@ -3,7 +3,7 @@ import { RiskIcon } from '../ItemIcon'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { NewRisk, RiskId, RiskStatus } from '../../../data/types'
-import { RISK_STATUS_UI } from '../../../components/Status'
+import { RISK_STATUS_UI } from '../Status'
 import {
   selectAllIssues,
   selectAllRisks,

@@ -6,7 +6,7 @@ import { selectAllTags, useStore } from '../../../data/store'
 import { Item } from '../../../data/types'
 import { renderDate } from '../../../data/util'
 import { ItemLink } from '../ItemLink'
-import { ItemStatus } from '../../../components/Status'
+import { ItemStatus } from '../Status'
 import { TableState, useTablesStore } from './store'
 import { SorterResult } from 'antd/lib/table/interface'
 
