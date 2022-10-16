@@ -1,0 +1,38 @@
+title: Item identifier format
+tags: []
+created: 2022-10-16T17:28:14.142Z
+modified: 2022-10-16T17:42:58.030Z
+comments: []
+status: accepted
+deciders:
+  - erikhofer
+decided: 2022-01-25T18:38:18.408Z
+assesses: []
+context: How should items be identified (references, file names).
+drivers: |-
+  * Human-readability and -sayability
+  * Descriptivity
+  * Writabality (e.g. for references in Markdown text fields)
+  * URL patters and directory structure
+options:
+  - title: UUID
+  - title: 2020-01-01-some-slug
+  - title: "42"
+  - title: issues/42
+  - title: issue-42
+  - title: ISSUE-42
+  - title: issue#42
+  - title: issue-0042
+outcome:
+  optionIndex: 4
+  rationale: In conjunction with :link{#decision-5}.
+  positiveConsequences: |-
+    * Identifier is stable when title changes (no slug).
+    * Item type is obvious from identifier in refernces (e.g. `cause: issue-2`).
+    * (Virtually) infinite items (no leading zeros).
+  negativeConsequences: |-
+    * File name is not descriptive (no slug).
+    * No differentiation between multiple projects (like in JIRA).
+    * Files are not sorted properly (no leading zeros).
+    * Long indentifiers for improvements.
+    * Redundant information in path (e.g. `issues/issue-42`).

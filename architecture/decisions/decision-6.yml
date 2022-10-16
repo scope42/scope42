@@ -1,0 +1,28 @@
+title: React framework
+tags: []
+created: 2022-10-16T17:35:43.951Z
+modified: 2022-10-16T19:30:42.823Z
+comments: []
+status: accepted
+deciders:
+  - erikhofer
+decided: 2022-02-17T20:30:24.424Z
+assesses: []
+context: Basic technology stack is React with Ant Design. Which framework is
+  used to create the app?
+drivers: |-
+  * Export feature should be able to produce static HTML.
+  * Data is persisted on the local machine (:link{#decision-1}).
+options:
+  - title: NextJS
+  - title: create-react-app
+outcome:
+  optionIndex: 1
+  rationale: Because NextJS has problems with client-only apps (e.g. `router.push`
+    requires page reload) and we do not need SSR aside from export.
+  positiveConsequences: "* We do not have wo work around issues with NextJS."
+  negativeConsequences: >-
+    * For the export feature, we have to come up with another
+    solution or go for a non-static approach.
+
+    * If we want a landing page with proper SEO, we cannot integrate it with the app as easily.

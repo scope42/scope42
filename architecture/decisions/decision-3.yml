@@ -1,0 +1,37 @@
+title: Application type
+tags: []
+created: 2022-10-16T17:19:40.638Z
+modified: 2022-10-16T17:25:13.132Z
+comments: []
+status: accepted
+deciders:
+  - erikhofer
+decided: 2021-12-14T18:20:03.331Z
+assesses: []
+context: How should the tool be distributed to users?
+drivers: |-
+  * Web technology for UI
+  * UX
+  * Delivering Updates
+  * Access to local files (:link{#decision-1})
+  * Code signing is not pratical
+  * Possibility for export in CI/CD
+options:
+  - title: CLI with locally started web app
+    description: similar to pgAdmin
+  - title: Electron App
+  - title: Pogressive Web App
+    description: with File System Access API
+    pros: |-
+      * Proper UX, can be tried without any download.
+      * Updates don't require actions by the user.
+      * No code signing needed.
+    cons: >-
+      * File System Access API is not supported by all browsers yet, most
+      notably Firefox. Chromium (Chrom/Edge) works.
+
+      * Export feature will require a seperate tool that is distributed as CLI.
+outcome:
+  optionIndex: 2
+  rationale: Because it is the most practical for now.
+  positiveConsequences: ""

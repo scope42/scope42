@@ -1,84 +1,20 @@
-title: Monorepo
+title: Item serial scope
 tags: []
-created: 2022-10-15T10:10:51.532Z
-modified: 2022-10-15T11:32:00.340Z
+created: 2022-10-16T17:34:56.630Z
+modified: 2022-10-16T17:47:08.286Z
 comments: []
-status: proposed
+status: accepted
 deciders:
   - erikhofer
-decided: 2022-10-15T10:14:55.622Z
+decided: 2022-01-25T18:43:37.666Z
 assesses: []
-context: >-
-  We need to separate out some functionalities into packages that can be
-  published. These will e.g. make programmatic processing of scope42 data more
-  convenient for users.
-
-
-  We have to decide whether we want to create a separate repository for each package or turn the main repository into a monorepo. If we do the latter, we have to decide on a tooling setup.
-
-
-  One particular point of interest is the versioning and releasing of packages. Currently, we use semantic-release to automatically create releases based on commit messages. This does not work seamlessly in a monorepo. There is https://github.com/pmowrer/semantic-release-monorepo but it is not considered a robust solution. Also, the meaning of a version bump of an internal package for its dependents is not always derivable automatically. Such relationships are only considered by tooling that is specifically made for monorepos.
+context: In :link{#decision-4} we decided to use serial numbers in identifiers.
+  Which scope should these serials be unique in?
 options:
-  - title: Multiple standalone repositories
-    description: Create a repository for each packge. Automate releases and updates
-      with semantic-release and Renovate.
-    pros: |-
-      * Simple setup, no additional monorepo tooling is required.
-      * semantic-release can be used.
-    cons: >-
-      * Development is not assisted by special tooling. We need to work with
-      `npm link` which is okay but not really convenient.
-
-      * It is hard to deploy a preview of a new vertical feature. This would need pre-releases of libraries. In a monorepo, it would be a simple branch.
-  - title: Monorepo with Lerna
-    description: >-
-      https://github.com/lerna/lerna
-
-
-      The classic monorepo tooling. The project was declared dead but has recently been taken over by Nrwl, the company behind Nx.
-    cons: I didn't know that the project had been revived, so I did not look into it
-      too much. For a greenfield project however, it is probably best to prefer
-      one of the more modern options anyways.
-  - title: Monorepo with Nx
-    description: >-
-      https://nx.dev
-
-
-      One of the two major competitors in the monorepo space.
-
-
-      There is a SemVer plugin (https://github.com/jscutlery/semver) but I have not tried it yet.
-    pros: "* Very mature and established ecosystem."
-    cons: >-
-      * A bit overwhelming because it can do so much. There is a certain
-      learning curve and more time would be needed to set up an MVP.
-
-      * It seems to impose a closer coupling with the project setup. 
-  - title: Monorepo with Turborepo
-    description: >-
-      https://turborepo.org/
-
-
-      One of the two major competitors in the monorepo space.
-
-
-      Versioning is recommended to be done with changesets (https://github.com/changesets/changesets) which takes a different, more manual approach than semantic-release.
-    pros: >-
-      * Very light-weight, gets out of your way in comparison to Nx. Setting up
-      an MVP was quite easy.
-
-      * Versioning with changesets seems to make sense despite the extra work. For example, a minor release of an internal package may translate to a minor release of the app without any further changes in the app. This would be harder to tale care of with Renovate and semantic-release.
-    cons: >-
-      * A rather young project that still has some rough edges.
-
-      * Moving from semantic-release to changesets creates some extra manual work.
+  - title: Per item type
+  - title: Global
+    description: Like GitHub issues and PRs
 outcome:
-  optionIndex: 3
-  rationale: >-
-    First of all, I decided to go the monorepo route. I think it is
-    necessary for publishing packages while keeping the overhead for vertical
-    features low. In a small project like this, a lot of seperate repositories
-    are not managable while keeping velocity up.
-
-
-    As for the tooling, I think going with Turborepo is the most practical way. It doesn't require a lot of ramp-up work and provides everything that we currently need. Also, I think the approach of changesets is sensible and the extra work is managable. As the project grows, we may want to re-visit the tooling choice.
+  optionIndex: 0
+  positiveConsequences: "* Each combination of type and number exists (if not deleted)."
+  negativeConsequences: "* The serial alone is not enough to identify an item."

@@ -1,0 +1,32 @@
+title: Data storage location
+tags: []
+created: 2022-10-16T17:10:16.952Z
+modified: 2022-10-16T17:13:56.300Z
+comments: []
+status: accepted
+deciders:
+  - erikhofer
+decided: 2021-06-19T17:10:43.128Z
+assesses: []
+context: Where should the data be stored?
+drivers: |-
+  * Data ownership
+  * Privacy
+  * Collaboration
+  * Implementation effort
+  * Implications for hosting
+options:
+  - title: Backend server
+  - title: Local machine
+outcome:
+  optionIndex: 1
+  rationale: Because we don't have to concern ourselves with hosting and legal
+    obligations and promote data ownership.
+  positiveConsequences: |-
+    * No database hosting
+    * No backend and API
+    * Data ownership for users
+    * Privacy for users
+  negativeConsequences: |-
+    * Users have to care about data themselves (e.g. backups)
+    * Users have to care about collaboration themselves
