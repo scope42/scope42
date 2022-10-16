@@ -1,9 +1,9 @@
-title: Monorepo
+title: Repository organization
 tags: []
 created: 2022-10-15T10:10:51.532Z
-modified: 2022-10-15T11:32:00.340Z
+modified: 2022-10-16T19:49:35.563Z
 comments: []
-status: proposed
+status: accepted
 deciders:
   - erikhofer
 decided: 2022-10-15T10:14:55.622Z

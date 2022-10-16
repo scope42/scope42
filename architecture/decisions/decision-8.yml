@@ -1,0 +1,45 @@
+title: Static export approach
+tags: []
+created: 2022-10-16T19:50:41.075Z
+modified: 2022-10-16T20:37:02.757Z
+comments: []
+status: proposed
+deciders:
+  - erikhofer
+assesses: []
+context: We want to provide the ability to export a workspace as a read-only
+  scope42 site that does not require a local copy of the data. How can this be
+  approached?
+options:
+  - title: Full client-side rendering
+    description: This could work similar to how the demo workspace is realized. The
+      app is essentially not changed, just the entry point is modified to load a
+      pre-baked workspace JSON export.
+    pros: |-
+      * Relatively easy to set up.
+      * State management can stay the same.
+    cons: >-
+      * Does not work without JavaScript at all.
+
+      * The whole workspace must be downloaded before the app can be loaded. This can be partially avoided by https://github.com/scope42/scope42/issues/234. We should also consider caching (and cache busting).
+  - title: Static site generation with NextJS
+    description: ""
+    pros: |-
+      * Works without JavaScript and can use Progressive Enhancement.
+      * Only the data that is actually needed is downloaded.
+    cons: >-
+      * We would need to migrate the whole app to NextJS. We had issues with
+      this in the past that lead to dropping it (:link{#decision-6}).
+
+      * We need to re-work the state management and full-text search population.
+  - title: Static site generation with react-snap
+    description: >-
+      https://github.com/stereobooster/react-snap
+
+
+      It's the successor of https://github.com/geelen/react-snapshot and https://github.com/react-static/react-static (both dead).
+    pros: |-
+      * Works without JavaScript and can use Progressive Enhancement.
+      * Only the data that is actually needed is downloaded.
+    cons: "* We need to re-work the state management and full-text search
+      population."
