@@ -110,7 +110,7 @@ export type ItemStatusProps =
   | { type: 'risk'; status: RiskStatus }
   | { type: 'improvement'; status: ImprovementStatus }
 
-export const ItemStatus: React.VFC<{ item: Item }> = props => {
+export const ItemStatus: React.FC<{ item: Item }> = props => {
   switch (props.item.type) {
     case 'issue':
       return <>{ISSUE_STATUS_UI[props.item.status].component}</>

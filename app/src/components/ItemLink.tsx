@@ -14,7 +14,7 @@ export const PATHS: { [type in ItemType]: string } = {
   decision: 'decisions'
 }
 
-export const ItemLink: React.VFC<{ id: ItemId; noPopover?: boolean }> = ({
+export const ItemLink: React.FC<{ id: ItemId; noPopover?: boolean }> = ({
   id,
   noPopover
 }) => {

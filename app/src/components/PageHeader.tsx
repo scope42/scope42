@@ -4,6 +4,7 @@ import {
 } from 'antd'
 
 type PageHeaderProps = {
+  children?: React.ReactNode
   title: string
   icon?: React.ReactNode
   backButton?: boolean

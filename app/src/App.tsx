@@ -16,7 +16,7 @@ import DecisionDetailsPage from './pages/decision-details'
 import SearchPage from './pages/search'
 import { DefaultLayout } from './features/layout'
 
-const App: React.VFC = () => {
+const App: React.FC = () => {
   const workspacePresent = useStore(state => state.workspace.present)
 
   if (!workspacePresent) {

@@ -31,7 +31,7 @@ export interface ItemsTableProps {
   defaultVisibleStatuses: string[] | null
 }
 
-export const ItemsTable: React.VFC<ItemsTableProps> = props => {
+export const ItemsTable: React.FC<ItemsTableProps> = props => {
   const { id, items, defaultVisibleStatuses, possibleStatuses } = props
   const allTags = useStore(selectAllTags)
   const tableState: TableState = useTablesStore(

@@ -19,6 +19,7 @@ const IconSvg = () => (
 )
 
 interface ExternalLinkProps {
+  children: React.ReactNode
   url: string
   noIcon?: boolean
   iconProps?: React.ComponentProps<typeof Icon>

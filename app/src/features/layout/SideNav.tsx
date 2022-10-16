@@ -8,7 +8,7 @@ import {
   RiskIcon
 } from '../../components/ItemIcon'
 
-export const SideNav: React.VFC = () => {
+export const SideNav: React.FC = () => {
   const location = useLocation()
 
   const basePath = '/' + location.pathname.split('/')[1]

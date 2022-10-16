@@ -5,7 +5,7 @@ interface Aim42SectionCardProps {
   section: Atomic<Section>
 }
 
-export const Aim42SectionCard: React.VFC<Aim42SectionCardProps> = props => {
+export const Aim42SectionCard: React.FC<Aim42SectionCardProps> = props => {
   const { section } = props
   return (
     <Aim42Card

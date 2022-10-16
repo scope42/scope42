@@ -67,7 +67,7 @@ export const DecisionIcon: React.FC<IconProps> = props => (
   <Icon {...props} component={DecisionSvg} />
 )
 
-export const ItemIcon: React.VFC<{ type: ItemType } & IconProps> = props => {
+export const ItemIcon: React.FC<{ type: ItemType } & IconProps> = props => {
   const { type, ...restProps } = props
   switch (type) {
     case 'issue':

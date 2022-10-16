@@ -54,7 +54,7 @@ const processingInstructions = [
 
 const htmlToReactParser = new Parser()
 
-export const Aim42Content: React.VFC<{ html: string }> = props => {
+export const Aim42Content: React.FC<{ html: string }> = props => {
   const reactElement = htmlToReactParser.parseWithInstructions(
     props.html,
     isValidNode,

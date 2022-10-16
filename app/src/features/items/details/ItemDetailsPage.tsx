@@ -7,6 +7,7 @@ import { Relations } from './relations.conponent'
 const { Title } = Typography
 
 export interface ItemDetailsPageProps {
+  children: React.ReactNode
   item: Item
 }
 
