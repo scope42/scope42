@@ -4,7 +4,9 @@ import { GraphCard } from '../../graphs'
 import { ItemsTable, ItemsTableProps } from './ItemsTable'
 import { useTablesStore } from './store'
 
-interface ItemsTablePageProps extends ItemsTableProps {}
+interface ItemsTablePageProps extends ItemsTableProps {
+  children?: React.ReactNode
+}
 
 export const ItemsTablePage: React.FC<ItemsTablePageProps> = props => {
   const { id, items, possibleStatuses, defaultVisibleStatuses, children } =

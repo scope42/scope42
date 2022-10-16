@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import React from 'react'
 import DayjsDatePicker from './DayjsDatePicker'
 
-export const NativeDatePicker: React.VFC<PickerProps<Date>> = React.forwardRef(
+export const NativeDatePicker: React.FC<PickerProps<Date>> = React.forwardRef(
   (props, ref) => {
     const {
       value,

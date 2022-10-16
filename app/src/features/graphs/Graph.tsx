@@ -78,7 +78,7 @@ interface ItemsGraphProps {
   preview?: boolean
 }
 
-export const Graph: React.VFC<ItemsGraphProps> = props => {
+export const Graph: React.FC<ItemsGraphProps> = props => {
   const { items, preview, showRelatedItems } = props
   const allItems = useStore(state => state.items)
   const [cy, setCy] = useState<Cytoscape.Core | null>(null)

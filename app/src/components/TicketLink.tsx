@@ -14,7 +14,7 @@ const ICONS: { [key in Tracker]?: ReactNode } = {
   gitlab: <GitlabOutlined />
 }
 
-export const TicketLink: React.VFC<{ url: string }> = ({ url }) => {
+export const TicketLink: React.FC<{ url: string }> = ({ url }) => {
   const { tracker, label } = parseTicketUrl(url)
   const icon = ICONS[tracker]
   return (

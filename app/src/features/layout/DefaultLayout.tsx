@@ -1,12 +1,13 @@
 import { GithubOutlined } from '@ant-design/icons'
 import { Divider, Layout } from 'antd'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import { ExternalLink } from '../../components/ExternalLink'
 import { ItemEditor } from '../../components/ItemEditor/ItemEditor'
 import { Header } from './Header'
 import { SideNav } from './SideNav'
 
-export const DefaultLayout: React.FC = props => {
+export const DefaultLayout: React.FC<{ children: React.ReactNode }> = props => {
   return (
     <Layout style={{ minHeight: '100%' }} hasSider>
       <SideNav />

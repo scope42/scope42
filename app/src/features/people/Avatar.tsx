@@ -1,6 +1,6 @@
 import Avvvatars from 'avvvatars-react'
 
-export const Avatar: React.VFC<{ name: string; size?: number }> = ({
+export const Avatar: React.FC<{ name: string; size?: number }> = ({
   name,
   size
 }) => {

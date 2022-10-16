@@ -35,7 +35,7 @@ function getTableValue(tableKey: string) {
   return value
 }
 
-export const Aim42ItemDescription: React.VFC<{ type: Aim42ItemType }> = ({
+export const Aim42ItemDescription: React.FC<{ type: Aim42ItemType }> = ({
   type
 }) => {
   const tableKey = TABLE_KEY[type]

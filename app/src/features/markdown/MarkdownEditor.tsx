@@ -3,7 +3,7 @@ import { TextAreaProps } from 'antd/lib/input'
 import React from 'react'
 import { ExternalLink } from '../../components/ExternalLink'
 
-export const MarkdownEditor: React.VFC<TextAreaProps> = React.forwardRef(
+export const MarkdownEditor: React.FC<TextAreaProps> = React.forwardRef(
   (props, ref) => {
     const { style, ...restProps } = props
     return (

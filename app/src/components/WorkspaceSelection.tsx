@@ -4,7 +4,7 @@ import { useStore } from '../data/store'
 import 'liquid-loading'
 import { ExternalLink } from './ExternalLink'
 
-export const WorkspaceSelection: React.VFC = () => {
+export const WorkspaceSelection: React.FC = () => {
   const loading = useStore(state => state.workspace.loading)
   const error = useStore(state => state.workspace.error)
   const openDemoWorkspace = useStore(state => state.openDemoWorkspace)
@@ -100,12 +100,12 @@ export const WorkspaceSelection: React.VFC = () => {
   )
 }
 
-const Loading: React.VFC = () => {
+const Loading: React.FC = () => {
   // @ts-ignore
   return <liquid-loading />
 }
 
-const DirectoryPicker: React.VFC = () => {
+const DirectoryPicker: React.FC = () => {
   const browserSupported = window.showDirectoryPicker !== undefined
 
   const createWorkspace = useStore(state => state.createWorkspace)

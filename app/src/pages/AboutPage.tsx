@@ -5,7 +5,7 @@ import { ExternalLink } from '../components/ExternalLink'
 import { PageHeader } from '../components/PageHeader'
 import { Aim42Attribution } from '../features/aim42'
 
-export const AboutPage: React.VFC = () => {
+export const AboutPage: React.FC = () => {
   return (
     <>
       <PageHeader title="About" />

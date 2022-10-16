@@ -1,6 +1,6 @@
 import { ExternalLink } from '../../components/ExternalLink'
 
-export const Aim42Attribution: React.VFC<{ sectionId?: string }> = ({
+export const Aim42Attribution: React.FC<{ sectionId?: string }> = ({
   sectionId
 }) => {
   const url = 'https://aim42.github.io/' + (sectionId ? '#' + sectionId : '')

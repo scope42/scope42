@@ -15,6 +15,10 @@
     "changeset": "changeset",
     "release": "turbo run build && changeset publish"
   },
+  "resolutions": {
+    "@types/react": "18.0.21",
+    "@types/react-dom": "18.0.6"
+  },
   "prettier": "@xinra/prettier-config",
   "devDependencies": {
     "@changesets/cli": "2.25.0",

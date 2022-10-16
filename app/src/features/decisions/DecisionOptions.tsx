@@ -26,7 +26,7 @@ import { Markdown, MarkdownEditor } from '../markdown'
 import { red, green, blue } from '@ant-design/colors'
 import { AvatarDiv } from '../ui'
 
-export const DecisionOptions: React.VFC<{ decision: Decision }> = ({
+export const DecisionOptions: React.FC<{ decision: Decision }> = ({
   decision
 }) => {
   const [editingIndex, setEditingIndex] = useState<number | null>(null)
@@ -107,7 +107,7 @@ export const DecisionOptions: React.VFC<{ decision: Decision }> = ({
   )
 }
 
-const OptionEditor: React.VFC<{
+const OptionEditor: React.FC<{
   decision: Decision
   commentIndex: number
   onClose: () => void

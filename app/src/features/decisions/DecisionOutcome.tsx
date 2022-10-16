@@ -38,7 +38,7 @@ const help = {
     'For example compromising quality attribute, follow-up decisions required, etc.'
 }
 
-export const DecisionOutcome: React.VFC<{ decision: Decision }> = ({
+export const DecisionOutcome: React.FC<{ decision: Decision }> = ({
   decision
 }) => {
   const [editing, setEditing] = useState(false)
@@ -127,7 +127,7 @@ export const DecisionOutcome: React.VFC<{ decision: Decision }> = ({
   )
 }
 
-const OutcomeEditor: React.VFC<{
+const OutcomeEditor: React.FC<{
   decision: Decision
   onClose: () => void
 }> = props => {

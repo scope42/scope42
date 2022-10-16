@@ -17,7 +17,7 @@ import { CommentOutlined } from '@ant-design/icons'
 import { Avatar } from '../../people'
 import { Markdown, MarkdownEditor } from '../../markdown'
 
-export const Comments: React.VFC<{ item: Item }> = props => {
+export const Comments: React.FC<{ item: Item }> = props => {
   const { comments } = props.item
   const [editingIndex, setEditingIndex] = useState<number | null>(null)
   return (
@@ -54,7 +54,7 @@ export const Comments: React.VFC<{ item: Item }> = props => {
   )
 }
 
-const CommentEditor: React.VFC<{
+const CommentEditor: React.FC<{
   item: Item
   commentIndex: number
   onClose: () => void

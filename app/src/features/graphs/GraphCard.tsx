@@ -9,7 +9,7 @@ interface GraphCardProps extends CardProps {
   alwaysShowRelatedItems?: boolean
 }
 
-export const GraphCard: React.VFC<GraphCardProps> = props => {
+export const GraphCard: React.FC<GraphCardProps> = props => {
   const { items, alwaysShowRelatedItems, ...cardProps } = props
   const [expanded, setExpanded] = useState(false)
   const [showRelatedItems, setShowRelatedItems] = useState(false)

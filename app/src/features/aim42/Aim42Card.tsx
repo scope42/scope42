@@ -8,7 +8,7 @@ interface Aim42CardProps extends CardProps {
   attributionSectionId?: string
 }
 
-export const Aim42Card: React.VFC<Aim42CardProps> = props => {
+export const Aim42Card: React.FC<Aim42CardProps> = props => {
   const { content, attributionSectionId, ...cardProps } = props
   return (
     <AttributionCard

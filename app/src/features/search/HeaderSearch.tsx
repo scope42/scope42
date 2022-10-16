@@ -10,7 +10,7 @@ import { useNavigateToItem } from '../items'
 import style from './HeaderSearch.module.css'
 import { suggest } from './search-index'
 
-export const HeaderSearch: React.VFC = () => {
+export const HeaderSearch: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false)
   useHotkeys('ctrl+k', e => {
     e.preventDefault()
@@ -95,7 +95,7 @@ const SearchModal: React.FC<{ onClose: () => void }> = props => {
   )
 }
 
-const ItemLabel: React.VFC<{ id: ItemId }> = props => {
+const ItemLabel: React.FC<{ id: ItemId }> = props => {
   const item = useStore(state => state.items[props.id])
   if (!item) {
     return <>{props.id}</>

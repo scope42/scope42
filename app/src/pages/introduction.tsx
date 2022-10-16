@@ -10,7 +10,7 @@ import { ExternalLink } from '../components/ExternalLink'
 
 const { Title } = Typography
 
-export const IntroductionPage: React.VFC = () => {
+export const IntroductionPage: React.FC = () => {
   const demoMode = useStore(state => state.workspace.handle === undefined)
 
   return (
