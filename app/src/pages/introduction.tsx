@@ -6,7 +6,7 @@ import { Alert, Avatar, Typography } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import { PageHeader } from '../components/PageHeader'
 import { useStore } from '../data/store'
-import { ExternalLink } from '../components/ExternalLink'
+import { ExternalLink } from '../features/ui'
 
 const { Title } = Typography
 

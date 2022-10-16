@@ -1,7 +1,7 @@
 import { Input, Popover } from 'antd'
 import { TextAreaProps } from 'antd/lib/input'
 import React from 'react'
-import { ExternalLink } from '../../components/ExternalLink'
+import { ExternalLink } from '../ui'
 
 export const MarkdownEditor: React.FC<TextAreaProps> = React.forwardRef(
   (props, ref) => {

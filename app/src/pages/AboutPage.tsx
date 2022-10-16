@@ -1,7 +1,7 @@
 import { BugOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
 import React from 'react'
-import { ExternalLink } from '../components/ExternalLink'
+import { ExternalLink } from '../features/ui'
 import { PageHeader } from '../components/PageHeader'
 import { Aim42Attribution } from '../features/aim42'
 

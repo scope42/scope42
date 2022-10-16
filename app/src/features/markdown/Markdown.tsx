@@ -1,6 +1,6 @@
 import ReactMarkdown, { Components } from 'react-markdown'
 import remarkGfm from 'remark-gfm'
-import { ExternalLink } from '../../components/ExternalLink'
+import { ExternalLink } from '../ui'
 import './Markdown.css'
 import type { Plugin } from 'unified'
 import type { Root } from 'mdast'

@@ -1,6 +1,6 @@
 import { GithubOutlined, GitlabOutlined } from '@ant-design/icons'
 import React, { ReactNode } from 'react'
-import { ExternalLink } from './ExternalLink'
+import { ExternalLink } from '../features/ui'
 
 type Tracker = 'unknown' | 'github' | 'gitlab' | 'jira'
 
