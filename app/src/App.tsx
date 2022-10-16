@@ -3,13 +3,13 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { WorkspaceSelection } from './features/workspace'
 import { useStore } from './data/store'
 import { Error404 } from './features/ui'
-import ImprovementsPage from './pages/ImprovementsPage'
-import IssuesPage from './pages/IssuesPage'
-import IssuePage from './pages/IssuePage'
-import RisksPage from './pages/RisksPage'
-import RiskPage from './pages/RiskPage'
-import ImprovementPage from './pages/ImprovementPage'
-import { AboutPage } from './pages/AboutPage'
+import ImprovementsTablePage from './pages/improvements-table'
+import IssuesTablePage from './pages/issues-table'
+import IssueDetailsPage from './pages/issue-details'
+import RisksTablePage from './pages/risks-table'
+import RiskDetailsPage from './pages/risk-details'
+import ImprovementDetailsPage from './pages/improvement-details'
+import { AboutPage } from './pages/about'
 import { IntroductionPage } from './pages/introduction'
 import DecisionsTablePage from './pages/decisions-table'
 import DecisionDetailsPage from './pages/decision-details'
@@ -29,12 +29,15 @@ const App: React.FC = () => {
         <Routes>
           <Route index element={<IntroductionPage />} />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/issues" element={<IssuesPage />} />
-          <Route path="/issues/:id" element={<IssuePage />} />
-          <Route path="/improvements" element={<ImprovementsPage />} />
-          <Route path="/improvements/:id" element={<ImprovementPage />} />
-          <Route path="/risks" element={<RisksPage />} />
-          <Route path="/risks/:id" element={<RiskPage />} />
+          <Route path="/issues" element={<IssuesTablePage />} />
+          <Route path="/issues/:id" element={<IssueDetailsPage />} />
+          <Route path="/improvements" element={<ImprovementsTablePage />} />
+          <Route
+            path="/improvements/:id"
+            element={<ImprovementDetailsPage />}
+          />
+          <Route path="/risks" element={<RisksTablePage />} />
+          <Route path="/risks/:id" element={<RiskDetailsPage />} />
           <Route path="/decisions" element={<DecisionsTablePage />} />
           <Route path="/decisions/:id" element={<DecisionDetailsPage />} />
           <Route path="/search" element={<SearchPage />} />

@@ -1,34 +1,34 @@
 import { Tag, Row, Descriptions, Button, Typography } from 'antd'
 import { useStore } from '../data/store'
-import { EditOutlined } from '@ant-design/icons'
-import { RISK_STATUS_UI } from '../features/items'
+import { EditOutlined, StopOutlined } from '@ant-design/icons'
+import { ISSUE_STATUS_UI } from '../features/items'
 import { renderDate } from '../data/util'
-import { RiskIcon } from '../features/items'
+import { IssueIcon } from '../features/items'
 import { PageHeader } from '../features/layout'
 import { Error404, TicketLink } from '../features/ui'
 import { useParams } from 'react-router-dom'
-import { RiskId } from '../data/types'
+import { IssueId } from '../data/types'
 import { ItemDetailsPage, useEditorStore } from '../features/items'
 import { Markdown } from '../features/markdown'
 
-const RiskPage = () => {
-  const id = String(useParams().id) as RiskId
-  const risk = useStore(state => state.items[id])
-  const edit = useEditorStore(state => state.editRisk)
+const IssueDetailsPage = () => {
+  const id = String(useParams().id) as IssueId
+  const issue = useStore(state => state.items[id])
+  const edit = useEditorStore(state => state.editIssue)
 
-  if (!risk || risk.type !== 'risk') {
+  if (!issue || issue.type !== 'issue') {
     return <Error404 />
   }
 
   return (
     <>
       <PageHeader
-        title={risk.title}
-        icon={<RiskIcon size={24} />}
+        title={issue.title}
+        icon={<IssueIcon size={24} />}
         backButton
         extra={
           <>
-            <Tag>{risk.id}</Tag>
+            <Tag>{issue.id}</Tag>
             <Button
               type="primary"
               icon={<EditOutlined />}
@@ -38,36 +38,45 @@ const RiskPage = () => {
             </Button>
           </>
         }
+        tags={
+          issue.causedBy.length === 0 ? (
+            <Tag color="red">
+              <StopOutlined /> Root Cause
+            </Tag>
+          ) : (
+            []
+          )
+        }
       >
         <Row>
           <Descriptions size="small" column={3}>
             <Descriptions.Item label="Status">
-              {RISK_STATUS_UI[risk.status].component}
+              {ISSUE_STATUS_UI[issue.status].component}
             </Descriptions.Item>
             <Descriptions.Item label="Created">
-              {renderDate(risk.created)}
+              {renderDate(issue.created)}
             </Descriptions.Item>
             <Descriptions.Item label="Modified">
-              {renderDate(risk.modified)}
+              {renderDate(issue.modified)}
             </Descriptions.Item>
             <Descriptions.Item label="Tags">
-              {risk.tags.map(tag => (
+              {issue.tags.map(tag => (
                 <Tag key={tag}>{tag}</Tag>
               ))}
             </Descriptions.Item>
-            {risk.ticket ? (
+            {issue.ticket ? (
               <Descriptions.Item label="Ticket">
-                <TicketLink url={risk.ticket} />
+                <TicketLink url={issue.ticket} />
               </Descriptions.Item>
             ) : null}
           </Descriptions>
         </Row>
       </PageHeader>
-      <ItemDetailsPage item={risk}>
-        {risk.description && (
+      <ItemDetailsPage item={issue}>
+        {issue.description && (
           <>
             <Typography.Title level={2}>Description</Typography.Title>
-            <Markdown>{risk.description}</Markdown>
+            <Markdown>{issue.description}</Markdown>
           </>
         )}
       </ItemDetailsPage>
@@ -75,4 +84,4 @@ const RiskPage = () => {
   )
 }
 
-export default RiskPage
+export default IssueDetailsPage

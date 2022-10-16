@@ -1,34 +1,34 @@
 import { Tag, Row, Descriptions, Button, Typography } from 'antd'
 import { useStore } from '../data/store'
-import { EditOutlined, StopOutlined } from '@ant-design/icons'
-import { ISSUE_STATUS_UI } from '../features/items'
+import { EditOutlined } from '@ant-design/icons'
+import { IMPROVEMENT_STATUS_UI } from '../features/items'
 import { renderDate } from '../data/util'
-import { IssueIcon } from '../features/items'
+import { ImprovementIcon } from '../features/items'
 import { PageHeader } from '../features/layout'
 import { Error404, TicketLink } from '../features/ui'
 import { useParams } from 'react-router-dom'
-import { IssueId } from '../data/types'
+import { ImprovementId } from '../data/types'
 import { ItemDetailsPage, useEditorStore } from '../features/items'
 import { Markdown } from '../features/markdown'
 
-const IssuePage = () => {
-  const id = String(useParams().id) as IssueId
-  const issue = useStore(state => state.items[id])
-  const edit = useEditorStore(state => state.editIssue)
+const ImprovementDetailsPage = () => {
+  const id = String(useParams().id) as ImprovementId
+  const improvement = useStore(state => state.items[id])
+  const edit = useEditorStore(state => state.editImprovement)
 
-  if (!issue || issue.type !== 'issue') {
+  if (!improvement || improvement.type !== 'improvement') {
     return <Error404 />
   }
 
   return (
     <>
       <PageHeader
-        title={issue.title}
-        icon={<IssueIcon size={24} />}
+        title={improvement.title}
+        icon={<ImprovementIcon size={24} />}
         backButton
         extra={
           <>
-            <Tag>{issue.id}</Tag>
+            <Tag>{improvement.id}</Tag>
             <Button
               type="primary"
               icon={<EditOutlined />}
@@ -38,45 +38,36 @@ const IssuePage = () => {
             </Button>
           </>
         }
-        tags={
-          issue.causedBy.length === 0 ? (
-            <Tag color="red">
-              <StopOutlined /> Root Cause
-            </Tag>
-          ) : (
-            []
-          )
-        }
       >
         <Row>
           <Descriptions size="small" column={3}>
             <Descriptions.Item label="Status">
-              {ISSUE_STATUS_UI[issue.status].component}
+              {IMPROVEMENT_STATUS_UI[improvement.status].component}
             </Descriptions.Item>
             <Descriptions.Item label="Created">
-              {renderDate(issue.created)}
+              {renderDate(improvement.created)}
             </Descriptions.Item>
             <Descriptions.Item label="Modified">
-              {renderDate(issue.modified)}
+              {renderDate(improvement.modified)}
             </Descriptions.Item>
             <Descriptions.Item label="Tags">
-              {issue.tags.map(tag => (
+              {improvement.tags.map(tag => (
                 <Tag key={tag}>{tag}</Tag>
               ))}
             </Descriptions.Item>
-            {issue.ticket ? (
+            {improvement.ticket ? (
               <Descriptions.Item label="Ticket">
-                <TicketLink url={issue.ticket} />
+                <TicketLink url={improvement.ticket} />
               </Descriptions.Item>
             ) : null}
           </Descriptions>
         </Row>
       </PageHeader>
-      <ItemDetailsPage item={issue}>
-        {issue.description && (
+      <ItemDetailsPage item={improvement}>
+        {improvement.description && (
           <>
             <Typography.Title level={2}>Description</Typography.Title>
-            <Markdown>{issue.description}</Markdown>
+            <Markdown>{improvement.description}</Markdown>
           </>
         )}
       </ItemDetailsPage>
@@ -84,4 +75,4 @@ const IssuePage = () => {
   )
 }
 
-export default IssuePage
+export default ImprovementDetailsPage

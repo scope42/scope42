@@ -8,7 +8,7 @@ import { Aim42ItemDescription } from '../features/aim42'
 
 const defaultVisibleStatuses: IssueStatus[] = ['current']
 
-export default function IssuesPage() {
+export default function IssuesTablePage() {
   const issues = useStore(selectAllIssues)
 
   return (

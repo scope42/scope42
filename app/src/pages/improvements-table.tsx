@@ -8,7 +8,7 @@ import { Aim42ItemDescription } from '../features/aim42'
 
 const defaultVisibleStatuses: ImprovementStatus[] = ['proposed', 'accepted']
 
-export default function ImprovementsPage() {
+export default function ImprovementsTablePage() {
   const improvements = useStore(selectAllImprovements)
 
   return (

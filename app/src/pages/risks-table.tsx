@@ -8,7 +8,7 @@ import { Aim42ItemDescription } from '../features/aim42'
 
 const defaultVisibleStatuses: RiskStatus[] = ['potential', 'current']
 
-export default function RisksPage() {
+export default function RisksTablePage() {
   const risks = useStore(selectAllRisks)
 
   return (
