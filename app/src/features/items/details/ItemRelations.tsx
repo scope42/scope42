@@ -16,7 +16,7 @@ const columns: ColumnsType<Relation> = [
   }
 ]
 
-export const Relations: React.FC<{ item: Item }> = ({ item }) => {
+export const ItemRelations: React.FC<{ item: Item }> = ({ item }) => {
   const allItems = useStore(state => state.items)
   const relations = [
     ...getOutgoingRelations(item, allItems),

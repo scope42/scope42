@@ -2,7 +2,7 @@ import { Col, Row, Typography } from 'antd'
 import { Item } from '../../../data/types'
 import { GraphCard } from '../../graphs'
 import { Comments } from './Comments'
-import { Relations } from './relations.conponent'
+import { ItemRelations } from './ItemRelations'
 
 const { Title } = Typography
 
@@ -23,7 +23,7 @@ export const ItemDetailsPage: React.FC<ItemDetailsPageProps> = props => {
       <Col span={10}>
         <Title level={2}>Relations</Title>
         <GraphCard items={[item]} alwaysShowRelatedItems />
-        <Relations item={item} />
+        <ItemRelations item={item} />
       </Col>
     </Row>
   )
