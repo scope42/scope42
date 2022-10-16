@@ -6,11 +6,10 @@ import { renderDate } from '../data/util'
 import { RiskIcon } from '../components/ItemIcon'
 import { PageHeader } from '../components/PageHeader'
 import Error404 from '../components/Error404'
-import { useEditorStore } from '../components/ItemEditor/ItemEditor'
 import { useParams } from 'react-router-dom'
 import { TicketLink } from '../components/TicketLink'
 import { RiskId } from '../data/types'
-import { ItemDetailsPage } from '../features/items'
+import { ItemDetailsPage, useEditorStore } from '../features/items'
 import { Markdown } from '../features/markdown'
 
 const RiskPage = () => {

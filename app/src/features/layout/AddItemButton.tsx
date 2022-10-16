@@ -1,7 +1,7 @@
 import { PlusOutlined } from '@ant-design/icons'
 import { Dropdown, Menu } from 'antd'
 import Button from 'antd-button-color'
-import { useEditorStore } from '../../components/ItemEditor/ItemEditor'
+import { useEditorStore } from '../items'
 import {
   DecisionIcon,
   ImprovementIcon,

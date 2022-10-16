@@ -1,58 +1,48 @@
 import { Form, Input, message, Modal, Select, Tag } from 'antd'
-import { ImprovementIcon } from '../ItemIcon'
+import { RiskIcon } from '../../../components/ItemIcon'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { NewRisk, RiskId, RiskStatus } from '../../../data/types'
+import { RISK_STATUS_UI } from '../../../components/Status'
 import {
-  ImprovementId,
-  ImprovementStatus,
-  NewImprovement
-} from '../../data/types'
-import { IMPROVEMENT_STATUS_UI } from '../Status'
-import {
-  selectAllImprovements,
   selectAllIssues,
   selectAllRisks,
   selectAllTags,
   useStore
-} from '../../data/store'
+} from '../../../data/store'
 import { useEditorStore } from './ItemEditor'
 import { useNavigate } from 'react-router-dom'
-import { getErrorMessage } from './form-utils'
-import { getDefaults } from '../../data/util'
-import { MarkdownEditor } from '../../features/markdown'
+import { getDefaults } from '../../../data/util'
+import { MarkdownEditor } from '../../../features/markdown'
 
-export const ImprovementEditor: React.FC<{
-  improvementId?: ImprovementId
-}> = props => {
+export const RiskEditor: React.FC<{ riskId?: RiskId }> = props => {
   const allTags = useStore(selectAllTags)
-  const allIssues = useStore(selectAllIssues)
   const allRisks = useStore(selectAllRisks)
-  const allImprovements = useStore(selectAllImprovements)
+  const allIssues = useStore(selectAllIssues)
   const createItem = useStore(state => state.createItem)
   const updateItem = useStore(state => state.updateItem)
   const navigate = useNavigate()
   const closeEditor = useEditorStore(state => state.closeEditor)
-  const allIssuesAndRisks = [...allIssues, ...allRisks]
 
   const {
     handleSubmit,
     control,
     formState: { errors }
   } = useForm({
-    defaultValues: props.improvementId
-      ? allImprovements.find(i => i.id === props.improvementId)
-      : (getDefaults(NewImprovement) as NewImprovement),
-    resolver: zodResolver(NewImprovement)
+    defaultValues: props.riskId
+      ? allRisks.find(r => r.id === props.riskId)
+      : (getDefaults(NewRisk) as NewRisk),
+    resolver: zodResolver(NewRisk)
   })
 
-  const onSuccess = async (improvement: NewImprovement) => {
-    if (props.improvementId) {
-      await updateItem({ ...improvement, id: props.improvementId })
-      message.success('Improvement updated')
+  const onSuccess = async (risk: NewRisk) => {
+    if (props.riskId) {
+      await updateItem({ ...risk, id: props.riskId })
+      message.success('Risk updated')
     } else {
-      const newId = await createItem(improvement)
-      message.success('Improvement created')
-      navigate('/improvements/' + newId)
+      const newId = await createItem(risk)
+      message.success('Risk created')
+      navigate('/risks/' + newId)
     }
     closeEditor()
   }
@@ -61,8 +51,8 @@ export const ImprovementEditor: React.FC<{
     <Modal
       title={
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <ImprovementIcon />
-          <span>{props.improvementId ? 'Edit' : 'Create'} Improvement</span>
+          <RiskIcon />
+          <span>{props.riskId ? 'Edit' : 'Create'} Risk</span>
         </div>
       }
       maskClosable={false}
@@ -95,9 +85,9 @@ export const ImprovementEditor: React.FC<{
             name="status"
             render={({ field }) => (
               <Select {...field}>
-                {ImprovementStatus.options.map(status => (
+                {RiskStatus.options.map(status => (
                   <Select.Option value={status} key={status}>
-                    {IMPROVEMENT_STATUS_UI[status].label}
+                    {RISK_STATUS_UI[status].label}
                   </Select.Option>
                 ))}
               </Select>
@@ -108,7 +98,7 @@ export const ImprovementEditor: React.FC<{
         <Form.Item
           label="Tags"
           validateStatus={errors.tags ? 'error' : undefined}
-          help={getErrorMessage(errors.tags)}
+          help={errors.tags?.map(e => e.message).join(', ')}
         >
           <Controller
             control={control}
@@ -126,14 +116,13 @@ export const ImprovementEditor: React.FC<{
         </Form.Item>
 
         <Form.Item
-          label="Resolves"
-          required
-          validateStatus={errors.resolves ? 'error' : undefined}
-          help={getErrorMessage(errors.resolves)}
+          label="Caused by"
+          validateStatus={errors.causedBy ? 'error' : undefined}
+          help={errors.causedBy?.map(e => e.message).join(', ')}
         >
           <Controller
             control={control}
-            name="resolves"
+            name="causedBy"
             render={({ field }) => (
               <Select
                 {...field}
@@ -142,61 +131,9 @@ export const ImprovementEditor: React.FC<{
                 optionFilterProp="children"
                 mode="multiple"
               >
-                {allIssuesAndRisks.map(item => (
-                  <Select.Option key={item.id} value={item.id}>
-                    <Tag>{item.id}</Tag> {item.title}
-                  </Select.Option>
-                ))}
-              </Select>
-            )}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Modifies"
-          validateStatus={errors.modifies ? 'error' : undefined}
-          help={getErrorMessage(errors.modifies)}
-        >
-          <Controller
-            control={control}
-            name="modifies"
-            render={({ field }) => (
-              <Select
-                {...field}
-                allowClear
-                showSearch
-                optionFilterProp="children"
-                mode="multiple"
-              >
-                {allRisks.map(risk => (
-                  <Select.Option key={risk.id} value={risk.id}>
-                    <Tag>{risk.id}</Tag> {risk.title}
-                  </Select.Option>
-                ))}
-              </Select>
-            )}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Creates"
-          validateStatus={errors.creates ? 'error' : undefined}
-          help={getErrorMessage(errors.creates)}
-        >
-          <Controller
-            control={control}
-            name="creates"
-            render={({ field }) => (
-              <Select
-                {...field}
-                allowClear
-                showSearch
-                optionFilterProp="children"
-                mode="multiple"
-              >
-                {allRisks.map(risk => (
-                  <Select.Option key={risk.id} value={risk.id}>
-                    <Tag>{risk.id}</Tag> {risk.title}
+                {allIssues.map(issue => (
+                  <Select.Option key={issue.id} value={issue.id}>
+                    <Tag>{issue.id}</Tag> {issue.title}
                   </Select.Option>
                 ))}
               </Select>

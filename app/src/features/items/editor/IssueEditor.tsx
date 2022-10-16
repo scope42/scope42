@@ -1,23 +1,17 @@
 import { Form, Input, message, Modal, Select, Tag } from 'antd'
-import { RiskIcon } from '../ItemIcon'
+import { IssueIcon } from '../../../components/ItemIcon'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { NewRisk, RiskId, RiskStatus } from '../../data/types'
-import { RISK_STATUS_UI } from '../Status'
-import {
-  selectAllIssues,
-  selectAllRisks,
-  selectAllTags,
-  useStore
-} from '../../data/store'
+import { IssueId, IssueStatus, NewIssue } from '../../../data/types'
+import { ISSUE_STATUS_UI } from '../../../components/Status'
+import { selectAllIssues, selectAllTags, useStore } from '../../../data/store'
 import { useEditorStore } from './ItemEditor'
 import { useNavigate } from 'react-router-dom'
-import { getDefaults } from '../../data/util'
-import { MarkdownEditor } from '../../features/markdown'
+import { getDefaults } from '../../../data/util'
+import { MarkdownEditor } from '../../markdown'
 
-export const RiskEditor: React.FC<{ riskId?: RiskId }> = props => {
+export const IssueEditor: React.FC<{ issueId?: IssueId }> = props => {
   const allTags = useStore(selectAllTags)
-  const allRisks = useStore(selectAllRisks)
   const allIssues = useStore(selectAllIssues)
   const createItem = useStore(state => state.createItem)
   const updateItem = useStore(state => state.updateItem)
@@ -29,20 +23,20 @@ export const RiskEditor: React.FC<{ riskId?: RiskId }> = props => {
     control,
     formState: { errors }
   } = useForm({
-    defaultValues: props.riskId
-      ? allRisks.find(r => r.id === props.riskId)
-      : (getDefaults(NewRisk) as NewRisk),
-    resolver: zodResolver(NewRisk)
+    defaultValues: props.issueId
+      ? allIssues.find(i => i.id === props.issueId)
+      : (getDefaults(NewIssue) as NewIssue),
+    resolver: zodResolver(NewIssue)
   })
 
-  const onSuccess = async (risk: NewRisk) => {
-    if (props.riskId) {
-      await updateItem({ ...risk, id: props.riskId })
-      message.success('Risk updated')
+  const onSuccess = async (issue: NewIssue) => {
+    if (props.issueId) {
+      await updateItem({ ...issue, id: props.issueId })
+      message.success('Issue updated')
     } else {
-      const newId = await createItem(risk)
-      message.success('Risk created')
-      navigate('/risks/' + newId)
+      const newId = await createItem(issue)
+      message.success('Issue created')
+      navigate('/issues/' + newId)
     }
     closeEditor()
   }
@@ -51,8 +45,8 @@ export const RiskEditor: React.FC<{ riskId?: RiskId }> = props => {
     <Modal
       title={
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <RiskIcon />
-          <span>{props.riskId ? 'Edit' : 'Create'} Risk</span>
+          <IssueIcon />
+          <span>{props.issueId ? 'Edit' : 'Create'} Issue</span>
         </div>
       }
       maskClosable={false}
@@ -85,9 +79,9 @@ export const RiskEditor: React.FC<{ riskId?: RiskId }> = props => {
             name="status"
             render={({ field }) => (
               <Select {...field}>
-                {RiskStatus.options.map(status => (
+                {IssueStatus.options.map(status => (
                   <Select.Option value={status} key={status}>
-                    {RISK_STATUS_UI[status].label}
+                    {ISSUE_STATUS_UI[status].label}
                   </Select.Option>
                 ))}
               </Select>

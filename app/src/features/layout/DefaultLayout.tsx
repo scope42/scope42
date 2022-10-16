@@ -3,7 +3,7 @@ import { Divider, Layout } from 'antd'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { ExternalLink } from '../../components/ExternalLink'
-import { ItemEditor } from '../../components/ItemEditor/ItemEditor'
+import { ItemEditor } from '../items'
 import { Header } from './Header'
 import { SideNav } from './SideNav'
 

@@ -1,23 +1,23 @@
 import { Form, Input, message, Modal, Select, Tag } from 'antd'
-import { DecisionIcon } from '../ItemIcon'
+import { DecisionIcon } from '../../../components/ItemIcon'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { DecisionId, DecisionStatus, NewDecision } from '../../data/types'
-import { DECISION_STATUS_UI } from '../Status'
+import { DecisionId, DecisionStatus, NewDecision } from '../../../data/types'
+import { DECISION_STATUS_UI } from '../../../components/Status'
 import {
   selectAllDecisions,
   selectAllImprovements,
   selectAllPersonNames,
   selectAllTags,
   useStore
-} from '../../data/store'
+} from '../../../data/store'
 import { useEditorStore } from './ItemEditor'
 import { useNavigate } from 'react-router-dom'
-import { getDefaults } from '../../data/util'
+import { getDefaults } from '../../../data/util'
 import React from 'react'
-import { NativeDatePicker } from '../../features/forms'
-import { InfoBubble } from '../../features/ui'
-import { MarkdownEditor } from '../../features/markdown'
+import { NativeDatePicker } from '../../forms'
+import { InfoBubble } from '../../ui'
+import { MarkdownEditor } from '../../markdown'
 
 /**
  * Source: https://github.com/adr/madr/blob/main/template/adr-template.md (CC0)
