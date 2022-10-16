@@ -6,6 +6,7 @@
   <a href="https://github.com/scope42/scope42/actions/workflows/build.yml"><img src="https://github.com/scope42/scope42/actions/workflows/build.yml/badge.svg" alt="Build"></a>
   <a href="http://makeapullrequest.com"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome"></a>
   <a href="https://github.com/scope42/scope42/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-GPL--3.0-informational.svg" alt="License: GPL v3"></a>
+  <a href="https://github.com/scope42/scope42/tree/main/architecture"><img src="https://img.shields.io/badge/%F0%9F%93%96%20architecture-scope42-blue" alt="Architecture Documentation" /></a>
   <br />
   <a href="https://matrix.to/#/#scope42:matrix.org"><img src="https://img.shields.io/matrix/scope42:matrix.org" alt="Matrix"></a>
   <a href="https://twitter.com/scope42_org"><img src="https://img.shields.io/twitter/follow/scope42_org?style=social" alt="Twitter Follow"></a>
@@ -79,12 +80,12 @@ comments:
 
 ## Badge
 
-[![Architecture Documentation](https://img.shields.io/badge/%F0%9F%93%96%20architecture-scope42-blue)](https://github.com/scope42/scope42/tree/main/example)
+[![Architecture Documentation](https://img.shields.io/badge/%F0%9F%93%96%20architecture-scope42-blue)](https://github.com/scope42/scope42/tree/main/architecture)
 
 If you use scope42 in your project, you can add this badge to your README. This way, people visiting your repository can quickly find the architecture documentation. Simply copy the code below and change the link to point to an export (coming soon) or the workspace of your scope42 data.
 
 ```md
-[![Architecture Documentation](https://img.shields.io/badge/%F0%9F%93%96%20architecture-scope42-blue)](https://github.com/scope42/scope42/tree/main/example)
+[![Architecture Documentation](https://img.shields.io/badge/%F0%9F%93%96%20architecture-scope42-blue)](https://github.com/scope42/scope42/tree/main/architecture)
 ```
 
 ## Tech Stack
