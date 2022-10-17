@@ -41,7 +41,7 @@ const COMPONENTS: Components = {
   'scope42-item-link'(props) {
     return <ItemLink id={props['item-id']} />
   },
-  code({ node, inline, className, children, ...props }) {
+  code({ node, inline, className, children, style, ...props }) {
     if (inline) {
       return <Typography.Text code>{children}</Typography.Text>
     }
@@ -59,7 +59,12 @@ const COMPONENTS: Components = {
 
     return (
       <Suspense fallback={<pre>{code}</pre>}>
-        <LazyCode children={code} language={language} {...props} />
+        <LazyCode
+          children={code}
+          language={language}
+          style={style as any}
+          {...props}
+        />
       </Suspense>
     )
   }
