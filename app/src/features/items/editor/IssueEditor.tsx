@@ -9,6 +9,7 @@ import { useEditorStore } from './ItemEditor'
 import { useNavigate } from 'react-router-dom'
 import { getDefaults } from '../../../data/util'
 import { MarkdownEditor } from '../../markdown'
+import { getErrorMessage } from './form-utils'
 
 export const IssueEditor: React.FC<{ issueId?: IssueId }> = props => {
   const allTags = useStore(selectAllTags)
@@ -72,7 +73,7 @@ export const IssueEditor: React.FC<{ issueId?: IssueId }> = props => {
           required
           label="Status"
           validateStatus={errors.status?.message ? 'error' : undefined}
-          help={errors.status?.message}
+          help={getErrorMessage(errors.status)}
         >
           <Controller
             control={control}
@@ -92,7 +93,7 @@ export const IssueEditor: React.FC<{ issueId?: IssueId }> = props => {
         <Form.Item
           label="Tags"
           validateStatus={errors.tags ? 'error' : undefined}
-          help={errors.tags?.map(e => e.message).join(', ')}
+          help={getErrorMessage(errors.tags)}
         >
           <Controller
             control={control}
@@ -112,7 +113,7 @@ export const IssueEditor: React.FC<{ issueId?: IssueId }> = props => {
         <Form.Item
           label="Caused by"
           validateStatus={errors.causedBy ? 'error' : undefined}
-          help={errors.causedBy?.map(e => e.message).join(', ')}
+          help={getErrorMessage(errors.causedBy)}
         >
           <Controller
             control={control}

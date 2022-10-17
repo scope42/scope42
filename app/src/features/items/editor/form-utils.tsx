@@ -1,7 +1,7 @@
-import { FieldError } from 'react-hook-form'
+import { FieldError, Merge } from 'react-hook-form'
 
 export function getErrorMessage(
-  error: FieldError | FieldError[] | undefined
+  error: Merge<FieldError, (FieldError | undefined)[]> | undefined
 ): string | undefined {
   if (Array.isArray(error)) {
     return error.map(e => e.message).join(', ')
