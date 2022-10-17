@@ -18,6 +18,7 @@ import React from 'react'
 import { NativeDatePicker } from '../../forms'
 import { InfoBubble } from '../../ui'
 import { MarkdownEditor } from '../../markdown'
+import { getErrorMessage } from './form-utils'
 
 /**
  * Source: https://github.com/adr/madr/blob/main/template/adr-template.md (CC0)
@@ -113,7 +114,7 @@ export const DecisionEditor: React.FC<{ decisionId?: DecisionId }> = props => {
         <Form.Item
           label="Tags"
           validateStatus={errors.tags ? 'error' : undefined}
-          help={errors.tags?.map(e => e.message).join(', ')}
+          help={getErrorMessage(errors.tags)}
         >
           <Controller
             control={control}
@@ -158,7 +159,7 @@ export const DecisionEditor: React.FC<{ decisionId?: DecisionId }> = props => {
         <Form.Item
           label="Assesses"
           validateStatus={errors.assesses ? 'error' : undefined}
-          help={errors.assesses?.map(e => e.message).join(', ')}
+          help={getErrorMessage(errors.assesses)}
         >
           <Controller
             control={control}
@@ -196,7 +197,7 @@ export const DecisionEditor: React.FC<{ decisionId?: DecisionId }> = props => {
         <Form.Item
           label="Deciders"
           validateStatus={errors.deciders ? 'error' : undefined}
-          help={errors.deciders?.map(e => e.message).join(', ')}
+          help={getErrorMessage(errors.deciders)}
         >
           <Controller
             control={control}

@@ -14,6 +14,7 @@ import { useEditorStore } from './ItemEditor'
 import { useNavigate } from 'react-router-dom'
 import { getDefaults } from '../../../data/util'
 import { MarkdownEditor } from '../../../features/markdown'
+import { getErrorMessage } from './form-utils'
 
 export const RiskEditor: React.FC<{ riskId?: RiskId }> = props => {
   const allTags = useStore(selectAllTags)
@@ -98,7 +99,7 @@ export const RiskEditor: React.FC<{ riskId?: RiskId }> = props => {
         <Form.Item
           label="Tags"
           validateStatus={errors.tags ? 'error' : undefined}
-          help={errors.tags?.map(e => e.message).join(', ')}
+          help={getErrorMessage(errors.tags)}
         >
           <Controller
             control={control}
@@ -118,7 +119,7 @@ export const RiskEditor: React.FC<{ riskId?: RiskId }> = props => {
         <Form.Item
           label="Caused by"
           validateStatus={errors.causedBy ? 'error' : undefined}
-          help={errors.causedBy?.map(e => e.message).join(', ')}
+          help={getErrorMessage(errors.causedBy)}
         >
           <Controller
             control={control}
