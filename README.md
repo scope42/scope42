@@ -19,8 +19,6 @@ scope42 is a Progressive Web App that runs entirely inside your browser. Click t
 
 <h3 align="center">🔗 <a href="https://app.scope42.org">app.scope42.org</a></h3>
 
-⚠⚠⚠ **This project is currently in beta stage. Breaking changes to the data format are not planned but may happen with short notice.**
-
 ## Features
 
 <h3 align="center">✨ Management of items with a fancy UI</h3>
