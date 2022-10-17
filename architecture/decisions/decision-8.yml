@@ -1,8 +1,12 @@
 title: Static export approach
 tags: []
 created: 2022-10-16T19:50:41.075Z
-modified: 2022-10-16T20:37:02.757Z
-comments: []
+modified: 2022-10-17T14:55:01.640Z
+comments:
+  - author: erikhofer
+    created: 2022-10-17T14:54:41.558Z
+    content: "Possible cache busting approach:
+      https://github.com/CagriAldemir/react-cache-buster"
 status: proposed
 deciders:
   - erikhofer
@@ -12,16 +16,25 @@ context: We want to provide the ability to export a workspace as a read-only
   approached?
 options:
   - title: Full client-side rendering
-    description: This could work similar to how the demo workspace is realized. The
+    description: >-
+      This could work similar to how the demo workspace is realized. The
       app is essentially not changed, just the entry point is modified to load a
       pre-baked workspace JSON export.
+
+
+      I could be possible to use the pre-built app and not do a separate build for export. This would make things much simpler.
+
+      A challenge for this is hosting the export on non-root path. This is normally configured at build time using `%PUBLIC_URL%`. There are, however, ways to solve this: https://dev.to/n1ru4l/configure-the-cra-public-url-post-build-with-node-js-and-express-4n8
     pros: |-
       * Relatively easy to set up.
       * State management can stay the same.
+      * No separate building process (potentially).
     cons: >-
       * Does not work without JavaScript at all.
 
       * The whole workspace must be downloaded before the app can be loaded. This can be partially avoided by https://github.com/scope42/scope42/issues/234. We should also consider caching (and cache busting).
+
+      * The webserver needs to support SPAs (e.g. GH pages does not). Or we could add support for hash routing.
   - title: Static site generation with NextJS
     description: ""
     pros: |-
