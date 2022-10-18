@@ -1,5 +1,11 @@
 # @scope42/app
 
+## 0.1.4
+
+### Patch Changes
+
+- 5f486eb: Trigger deployment
+
 ## 0.1.3
 
 ### Patch Changes
