@@ -76,11 +76,6 @@ export const WorkspaceSelection: React.FC = () => {
                     </>
                   ) : null}
                   <DirectoryPicker />
-                  <Alert
-                    style={{ marginTop: 16 }}
-                    type="warning"
-                    message="⚠ This project is currently in beta stage. Breaking changes to the data format are not planned but may happen with short notice."
-                  />
                 </>
               )}
             </Col>
