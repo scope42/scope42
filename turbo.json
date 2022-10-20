@@ -5,6 +5,11 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**", "build/**"]
     },
+    "app#build": {
+      "dependsOn": ["^build"],
+      "outputs": ["build/**"],
+      "env": ["PUBLIC_URL", "REACT_APP_VERSION"]
+    },
     "test": {
       "outputs": []
     },
