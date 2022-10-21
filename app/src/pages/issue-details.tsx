@@ -7,7 +7,7 @@ import { IssueIcon } from '../features/items'
 import { PageHeader } from '../features/layout'
 import { Error404, TicketLink } from '../features/ui'
 import { useParams } from 'react-router-dom'
-import { IssueId } from '../data/types'
+import { IssueId } from '@scope42/data'
 import { ItemDetailsPage, useEditorStore } from '../features/items'
 import { Markdown } from '../features/markdown'
 

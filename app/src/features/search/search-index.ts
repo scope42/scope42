@@ -1,5 +1,5 @@
 import { Index } from 'flexsearch'
-import { Item, ItemId, ItemType } from '../../data/types'
+import { Item, ItemId, ItemType } from '@scope42/data'
 import { exists, getIdFromSerial, getSerialFromId } from '../../data/util'
 
 /**

@@ -1,4 +1,4 @@
-import { Aim42ItemType } from '../../data/types'
+import { Aim42ItemType } from '@scope42/data'
 import { Aim42Card } from '.'
 import { commonTerminology } from '@scope42/structured-aim42/lib/introduction/how-does-aim42-work/common-terminology'
 import { AtomicNode } from '@scope42/structured-aim42/lib/types'

@@ -7,7 +7,7 @@ import { ImprovementIcon } from '../features/items'
 import { PageHeader } from '../features/layout'
 import { Error404, TicketLink } from '../features/ui'
 import { useParams } from 'react-router-dom'
-import { ImprovementId } from '../data/types'
+import { ImprovementId } from '@scope42/data'
 import { ItemDetailsPage, useEditorStore } from '../features/items'
 import { Markdown } from '../features/markdown'
 

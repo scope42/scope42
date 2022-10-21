@@ -1,5 +1,5 @@
 import { Col, Row, Typography } from 'antd'
-import { Item } from '../../../data/types'
+import { Item } from '@scope42/data'
 import { GraphCard } from '../../graphs'
 import { Comments } from './Comments'
 import { ItemRelations } from './ItemRelations'

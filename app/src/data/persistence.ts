@@ -11,7 +11,7 @@ import {
   ItemType,
   Risk,
   RiskId
-} from './types'
+} from '@scope42/data'
 import YAML from 'yaml'
 import { message } from 'antd'
 import { getTypeFromId } from './util'

@@ -1,7 +1,7 @@
 import { ElementDefinition, Stylesheet } from 'cytoscape'
 import { useEffect, useMemo, useState } from 'react'
 import { Items, useStore } from '../../data/store'
-import { Item } from '../../data/types'
+import { Item } from '@scope42/data'
 import { getIncomingRelations, getOutgoingRelations } from '../items'
 import Cytoscape from 'cytoscape'
 import CytoscapeComponent from 'react-cytoscapejs'

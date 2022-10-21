@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { PATHS } from './ItemLink'
-import { ItemId } from '../../data/types'
+import { ItemId } from '@scope42/data'
 import { getTypeFromId } from '../../data/util'
 
 export function useNavigateToItem() {

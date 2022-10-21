@@ -1,4 +1,4 @@
-import { ItemId, ItemType } from './types'
+import { ItemId, ItemType } from '@scope42/data'
 import dayjs from 'dayjs'
 import { z } from 'zod'
 

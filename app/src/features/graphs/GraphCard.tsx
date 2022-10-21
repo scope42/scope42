@@ -1,7 +1,7 @@
 import { FullscreenOutlined } from '@ant-design/icons'
 import { Card, CardProps, Modal, Switch } from 'antd'
 import { useState } from 'react'
-import { Item } from '../../data/types'
+import { Item } from '@scope42/data'
 import { Graph } from './Graph'
 
 interface GraphCardProps extends CardProps {

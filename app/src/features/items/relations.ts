@@ -6,7 +6,7 @@ import {
   selectAllIssues,
   selectAllRisks
 } from '../../data/store'
-import { Item, ItemId } from '../../data/types'
+import { Item, ItemId } from '@scope42/data'
 import { exists } from '../../data/util'
 
 export interface Relation {

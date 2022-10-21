@@ -2,7 +2,7 @@ import { Form, Input, message, Modal, Select, Tag } from 'antd'
 import { RiskIcon } from '../ItemIcon'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { NewRisk, RiskId, RiskStatus } from '../../../data/types'
+import { NewRisk, RiskId, RiskStatus } from '@scope42/data'
 import { RISK_STATUS_UI } from '../Status'
 import {
   selectAllIssues,

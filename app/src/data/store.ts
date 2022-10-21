@@ -13,7 +13,7 @@ import {
   Risk,
   RiskId,
   WorkspaceConfig
-} from './types'
+} from '@scope42/data'
 import { getIdFromSerial, getSerialFromId } from './util'
 import {
   loadItems,

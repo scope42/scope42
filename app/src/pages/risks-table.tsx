@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import { RiskStatus } from '../data/types'
+import { RiskStatus } from '@scope42/data'
 import { selectAllRisks, useStore } from '../data/store'
 import { PageHeader } from '../features/layout'
 import { POSSIBLE_STATUSES } from '../features/items'
