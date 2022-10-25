@@ -19,6 +19,9 @@ scope42 is a Progressive Web App that runs entirely inside your browser. Click t
 
 <h3 align="center">🔗 <a href="https://app.scope42.org">app.scope42.org</a></h3>
 
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fscope42%2Fscope42.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fscope42%2Fscope42?ref=badge_large)
+
 ## Features
 
 <h3 align="center">✨ Management of items with a fancy UI</h3>
@@ -79,6 +82,7 @@ comments:
 ## Badge
 
 [![Architecture Documentation](https://img.shields.io/badge/%F0%9F%93%96%20architecture-scope42-blue)](https://github.com/scope42/scope42/tree/main/architecture)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fscope42%2Fscope42.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fscope42%2Fscope42?ref=badge_shield)
 
 If you use scope42 in your project, you can add this badge to your README. This way, people visiting your repository can quickly find the architecture documentation. Simply copy the code below and change the link to point to an export (coming soon) or the workspace of your scope42 data.
 
