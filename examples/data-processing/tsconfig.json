@@ -1,0 +1,12 @@
+{
+  "extends": "@scope42/tsconfig/library.json",
+  "include": ["."],
+  "exclude": ["dist", "build", "node_modules"],
+  "ts-node": {
+    "transpileOnly": true,
+    "compilerOptions": {
+      "module": "commonjs",
+      "moduleResolution": "node"
+    }
+  }
+}
