@@ -1,12 +1,11 @@
 import {
   AppState,
-  Items,
   selectAllDecisions,
   selectAllImprovements,
   selectAllIssues,
   selectAllRisks
 } from '../../data/store'
-import { Item, ItemId } from '@scope42/data'
+import { IndexedItems, Item, ItemId } from '@scope42/data'
 import { exists } from '../../data/util'
 
 export interface Relation {
@@ -14,7 +13,10 @@ export interface Relation {
   label: string
 }
 
-export function getOutgoingRelations(item: Item, pool: Items): Relation[] {
+export function getOutgoingRelations(
+  item: Item,
+  pool: IndexedItems
+): Relation[] {
   const resolve = (ids: Array<ItemId | undefined>, label: string): Relation[] =>
     ids
       .filter(exists)
@@ -41,7 +43,10 @@ export function getOutgoingRelations(item: Item, pool: Items): Relation[] {
   }
 }
 
-export function getIncomingRelations(item: Item, pool: Items): Relation[] {
+export function getIncomingRelations(
+  item: Item,
+  pool: IndexedItems
+): Relation[] {
   function resolve<T extends Item>(
     selector: (items: Pick<AppState, 'items'>) => T[],
     getProperty: (item: T) => ItemId[],

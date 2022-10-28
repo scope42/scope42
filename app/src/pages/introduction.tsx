@@ -7,11 +7,15 @@ import { PlusOutlined } from '@ant-design/icons'
 import { PageHeader } from '../features/layout'
 import { useStore } from '../data/store'
 import { ExternalLink } from '../features/ui'
+import { DemoWorkspace } from '../features/demo'
 
 const { Title } = Typography
 
 export const IntroductionPage: React.FC = () => {
-  const demoMode = useStore(state => state.workspace.handle === undefined)
+  const demoMode = useStore(
+    state =>
+      state.workspace.present && state.workspace.access instanceof DemoWorkspace
+  )
 
   return (
     <Narrow>

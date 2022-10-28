@@ -10,9 +10,21 @@
     "dist/**"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format esm,cjs --dts",
-    "dev": "tsup src/index.ts --watch --format esm,cjs --dts",
+    "build": "tsup",
+    "dev": "tsup --watch",
     "lint": "eslint \"src/**/*.ts*\""
+  },
+  "tsup": {
+    "entry": [
+      "src/index.ts",
+      "src/io/adapters/node.ts",
+      "src/io/adapters/fsa.ts"
+    ],
+    "format": [
+      "esm",
+      "cjs"
+    ],
+    "dts": true
   },
   "prettier": "@xinra/prettier-config",
   "devDependencies": {
@@ -28,6 +40,7 @@
     "access": "public"
   },
   "dependencies": {
-    "zod": "^3.19.1"
+    "yaml": "2.1.3",
+    "zod": "3.19.1"
   }
 }

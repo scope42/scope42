@@ -6,7 +6,9 @@ import { useStore } from '../../data/store'
 import { HeaderSearch } from '../search'
 
 export const Header: React.FC = () => {
-  const workspaceName = useStore(state => state.workspace.name)
+  const workspaceName = useStore(state =>
+    state.workspace.present ? state.workspace.name : ''
+  )
   const closeWorkspace = useStore(state => state.closeWorkspace)
 
   const workspacePopover = (

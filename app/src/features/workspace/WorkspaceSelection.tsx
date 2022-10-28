@@ -3,11 +3,18 @@ import { Alert, Button, Card, Col, Modal, Row } from 'antd'
 import { useStore } from '../../data/store'
 import 'liquid-loading'
 import { ExternalLink } from '../ui'
+import { DemoWorkspace } from '../demo'
+import { Workspace } from '@scope42/data'
+import { FsaDirectoryHandle } from '@scope42/data/dist/io/adapters/fsa'
+import { initializeWorkspace } from './initialization'
 
 export const WorkspaceSelection: React.FC = () => {
-  const loading = useStore(state => state.workspace.loading)
-  const error = useStore(state => state.workspace.error)
-  const openDemoWorkspace = useStore(state => state.openDemoWorkspace)
+  const workspace = useStore(state => state.workspace)
+  const openWorkspace = useStore(state => state.openWorkspace)
+
+  if (workspace.present === true) {
+    return null
+  }
 
   return (
     <div
@@ -56,7 +63,7 @@ export const WorkspaceSelection: React.FC = () => {
               />
             </Col>
             <Col span={12}>
-              {loading ? (
+              {workspace.loading ? (
                 <Loading />
               ) : (
                 <>
@@ -65,12 +72,12 @@ export const WorkspaceSelection: React.FC = () => {
                     open file format on your machine. Click the button below to
                     choose a directory that is used as the workspace root.
                   </p>
-                  {error ? (
+                  {workspace.error ? (
                     <>
                       <Alert
                         type="error"
                         message="Opening workspace failed"
-                        description={`${error}`}
+                        description={`${workspace.error}`}
                       />
                       <br />
                     </>
@@ -85,8 +92,8 @@ export const WorkspaceSelection: React.FC = () => {
           block
           type="primary"
           ghost
-          onClick={openDemoWorkspace}
-          disabled={loading}
+          onClick={() => openWorkspace(new DemoWorkspace())}
+          disabled={workspace.loading}
         >
           Open Demo (no data persistence)
         </Button>
@@ -103,26 +110,29 @@ const Loading: React.FC = () => {
 const DirectoryPicker: React.FC = () => {
   const browserSupported = window.showDirectoryPicker !== undefined
 
-  const createWorkspace = useStore(state => state.createWorkspace)
   const openWorkspace = useStore(state => state.openWorkspace)
 
   const chooseWorkspace = async () => {
     const dirHandle = await window.showDirectoryPicker()
 
-    const configFileHandle = await dirHandle
-      .getFileHandle('scope42.yml')
-      .catch(() => null)
+    const workspace = new Workspace(new FsaDirectoryHandle(dirHandle))
 
-    if (configFileHandle === null) {
+    const isInitialized = await workspace
+      .readConfig()
+      .then(() => true)
+      .catch(() => false)
+
+    if (isInitialized) {
+      await openWorkspace(workspace)
+    } else {
       Modal.confirm({
         title: 'Create new workspace?',
         icon: <ExclamationCircleOutlined />,
         content:
           'The selected directory is a scope42 workspace yet. Do you want to create a new workspace here? This should only be done in empty directories to avoid loss of existing data!',
-        onOk: () => createWorkspace(dirHandle)
+        onOk: () =>
+          initializeWorkspace(workspace).then(() => openWorkspace(workspace))
       })
-    } else {
-      await openWorkspace(dirHandle)
     }
   }
 
