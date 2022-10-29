@@ -10,7 +10,8 @@
   "packageRules": [
     {
       "updateTypes": ["minor", "patch", "pin"],
-      "automerge": true
+      "automerge": true,
+      "automergeType": "branch"
     },
     {
       "packagePatterns": [
