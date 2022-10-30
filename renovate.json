@@ -6,7 +6,7 @@
   "stabilityDays": 7,
   "prCreation": "not-pending",
   "dependencyDashboard": true,
-  "labels": ["dependencies"],
+  "labels": ["Type: Dependency Upgrade"],
   "packageRules": [
     {
       "updateTypes": ["minor", "patch", "pin"],
