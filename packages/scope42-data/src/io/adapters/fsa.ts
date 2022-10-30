@@ -1,8 +1,8 @@
 import { DirectoryHandle, FileHandle } from './api'
 
 export class FsaDirectoryHandle implements DirectoryHandle {
-  kind = 'directory' as const
-  name: string
+  readonly kind = 'directory' as const
+  readonly name: string
   #delegate: FileSystemDirectoryHandle
 
   constructor(delegate: FileSystemDirectoryHandle) {
@@ -44,8 +44,8 @@ export class FsaDirectoryHandle implements DirectoryHandle {
 }
 
 export class FsaFileHandle implements FileHandle {
-  kind = 'file' as const
-  name: string
+  readonly kind = 'file' as const
+  readonly name: string
   #delegate: FileSystemFileHandle
 
   constructor(delegate: FileSystemFileHandle) {

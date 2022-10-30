@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-redeclare */
 import { z } from 'zod'
 import { DeserializableDate, nullsafeOptional } from './commons'
 import { ItemId } from './item-id'

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-redeclare */
 import { z } from 'zod'
 
 export const WorkspaceConfig = z.object({

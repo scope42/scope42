@@ -110,10 +110,9 @@ async function parseItemsInDirectory<ITEM extends Item, ID extends ItemId>(
   let dir: DirectoryHandle
   try {
     dir = await workspaceDir.resolveDirectory(itemDirName)
-  } catch {
+  } catch (e) {
     return [] // if the directory does not exist, that's okay
   }
-
   const promises: Promise<ITEM>[] = []
 
   for await (const entry of dir.getContent()) {

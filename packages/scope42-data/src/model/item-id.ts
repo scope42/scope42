@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-redeclare */
 import { z } from 'zod'
 
 // We could cover 5 digits with an exaustive template literal type but it causes

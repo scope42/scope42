@@ -9,8 +9,8 @@ const readFile = promisify(fs.readFile)
 const writeFile = promisify(fs.writeFile)
 
 export class NodeDirectoryHandle implements DirectoryHandle {
-  kind = 'directory' as const
-  name: string
+  readonly kind = 'directory' as const
+  readonly name: string
   #path: string
 
   constructor(path: string) {
@@ -58,8 +58,8 @@ export class NodeDirectoryHandle implements DirectoryHandle {
 }
 
 class NodeFileHandle implements FileHandle {
-  kind = 'file' as const
-  name: string
+  readonly kind = 'file' as const
+  readonly name: string
   #path: string
 
   constructor(path: string) {

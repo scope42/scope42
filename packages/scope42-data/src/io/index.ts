@@ -1,2 +1,2 @@
 export * from './workspace'
-export * from './adapters/api'
+export * from './adapters'

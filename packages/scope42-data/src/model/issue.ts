@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-redeclare */
 import { z } from 'zod'
 import { nullsafeOptional } from './commons'
 import { Item, ItemFileContent, NewItem } from './item-base'

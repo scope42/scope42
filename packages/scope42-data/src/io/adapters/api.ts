@@ -1,6 +1,6 @@
 export interface DirectoryHandle {
-  kind: 'directory'
-  name: string
+  readonly kind: 'directory'
+  readonly name: string
   resolveFile(name: string): Promise<FileHandle>
   resolveOrCreateFile(name: string): Promise<FileHandle>
   resolveDirectory(name: string): Promise<DirectoryHandle>
@@ -9,8 +9,8 @@ export interface DirectoryHandle {
 }
 
 export interface FileHandle {
-  kind: 'file'
-  name: string
+  readonly kind: 'file'
+  readonly name: string
   readText(): Promise<string>
   writeText(text: string): Promise<void>
 }
