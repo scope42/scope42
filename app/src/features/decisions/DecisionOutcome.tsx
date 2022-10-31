@@ -20,7 +20,7 @@ import { useStore } from '../../data/store'
 import {
   Decision,
   DecisionOutcome as DecisionOutcomeSchema
-} from '../../data/types'
+} from '@scope42/data'
 import { getDefaults } from '../../data/util'
 import produce from 'immer'
 import { useState } from 'react'

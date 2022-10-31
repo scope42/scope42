@@ -1,4 +1,4 @@
-import { DecisionStatus } from '../data/types'
+import { DecisionStatus } from '@scope42/data'
 import { selectAllDecisions, useStore } from '../data/store'
 import { PageHeader } from '../features/layout'
 import { POSSIBLE_STATUSES } from '../features/items'

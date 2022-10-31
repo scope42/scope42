@@ -1,4 +1,4 @@
-import { Decision, DecisionOption } from '../../data/types'
+import { Decision, DecisionOption } from '@scope42/data'
 import {
   Form,
   message,

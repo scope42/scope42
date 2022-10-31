@@ -5,7 +5,7 @@ import {
 } from 'antd/lib/table/interface'
 import produce from 'immer'
 import create from 'zustand'
-import { Item } from '../../../data/types'
+import { Item } from '@scope42/data'
 
 export interface TableState {
   pagination: TablePaginationConfig

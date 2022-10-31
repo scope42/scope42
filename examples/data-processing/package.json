@@ -1,0 +1,22 @@
+{
+  "name": "@scope42/data-processing-example",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "gen": "ts-node src/index.ts",
+    "lint": "eslint \"src/**/*.ts*\""
+  },
+  "prettier": "@xinra/prettier-config",
+  "devDependencies": {
+    "@scope42/tsconfig": "*",
+    "@xinra/prettier-config": "2.0.0",
+    "eslint": "8.25.0",
+    "eslint-config-scope42": "*",
+    "prettier": "2.7.1",
+    "typescript": "4.8.4",
+    "ts-node": "10.9.1"
+  },
+  "dependencies": {
+    "@scope42/data": "*"
+  }
+}

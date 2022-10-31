@@ -1,4 +1,4 @@
-import { Item, Comment } from '../../../data/types'
+import { Item, Comment } from '@scope42/data'
 import {
   Comment as AntdComment,
   Form,

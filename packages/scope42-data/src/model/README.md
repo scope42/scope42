@@ -1,0 +1,1 @@
+The data model defined here is based on the [aim42 domain model](https://aim42.github.io/#Domain-Model) by [Gernot Starke](https://www.gernotstarke.de/) and community contributors used under [CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/).

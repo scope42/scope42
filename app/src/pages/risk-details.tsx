@@ -7,7 +7,7 @@ import { RiskIcon } from '../features/items'
 import { PageHeader } from '../features/layout'
 import { Error404, TicketLink } from '../features/ui'
 import { useParams } from 'react-router-dom'
-import { RiskId } from '../data/types'
+import { RiskId } from '@scope42/data'
 import { ItemDetailsPage, useEditorStore } from '../features/items'
 import { Markdown } from '../features/markdown'
 

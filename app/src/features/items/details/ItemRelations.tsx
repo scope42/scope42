@@ -2,7 +2,7 @@ import Table, { ColumnsType } from 'antd/lib/table'
 import { getIncomingRelations, getOutgoingRelations, Relation } from '..'
 import { ItemLink } from '../ItemLink'
 import { useStore } from '../../../data/store'
-import { Item } from '../../../data/types'
+import { Item } from '@scope42/data'
 
 const columns: ColumnsType<Relation> = [
   {

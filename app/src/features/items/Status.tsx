@@ -7,7 +7,7 @@ import {
   Item,
   ItemType,
   RiskStatus
-} from '../../data/types'
+} from '@scope42/data'
 
 type StatusUi = { label: string; component: React.ReactNode; active: boolean }
 

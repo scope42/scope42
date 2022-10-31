@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import { ImprovementStatus } from '../data/types'
+import { ImprovementStatus } from '@scope42/data'
 import { selectAllImprovements, useStore } from '../data/store'
 import { PageHeader } from '../features/layout'
 import { POSSIBLE_STATUSES } from '../features/items'

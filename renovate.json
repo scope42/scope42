@@ -1,22 +1,17 @@
 {
-  "extends": [
-    "config:base",
-    ":semanticCommitTypeAll(chore)"
-  ],
+  "extends": ["config:base", ":semanticCommitTypeAll(chore)"],
   "stabilityDays": 7,
   "prCreation": "not-pending",
   "dependencyDashboard": true,
   "labels": ["Type: Dependency Upgrade"],
   "packageRules": [
     {
-      "updateTypes": ["minor", "patch", "pin"],
+      "updateTypes": ["minor", "patch"],
       "automerge": true,
       "automergeType": "branch"
     },
     {
-      "packagePatterns": [
-        "^@scope42/"
-      ],
+      "packagePatterns": ["^@scope42/"],
       "stabilityDays": 0
     }
   ]

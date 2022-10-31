@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import { IssueStatus } from '../data/types'
+import { IssueStatus } from '@scope42/data'
 import { selectAllIssues, useStore } from '../data/store'
 import { PageHeader } from '../features/layout'
 import { POSSIBLE_STATUSES } from '../features/items'

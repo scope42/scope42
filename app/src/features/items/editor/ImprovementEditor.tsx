@@ -2,11 +2,7 @@ import { Form, Input, message, Modal, Select, Tag } from 'antd'
 import { ImprovementIcon } from '../ItemIcon'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import {
-  ImprovementId,
-  ImprovementStatus,
-  NewImprovement
-} from '../../../data/types'
+import { ImprovementId, ImprovementStatus, NewImprovement } from '@scope42/data'
 import { IMPROVEMENT_STATUS_UI } from '../Status'
 import {
   selectAllImprovements,

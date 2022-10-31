@@ -1,5 +1,5 @@
 import create from 'zustand'
-import { DecisionId, ImprovementId, IssueId, RiskId } from '../../../data/types'
+import { DecisionId, ImprovementId, IssueId, RiskId } from '@scope42/data'
 import { DecisionEditor } from './DecisionEditor'
 import { ImprovementEditor } from './ImprovementEditor'
 import { IssueEditor } from './IssueEditor'

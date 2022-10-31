@@ -1,4 +1,4 @@
-import { ItemType } from '../../data/types'
+import { ItemType } from '@scope42/data'
 import Icon from '@ant-design/icons'
 
 type IconProps = React.ComponentProps<typeof Icon>
