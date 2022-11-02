@@ -1,12 +1,12 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const lightCodeTheme = require('prism-react-renderer/themes/github')
+const darkCodeTheme = require('prism-react-renderer/themes/dracula')
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'scope42 Documentation',
+  title: 'scope42',
   tagline: 'Improve your software architecture with precision!',
   url: 'https://docs.scope42.org',
   baseUrl: '/',
@@ -22,39 +22,44 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/scope42/docs/tree/main/',
+          editUrl: 'https://github.com/scope42/scope42/tree/main/website'
         },
         blog: false,
         theme: {
-          customCss: require.resolve('./src/css/custom.css'),
-        },
-      }),
-    ],
+          customCss: require.resolve('./src/css/custom.css')
+        }
+      })
+    ]
   ],
 
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'scope42 Documentation',
+        title: 'scope42',
         logo: {
           alt: 'scope42 logo',
-          src: 'img/logo.svg',
+          src: 'img/logo.svg'
         },
         items: [
           {
-            href: 'https://app.scope42.org',
-            label: 'scope42 App',
+            type: 'doc',
             position: 'left',
+            docId: 'introduction',
+            label: 'Docs'
           },
           {
             href: 'https://github.com/scope42/scope42',
             label: 'GitHub',
-            position: 'right',
+            position: 'right'
           },
-        ],
+          {
+            href: 'https://app.scope42.org',
+            label: 'App',
+            position: 'right'
+          }
+        ]
       },
       footer: {
         style: 'dark',
@@ -63,36 +68,44 @@ const config = {
             title: 'Community',
             items: [
               {
-                label: 'Matrix',
-                href: 'https://matrix.to/#/#scope42:matrix.org',
+                label: 'Twitter',
+                href: 'https://twitter.com/get_scope42'
               },
               {
-                label: 'Twitter',
-                href: 'https://twitter.com/get_scope42',
+                label: 'Mastodon',
+                href: 'https://floss.social/@scope42'
               },
-            ],
+              {
+                label: 'Matrix',
+                href: 'https://matrix.to/#/#scope42:matrix.org'
+              },
+              {
+                label: 'Forum',
+                href: 'https://github.com/scope42/scope42/discussions'
+              }
+            ]
           },
           {
             title: 'More',
             items: [
               {
-                label: 'scope42 App',
-                href: 'https://app.scope42.org',
+                label: 'App',
+                href: 'https://app.scope42.org'
               },
               {
                 label: 'GitHub',
-                href: 'https://github.com/scope42/scope42',
-              },
-            ],
-          },
+                href: 'https://github.com/scope42/scope42'
+              }
+            ]
+          }
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} scope42. Built with Docusaurus.`,
+        copyright: `Copyright © 2021-${new Date().getFullYear()} scope42. Built with Docusaurus.`
       },
       prism: {
         theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
-      },
-    }),
-};
+        darkTheme: darkCodeTheme
+      }
+    })
+}
 
-module.exports = config;
+module.exports = config
