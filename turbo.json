@@ -10,6 +10,20 @@
       "outputs": ["build/**"],
       "env": ["PUBLIC_URL", "REACT_APP_VERSION"]
     },
+    "website#build": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "src/**",
+        "static/**",
+        "docs/**",
+        "api/index.md",
+        "docusaurus.config.js",
+        "babel.config.js",
+        "sidebars.js",
+        "../packages/scope42-data/src/**"
+      ],
+      "outputs": ["build/**"]
+    },
     "test": {
       "outputs": []
     },
