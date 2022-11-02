@@ -33,6 +33,31 @@ const config = {
     ]
   ],
 
+  plugins: [
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'api',
+        path: 'api',
+        routeBasePath: 'api',
+        sidebarPath: require.resolve('./sidebars.js')
+      }
+    ],
+    [
+      'docusaurus-plugin-typedoc',
+      {
+        entryPoints: ['../packages/scope42-data/src/index.ts'],
+        tsconfig: '../packages/scope42-data/tsconfig.json',
+
+        out: '../api/data',
+        sidebar: {
+          categoryLabel: '@scope42/data',
+          position: 2
+        }
+      }
+    ]
+  ],
+
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
@@ -48,6 +73,12 @@ const config = {
             position: 'left',
             docId: 'introduction',
             label: 'Docs'
+          },
+          {
+            to: '/api/',
+            label: 'API',
+            position: 'left',
+            activeBaseRegex: `/api/`
           },
           {
             href: 'https://github.com/scope42/scope42',

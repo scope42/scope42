@@ -57,7 +57,7 @@ export class NodeDirectoryHandle implements DirectoryHandle {
   }
 }
 
-class NodeFileHandle implements FileHandle {
+export class NodeFileHandle implements FileHandle {
   readonly kind = 'file' as const
   readonly name: string
   #path: string
