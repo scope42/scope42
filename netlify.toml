@@ -1,7 +1,12 @@
 [build]
-  command = "npm run build -- --filter=app..."
-  publish = "/app/build"
+  command = "sh deploy.sh"
+  publish = "/deploy"
   base = "/"
+
+[[redirects]]
+  from = "/app/*"
+  to = "/app/index.html"
+  status = 200
 
 [[redirects]]
   from = "/*"
