@@ -3,12 +3,17 @@
   "version": "1.0.0",
   "private": true,
   "license": "GPL-3.0-only",
-  "dependencies": {
-    "copyfiles": "2.4.1"
-  },
+  "dependencies": {},
+  "main": "./dist/customization.js",
+  "module": "./dist/customization.mjs",
+  "types": "./dist/customization.d.ts",
+  "files": [
+    "dist/**",
+    "build/**"
+  ],
   "scripts": {
     "dev": "npm run gen && react-scripts start",
-    "build": "npm run gen && react-scripts build",
+    "build": "npm run gen && react-scripts build && tsup",
     "test": "react-scripts test --watchAll=false",
     "fix:prettier": "prettier --write \"src/**/*\"",
     "lint": "eslint \"src/**/*.{ts,tsx,js,jsx}\"",
@@ -35,12 +40,22 @@
       "last 1 safari version"
     ]
   },
+  "tsup": {
+    "entry": [
+      "src/customization.ts"
+    ],
+    "format": [
+      "esm",
+      "cjs"
+    ],
+    "dts": true
+  },
   "prettier": "@xinra/prettier-config",
   "devDependencies": {
     "@ant-design/icons": "4.7.0",
     "@hookform/resolvers": "2.9.10",
-    "@scope42/structured-aim42": "1.0.0",
     "@scope42/data": "*",
+    "@scope42/structured-aim42": "1.0.0",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "13.4.0",
     "@testing-library/user-event": "14.4.3",
@@ -58,6 +73,7 @@
     "antd": "4.23.6",
     "antd-button-color": "1.0.4",
     "avvvatars-react": "0.4.2",
+    "copyfiles": "2.4.1",
     "cytoscape": "3.23.0",
     "cytoscape-cose-bilkent": "4.1.0",
     "cytoscape-fcose": "2.1.0",
@@ -86,6 +102,7 @@
     "scope-css": "1.2.1",
     "superjson": "1.11.0",
     "ts-node": "10.9.1",
+    "tsup": "6.3.0",
     "typescript": "4.8.4",
     "web-vitals": "3.0.4",
     "yaml": "2.1.3",
