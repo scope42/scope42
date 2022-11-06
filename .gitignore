@@ -2,6 +2,7 @@
 node_modules
 .turbo
 dist
+/deploy
 
 .DS_Store
 .env.local
