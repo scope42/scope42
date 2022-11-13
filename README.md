@@ -65,13 +65,17 @@ comments:
     content: Accepted and placed into the fast lane on the board.
 ```
 
+<p align="center">
+<b>Want to learn more? Take a look at our <a href="https://dev.to/scope42/introducing-scope42-improve-your-software-architecture-with-precision-dk6">introduction blog post</a>!</b>
+</p>
+
 ## Planned Features
 
 - WYSIWYG markdown editor
 - Support for requirements (new item type)
 - Support for prose documentation of existing architecture (based on arc42)
 - Support for media files
-- Customizable Dashboard
+- Customizable dashboard
 - Export structured data (convenience library)
 - Export static site
 - Export markdown
