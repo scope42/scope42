@@ -3,7 +3,7 @@ import { ColumnsType, TableProps } from 'antd/lib/table'
 import dayjs from 'dayjs'
 import React, { useEffect } from 'react'
 import { selectAllTags, useStore } from '../../../data/store'
-import { Item } from '@scope42/data'
+import { Item, statusLabel } from '@scope42/data'
 import { renderDate } from '../../../data/util'
 import { ItemLink } from '../ItemLink'
 import { ItemStatus } from '../Status'
@@ -27,17 +27,21 @@ const dateSorter =
 export interface ItemsTableProps {
   id: string
   items: Item[]
-  possibleStatuses: { text: string; value: string }[]
+  possibleStatuses: readonly Item['status'][]
   defaultVisibleStatuses: string[] | null
 }
 
 export const ItemsTable: React.FC<ItemsTableProps> = props => {
-  const { id, items, defaultVisibleStatuses, possibleStatuses } = props
+  const { id, items, defaultVisibleStatuses } = props
   const allTags = useStore(selectAllTags)
   const tableState: TableState = useTablesStore(
     state => state.tableStates[props.id]
   )
   const setTableState = useTablesStore(state => state.setTableState)
+  const possibleStatuses = props.possibleStatuses.map(status => ({
+    value: status,
+    text: statusLabel(status)
+  }))
 
   useEffect(() => {
     if (tableState === undefined) {

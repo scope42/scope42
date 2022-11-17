@@ -1,12 +1,11 @@
-import { DecisionStatus } from '@scope42/data'
+import { DecisionStatuses, statusActive } from '@scope42/data'
 import { selectAllDecisions, useStore } from '../data/store'
 import { PageHeader } from '../features/layout'
-import { POSSIBLE_STATUSES } from '../features/items'
 import { ItemsTablePage } from '../features/items'
 import { AttributionCard } from '../features/ui'
 import { ExternalLink } from '../features/ui'
 
-const defaultVisibleStatuses: DecisionStatus[] = ['proposed', 'accepted']
+const defaultVisibleStatuses = DecisionStatuses.filter(statusActive)
 
 export default function DecisionsTablePage() {
   const decisions = useStore(selectAllDecisions)
@@ -17,7 +16,7 @@ export default function DecisionsTablePage() {
       <ItemsTablePage
         id="decisions"
         items={decisions}
-        possibleStatuses={POSSIBLE_STATUSES.decision}
+        possibleStatuses={DecisionStatuses}
         defaultVisibleStatuses={defaultVisibleStatuses}
       >
         <AttributionCard

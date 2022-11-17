@@ -1,15 +1,15 @@
 import {
-  Decision,
+  DecisionSchema,
   DecisionId,
-  Improvement,
+  ImprovementSchema,
   ImprovementId,
-  Issue,
+  IssueSchema,
   IssueId,
   Item,
   ItemId,
   IndexedItems,
   ItemType,
-  Risk,
+  RiskSchema,
   RiskId,
   WorkspaceConfig
 } from '../model'
@@ -48,25 +48,25 @@ export class Workspace {
         this.rootDirectory,
         ITEM_DIRECTORIES.issue,
         IssueId,
-        Issue
+        IssueSchema
       ),
       parseItemsInDirectory(
         this.rootDirectory,
         ITEM_DIRECTORIES.improvement,
         ImprovementId,
-        Improvement
+        ImprovementSchema
       ),
       parseItemsInDirectory(
         this.rootDirectory,
         ITEM_DIRECTORIES.risk,
         RiskId,
-        Risk
+        RiskSchema
       ),
       parseItemsInDirectory(
         this.rootDirectory,
         ITEM_DIRECTORIES.decision,
         DecisionId,
-        Decision
+        DecisionSchema
       )
     ])
 

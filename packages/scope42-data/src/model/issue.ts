@@ -1,21 +1,21 @@
-/* eslint-disable @typescript-eslint/no-redeclare */
 import { z } from 'zod'
 import { nullsafeOptional } from './commons'
 import { Item, ItemFileContent, NewItem } from './item-base'
 import { IssueId } from './item-id'
 
-export const IssueStatus = z.enum(['current', 'resolved', 'discarded'])
-export type IssueStatus = z.infer<typeof IssueStatus>
+export const IssueStatuses = ['current', 'resolved', 'discarded'] as const
 
-export const Issue = Item('issue', IssueId).extend({
-  status: IssueStatus.default('current'),
+export type IssueStatus = typeof IssueStatuses[number]
+
+export const IssueSchema = Item('issue', IssueId).extend({
+  status: z.enum(IssueStatuses),
   description: nullsafeOptional(z.string()), // TODO move to details
   causedBy: z.array(IssueId).default([])
 })
-export type Issue = z.infer<typeof Issue>
+export type Issue = z.infer<typeof IssueSchema>
 
-export const IssueFileContent = ItemFileContent(Issue)
-export type IssueFileContent = z.infer<typeof IssueFileContent>
+export const IssueFileContentSchema = ItemFileContent(IssueSchema)
+export type IssueFileContent = z.infer<typeof IssueFileContentSchema>
 
-export const NewIssue = NewItem(Issue)
-export type NewIssue = z.infer<typeof NewIssue>
+export const NewIssueSchema = NewItem(IssueSchema)
+export type NewIssue = z.infer<typeof NewIssueSchema>

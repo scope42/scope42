@@ -4,14 +4,15 @@ import { nullsafeOptional, DeserializableDate } from './commons'
 import { Item, ItemFileContent, NewItem } from './item-base'
 import { DecisionId, ImprovementId } from './item-id'
 
-export const DecisionStatus = z.enum([
+export const DecisionStatuses = [
   'proposed',
   'accepted',
   'deprecated',
   'superseded',
   'discarded'
-])
-export type DecisionStatus = z.infer<typeof DecisionStatus>
+] as const
+
+export type DecisionStatus = typeof DecisionStatuses[number]
 
 export const DecisionOption = z.object({
   title: z.string().min(1),
@@ -29,8 +30,8 @@ export const DecisionOutcome = z.object({
 })
 export type DecisionOutcome = z.infer<typeof DecisionOutcome>
 
-const DecisionSchema = Item('decision', DecisionId).extend({
-  status: DecisionStatus.default('proposed'),
+const DecisionSchemaBase = Item('decision', DecisionId).extend({
+  status: z.enum(DecisionStatuses),
   supersededBy: nullsafeOptional(DecisionId),
   deciders: z.array(z.string().min(1)).default([]),
   decided: nullsafeOptional(DeserializableDate),
@@ -41,7 +42,7 @@ const DecisionSchema = Item('decision', DecisionId).extend({
   outcome: nullsafeOptional(DecisionOutcome) // TODO move to details
 })
 
-const validateOutcomeExists: Parameters<typeof DecisionSchema['refine']> = [
+const validateOutcomeExists: Parameters<typeof DecisionSchemaBase['refine']> = [
   decision =>
     !decision.outcome || decision.outcome.optionIndex < decision.options.length,
   {
@@ -50,11 +51,13 @@ const validateOutcomeExists: Parameters<typeof DecisionSchema['refine']> = [
   }
 ]
 
-export const Decision = DecisionSchema.refine(...validateOutcomeExists)
+export const DecisionSchema = DecisionSchemaBase.refine(
+  ...validateOutcomeExists
+)
 
-export type Decision = z.infer<typeof Decision>
+export type Decision = z.infer<typeof DecisionSchema>
 
-export const DecisionFileContent = ItemFileContent(DecisionSchema).refine(
+export const DecisionFileContent = ItemFileContent(DecisionSchemaBase).refine(
   decision =>
     !decision.outcome || decision.outcome.optionIndex < decision.options.length,
   {
@@ -64,5 +67,5 @@ export const DecisionFileContent = ItemFileContent(DecisionSchema).refine(
 )
 export type DecisionFileContent = z.infer<typeof DecisionFileContent>
 
-export const NewDecision = NewItem(DecisionSchema)
-export type NewDecision = z.infer<typeof NewDecision>
+export const NewDecisionSchema = NewItem(DecisionSchemaBase)
+export type NewDecision = z.infer<typeof NewDecisionSchema>

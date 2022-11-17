@@ -1,9 +1,8 @@
 import { Tag, Row, Descriptions, Button, Typography, Space } from 'antd'
 import { useStore } from '../data/store'
 import { EditOutlined } from '@ant-design/icons'
-import { DECISION_STATUS_UI } from '../features/items'
 import { renderDate } from '../data/util'
-import { DecisionIcon } from '../features/items'
+import { DecisionIcon, ItemStatus } from '../features/items'
 import { PageHeader } from '../features/layout'
 import { Error404, TicketLink } from '../features/ui'
 import { useParams } from 'react-router-dom'
@@ -44,7 +43,7 @@ const DecisionDetailsPage = () => {
         <Row>
           <Descriptions size="small" column={3}>
             <Descriptions.Item label="Status">
-              {DECISION_STATUS_UI[decision.status].component}
+              <ItemStatus item={decision} />
             </Descriptions.Item>
             <Descriptions.Item label="Created">
               {renderDate(decision.created)}

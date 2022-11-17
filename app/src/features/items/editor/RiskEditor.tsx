@@ -2,8 +2,13 @@ import { Form, Input, message, Modal, Select, Tag } from 'antd'
 import { RiskIcon } from '../ItemIcon'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { NewRisk, RiskId, RiskStatus } from '@scope42/data'
-import { RISK_STATUS_UI } from '../Status'
+import {
+  NewRisk,
+  NewRiskSchema,
+  RiskId,
+  RiskStatuses,
+  statusLabel
+} from '@scope42/data'
 import {
   selectAllIssues,
   selectAllRisks,
@@ -12,9 +17,9 @@ import {
 } from '../../../data/store'
 import { useEditorStore } from './ItemEditor'
 import { useNavigate } from 'react-router-dom'
-import { getDefaults } from '../../../data/util'
 import { MarkdownEditor } from '../../../features/markdown'
 import { getErrorMessage } from './form-utils'
+import { getDefaults } from '../../../data/util'
 
 export const RiskEditor: React.FC<{ riskId?: RiskId }> = props => {
   const allTags = useStore(selectAllTags)
@@ -32,8 +37,8 @@ export const RiskEditor: React.FC<{ riskId?: RiskId }> = props => {
   } = useForm({
     defaultValues: props.riskId
       ? allRisks.find(r => r.id === props.riskId)
-      : (getDefaults(NewRisk) as NewRisk),
-    resolver: zodResolver(NewRisk)
+      : ({ ...getDefaults(NewRiskSchema), status: 'current' } as NewRisk),
+    resolver: zodResolver(NewRiskSchema)
   })
 
   const onSuccess = async (risk: NewRisk) => {
@@ -86,9 +91,9 @@ export const RiskEditor: React.FC<{ riskId?: RiskId }> = props => {
             name="status"
             render={({ field }) => (
               <Select {...field}>
-                {RiskStatus.options.map(status => (
+                {RiskStatuses.map(status => (
                   <Select.Option value={status} key={status}>
-                    {RISK_STATUS_UI[status].label}
+                    {statusLabel(status)}
                   </Select.Option>
                 ))}
               </Select>

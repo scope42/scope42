@@ -1,7 +1,7 @@
 import { Tag, Row, Descriptions, Button, Typography } from 'antd'
 import { useStore } from '../data/store'
 import { EditOutlined } from '@ant-design/icons'
-import { IMPROVEMENT_STATUS_UI } from '../features/items'
+import { ItemStatus } from '../features/items'
 import { renderDate } from '../data/util'
 import { ImprovementIcon } from '../features/items'
 import { PageHeader } from '../features/layout'
@@ -42,7 +42,7 @@ const ImprovementDetailsPage = () => {
         <Row>
           <Descriptions size="small" column={3}>
             <Descriptions.Item label="Status">
-              {IMPROVEMENT_STATUS_UI[improvement.status].component}
+              <ItemStatus item={improvement} />
             </Descriptions.Item>
             <Descriptions.Item label="Created">
               {renderDate(improvement.created)}
