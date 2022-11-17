@@ -2,8 +2,13 @@ import { Form, Input, message, Modal, Select, Tag } from 'antd'
 import { ImprovementIcon } from '../ItemIcon'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ImprovementId, ImprovementStatus, NewImprovement } from '@scope42/data'
-import { IMPROVEMENT_STATUS_UI } from '../Status'
+import {
+  ImprovementId,
+  ImprovementStatuses,
+  NewImprovement,
+  NewImprovementSchema,
+  statusLabel
+} from '@scope42/data'
 import {
   selectAllImprovements,
   selectAllIssues,
@@ -37,8 +42,11 @@ export const ImprovementEditor: React.FC<{
   } = useForm({
     defaultValues: props.improvementId
       ? allImprovements.find(i => i.id === props.improvementId)
-      : (getDefaults(NewImprovement) as NewImprovement),
-    resolver: zodResolver(NewImprovement)
+      : ({
+          ...getDefaults(NewImprovementSchema),
+          status: 'proposed'
+        } as NewImprovement),
+    resolver: zodResolver(NewImprovementSchema)
   })
 
   const onSuccess = async (improvement: NewImprovement) => {
@@ -91,9 +99,9 @@ export const ImprovementEditor: React.FC<{
             name="status"
             render={({ field }) => (
               <Select {...field}>
-                {ImprovementStatus.options.map(status => (
+                {ImprovementStatuses.map(status => (
                   <Select.Option value={status} key={status}>
-                    {IMPROVEMENT_STATUS_UI[status].label}
+                    {statusLabel(status)}
                   </Select.Option>
                 ))}
               </Select>

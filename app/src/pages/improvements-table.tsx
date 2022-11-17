@@ -1,12 +1,11 @@
 /* eslint-disable react/display-name */
-import { ImprovementStatus } from '@scope42/data'
+import { ImprovementStatuses, statusActive } from '@scope42/data'
 import { selectAllImprovements, useStore } from '../data/store'
 import { PageHeader } from '../features/layout'
-import { POSSIBLE_STATUSES } from '../features/items'
 import { ItemsTablePage } from '../features/items'
 import { Aim42ItemDescription } from '../features/aim42'
 
-const defaultVisibleStatuses: ImprovementStatus[] = ['proposed', 'accepted']
+const defaultVisibleStatuses = ImprovementStatuses.filter(statusActive)
 
 export default function ImprovementsTablePage() {
   const improvements = useStore(selectAllImprovements)
@@ -17,7 +16,7 @@ export default function ImprovementsTablePage() {
       <ItemsTablePage
         id="improvements"
         items={improvements}
-        possibleStatuses={POSSIBLE_STATUSES.improvement}
+        possibleStatuses={ImprovementStatuses}
         defaultVisibleStatuses={defaultVisibleStatuses}
       >
         <Aim42ItemDescription type="improvement" />

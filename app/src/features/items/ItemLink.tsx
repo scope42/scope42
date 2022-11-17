@@ -2,10 +2,10 @@ import { Descriptions, Popover, Tag, Typography } from 'antd'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useStore } from '../../data/store'
-import { ItemId, ItemType } from '@scope42/data'
+import { ItemId, ItemType, statusActive } from '@scope42/data'
 import { getSerialFromId, renderDate } from '../../data/util'
 import { ItemIcon } from '.'
-import { isActive, ItemStatus } from './Status'
+import { ItemStatus } from './Status'
 
 export const PATHS: { [type in ItemType]: string } = {
   issue: 'issues',
@@ -25,7 +25,7 @@ export const ItemLink: React.FC<{ id: ItemId; noPopover?: boolean }> = ({
   }
 
   const titleStyle = {
-    textDecoration: isActive(item) ? 'none' : 'line-through'
+    textDecoration: statusActive(item.status) ? 'none' : 'line-through'
   }
   const titleWords = item.title.split(' ')
 

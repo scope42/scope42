@@ -1,172 +1,84 @@
-import { Tag } from 'antd'
+import { Tag, TagProps } from 'antd'
 import React from 'react'
 import {
   DecisionStatus,
+  DecisionStatuses,
   ImprovementStatus,
+  ImprovementStatuses,
   IssueStatus,
+  IssueStatuses,
   Item,
   ItemType,
-  RiskStatus
+  RiskStatus,
+  RiskStatuses,
+  statusLabel
 } from '@scope42/data'
 
-type StatusUi = { label: string; component: React.ReactNode; active: boolean }
-
-export const ISSUE_STATUS_UI: { [status in IssueStatus]: StatusUi } = {
-  current: {
-    label: 'Current',
-    component: <Tag color="red">Current</Tag>,
-    active: true
-  },
-  resolved: {
-    label: 'Resolved',
-    component: <Tag color="green">Resolved</Tag>,
-    active: false
-  },
-  discarded: {
-    label: 'Discarded',
-    component: <Tag>Discarded</Tag>,
-    active: false
-  }
+const ISSUE_STATUS_COLORS: { [status in IssueStatus]: TagProps['color'] } = {
+  current: 'red',
+  resolved: 'green',
+  discarded: undefined
 }
 
-export const IMPROVEMENT_STATUS_UI: {
-  [status in ImprovementStatus]: StatusUi
+const IMPROVEMENT_STATUS_COLORS: {
+  [status in ImprovementStatus]: TagProps['color']
 } = {
-  proposed: {
-    label: 'Proposed',
-    component: <Tag color="cyan">Proposed</Tag>,
-    active: true
-  },
-  accepted: {
-    label: 'Accepted',
-    component: <Tag color="blue">Accepted</Tag>,
-    active: true
-  },
-  implemented: {
-    label: 'Implemented',
-    component: <Tag color="green">Implemented</Tag>,
-    active: false
-  },
-  discarded: {
-    label: 'Discarded',
-    component: <Tag>Discarded</Tag>,
-    active: false
-  }
+  proposed: 'cyan',
+  accepted: 'blue',
+  implemented: 'green',
+  discarded: undefined
 }
 
-export const RISK_STATUS_UI: { [status in RiskStatus]: StatusUi } = {
-  potential: {
-    label: 'Potential',
-    component: <Tag color="orange">Potential</Tag>,
-    active: true
-  },
-  current: {
-    label: 'Current',
-    component: <Tag color="red">Current</Tag>,
-    active: true
-  },
-  mitigated: {
-    label: 'Mitigated',
-    component: <Tag color="green">Mitigated</Tag>,
-    active: false
-  },
-  discarded: {
-    label: 'Discarded',
-    component: <Tag>Discarded</Tag>,
-    active: true
-  }
+const RISK_STATUS_COLORS: { [status in RiskStatus]: TagProps['color'] } = {
+  potential: 'orange',
+  current: 'red',
+  mitigated: 'green',
+  discarded: undefined
 }
 
-export const DECISION_STATUS_UI: { [status in DecisionStatus]: StatusUi } = {
-  proposed: {
-    label: 'Proposed',
-    component: <Tag color="cyan">Proposed</Tag>,
-    active: true
-  },
-  accepted: {
-    label: 'Accepted',
-    component: <Tag color="blue">Accepted</Tag>,
-    active: true
-  },
-  deprecated: {
-    label: 'Deprecated',
-    component: <Tag>Deprecated</Tag>,
-    active: false
-  },
-  discarded: {
-    label: 'Discarded',
-    component: <Tag>Discarded</Tag>,
-    active: false
-  },
-  superseded: {
-    label: 'Superseded',
-    component: <Tag>Superseded</Tag>,
-    active: false
-  }
+const DECISION_STATUS_COLORS: {
+  [status in DecisionStatus]: TagProps['color']
+} = {
+  proposed: 'cyan',
+  accepted: 'blue',
+  deprecated: undefined,
+  discarded: undefined,
+  superseded: undefined
 }
 
-export type ItemStatusProps =
-  | { type: 'issue'; status: IssueStatus }
-  | { type: 'risk'; status: RiskStatus }
-  | { type: 'improvement'; status: ImprovementStatus }
+function getStatusColor(item: Item): TagProps['color'] {
+  switch (item.type) {
+    case 'issue':
+      return ISSUE_STATUS_COLORS[item.status]
+    case 'risk':
+      return RISK_STATUS_COLORS[item.status]
+    case 'improvement':
+      return IMPROVEMENT_STATUS_COLORS[item.status]
+    case 'decision':
+      return DECISION_STATUS_COLORS[item.status]
+  }
+}
 
 export const ItemStatus: React.FC<{ item: Item }> = props => {
-  switch (props.item.type) {
-    case 'issue':
-      return <>{ISSUE_STATUS_UI[props.item.status].component}</>
-    case 'risk':
-      return <>{RISK_STATUS_UI[props.item.status].component}</>
-    case 'improvement':
-      return <>{IMPROVEMENT_STATUS_UI[props.item.status].component}</>
-    case 'decision':
-      return <>{DECISION_STATUS_UI[props.item.status].component}</>
-  }
+  return <Tag color={getStatusColor(props.item)}>{statusLabel(props.item)}</Tag>
 }
 
-export const POSSIBLE_STATUSES: Record<
-  ItemType,
-  Array<{ value: string; text: string }>
-> = {
-  issue: IssueStatus.options.map(status => ({
-    value: status,
-    text: ISSUE_STATUS_UI[status].label
-  })),
-  improvement: ImprovementStatus.options.map(status => ({
-    value: status,
-    text: IMPROVEMENT_STATUS_UI[status].label
-  })),
-  risk: RiskStatus.options.map(status => ({
-    value: status,
-    text: RISK_STATUS_UI[status].label
-  })),
-  decision: DecisionStatus.options.map(status => ({
-    value: status,
-    text: DECISION_STATUS_UI[status].label
-  }))
+const POSSIBLE_STATUSES: Record<ItemType, Item['status'][]> = {
+  issue: Object.values(IssueStatuses),
+  improvement: Object.values(ImprovementStatuses),
+  risk: Object.values(RiskStatuses),
+  decision: Object.values(DecisionStatuses)
 }
 
 export function getAllPossibleStatuses() {
-  const possibleStatuses: Array<{ value: string; text: string }> = []
+  const possibleStatuses: Item['status'][] = []
   // ensure unique entries
   Object.values(POSSIBLE_STATUSES)
     .flatMap(s => s)
     .forEach(status => {
-      if (!possibleStatuses.some(s => s.value === status.value)) {
+      if (!possibleStatuses.some(s => s === status)) {
         possibleStatuses.push(status)
       }
     })
   return possibleStatuses
-}
-
-export function isActive(item: Item): boolean {
-  switch (item.type) {
-    case 'issue':
-      return ISSUE_STATUS_UI[item.status].active
-    case 'risk':
-      return RISK_STATUS_UI[item.status].active
-    case 'improvement':
-      return IMPROVEMENT_STATUS_UI[item.status].active
-    case 'decision':
-      return DECISION_STATUS_UI[item.status].active
-  }
 }

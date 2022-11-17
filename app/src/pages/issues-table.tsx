@@ -1,12 +1,11 @@
 /* eslint-disable react/display-name */
-import { IssueStatus } from '@scope42/data'
+import { IssueStatuses, statusActive } from '@scope42/data'
 import { selectAllIssues, useStore } from '../data/store'
 import { PageHeader } from '../features/layout'
-import { POSSIBLE_STATUSES } from '../features/items'
 import { ItemsTablePage } from '../features/items'
 import { Aim42ItemDescription } from '../features/aim42'
 
-const defaultVisibleStatuses: IssueStatus[] = ['current']
+const defaultVisibleStatuses = IssueStatuses.filter(statusActive)
 
 export default function IssuesTablePage() {
   const issues = useStore(selectAllIssues)
@@ -17,7 +16,7 @@ export default function IssuesTablePage() {
       <ItemsTablePage
         id="issues"
         items={issues}
-        possibleStatuses={POSSIBLE_STATUSES.issue}
+        possibleStatuses={IssueStatuses}
         defaultVisibleStatuses={defaultVisibleStatuses}
       >
         <Aim42ItemDescription type="issue" />

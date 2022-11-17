@@ -2,8 +2,13 @@ import { Form, Input, message, Modal, Select, Tag } from 'antd'
 import { IssueIcon } from '../ItemIcon'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { IssueId, IssueStatus, NewIssue } from '@scope42/data'
-import { ISSUE_STATUS_UI } from '../Status'
+import {
+  IssueId,
+  IssueStatuses,
+  NewIssue,
+  NewIssueSchema,
+  statusLabel
+} from '@scope42/data'
 import { selectAllIssues, selectAllTags, useStore } from '../../../data/store'
 import { useEditorStore } from './ItemEditor'
 import { useNavigate } from 'react-router-dom'
@@ -26,8 +31,8 @@ export const IssueEditor: React.FC<{ issueId?: IssueId }> = props => {
   } = useForm({
     defaultValues: props.issueId
       ? allIssues.find(i => i.id === props.issueId)
-      : (getDefaults(NewIssue) as NewIssue),
-    resolver: zodResolver(NewIssue)
+      : ({ ...getDefaults(NewIssueSchema), status: 'current' } as NewIssue),
+    resolver: zodResolver(NewIssueSchema)
   })
 
   const onSuccess = async (issue: NewIssue) => {
@@ -80,9 +85,9 @@ export const IssueEditor: React.FC<{ issueId?: IssueId }> = props => {
             name="status"
             render={({ field }) => (
               <Select {...field}>
-                {IssueStatus.options.map(status => (
+                {IssueStatuses.map(status => (
                   <Select.Option value={status} key={status}>
-                    {ISSUE_STATUS_UI[status].label}
+                    {statusLabel(status)}
                   </Select.Option>
                 ))}
               </Select>

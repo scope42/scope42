@@ -2,8 +2,13 @@ import { Form, Input, message, Modal, Select, Tag } from 'antd'
 import { DecisionIcon } from '../ItemIcon'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { DecisionId, DecisionStatus, NewDecision } from '@scope42/data'
-import { DECISION_STATUS_UI } from '../Status'
+import {
+  DecisionId,
+  DecisionStatuses,
+  NewDecision,
+  NewDecisionSchema,
+  statusLabel
+} from '@scope42/data'
 import {
   selectAllDecisions,
   selectAllImprovements,
@@ -46,8 +51,11 @@ export const DecisionEditor: React.FC<{ decisionId?: DecisionId }> = props => {
   } = useForm({
     defaultValues: props.decisionId
       ? allDecisions.find(i => i.id === props.decisionId)
-      : (getDefaults(NewDecision) as NewDecision),
-    resolver: zodResolver(NewDecision)
+      : ({
+          ...getDefaults(NewDecisionSchema),
+          status: 'proposed'
+        } as NewDecision),
+    resolver: zodResolver(NewDecisionSchema)
   })
 
   const onSuccess = async (decision: NewDecision) => {
@@ -101,9 +109,9 @@ export const DecisionEditor: React.FC<{ decisionId?: DecisionId }> = props => {
             name="status"
             render={({ field }) => (
               <Select {...field}>
-                {DecisionStatus.options.map(status => (
+                {DecisionStatuses.map(status => (
                   <Select.Option value={status} key={status}>
-                    {DECISION_STATUS_UI[status].label}
+                    {statusLabel(status)}
                   </Select.Option>
                 ))}
               </Select>

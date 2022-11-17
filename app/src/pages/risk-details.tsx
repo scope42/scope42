@@ -1,9 +1,8 @@
 import { Tag, Row, Descriptions, Button, Typography } from 'antd'
 import { useStore } from '../data/store'
 import { EditOutlined } from '@ant-design/icons'
-import { RISK_STATUS_UI } from '../features/items'
 import { renderDate } from '../data/util'
-import { RiskIcon } from '../features/items'
+import { ItemStatus, RiskIcon } from '../features/items'
 import { PageHeader } from '../features/layout'
 import { Error404, TicketLink } from '../features/ui'
 import { useParams } from 'react-router-dom'
@@ -42,7 +41,7 @@ const RiskDetailsPage = () => {
         <Row>
           <Descriptions size="small" column={3}>
             <Descriptions.Item label="Status">
-              {RISK_STATUS_UI[risk.status].component}
+              <ItemStatus item={risk} />
             </Descriptions.Item>
             <Descriptions.Item label="Created">
               {renderDate(risk.created)}
