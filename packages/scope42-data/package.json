@@ -30,7 +30,7 @@
   "prettier": "@xinra/prettier-config",
   "devDependencies": {
     "@scope42/tsconfig": "*",
-    "@types/jest": "29.2.3",
+    "@types/jest": "29.2.4",
     "@xinra/prettier-config": "2.0.0",
     "eslint": "8.29.0",
     "eslint-config-scope42": "*",
