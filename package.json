@@ -23,7 +23,7 @@
   },
   "prettier": "@xinra/prettier-config",
   "devDependencies": {
-    "@changesets/cli": "2.25.2",
+    "@changesets/cli": "2.26.0",
     "@xinra/prettier-config": "2.0.0",
     "turbo": "1.6.3"
   }
