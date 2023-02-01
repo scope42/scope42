@@ -30,7 +30,7 @@
     "eslint": "8.32.0",
     "flexsearch": "0.7.21",
     "html-to-react": "1.5.0",
-    "immer": "9.0.16",
+    "immer": "9.0.18",
     "js-yaml": "4.1.0",
     "liquid-loading": "1.0.0",
     "mermaid": "9.3.0",
