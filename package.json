@@ -19,7 +19,7 @@
   },
   "resolutions": {
     "@types/react": "18.0.27",
-    "@types/react-dom": "18.0.9"
+    "@types/react-dom": "18.0.10"
   },
   "prettier": "@xinra/prettier-config",
   "devDependencies": {
