@@ -25,7 +25,7 @@
     "copyfiles": "2.4.1",
     "cytoscape": "3.23.0",
     "cytoscape-cose-bilkent": "4.1.0",
-    "cytoscape-fcose": "2.1.0",
+    "cytoscape-fcose": "2.2.0",
     "dayjs": "1.11.7",
     "eslint": "8.32.0",
     "flexsearch": "0.7.21",
