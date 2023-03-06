@@ -6,7 +6,7 @@
   "dependencies": {
     "eslint-plugin-prettier": "4.2.1",
     "eslint-config-prettier": "8.6.0",
-    "eslint-config-turbo": "0.0.8",
+    "eslint-config-turbo": "0.0.9",
     "eslint-config-react-app": "7.0.1"
   },
   "publishConfig": {
