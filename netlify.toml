@@ -1,3 +1,6 @@
+[[plugins]]
+package = "netlify-plugin-out-of-minutes"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
