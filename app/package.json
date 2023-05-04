@@ -4,7 +4,7 @@
   "private": true,
   "license": "GPL-3.0-only",
   "dependencies": {
-    "@ant-design/icons": "4.8.0",
+    "@ant-design/icons": "5.0.1",
     "@hookform/resolvers": "2.9.11",
     "@scope42/structured-aim42": "1.0.0",
     "@scope42/data": "*",
