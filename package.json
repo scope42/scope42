@@ -23,7 +23,7 @@
   },
   "prettier": "@xinra/prettier-config",
   "devDependencies": {
-    "@changesets/cli": "2.26.0",
+    "@changesets/cli": "2.29.8",
     "@xinra/prettier-config": "2.0.0",
     "netlify-plugin-out-of-minutes": "1.1.0",
     "turbo": "1.8.3"
