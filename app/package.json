@@ -26,7 +26,7 @@
     "cytoscape": "3.23.0",
     "cytoscape-cose-bilkent": "4.1.0",
     "cytoscape-fcose": "2.2.0",
-    "dayjs": "1.11.7",
+    "dayjs": "1.11.19",
     "eslint": "8.35.0",
     "flexsearch": "0.7.21",
     "html-to-react": "1.5.0",
