@@ -17,7 +17,7 @@
     "@types/react": "18.0.28",
     "@types/react-cytoscapejs": "1.2.2",
     "@types/react-dom": "18.0.11",
-    "@types/wicg-file-system-access": "2020.9.5",
+    "@types/wicg-file-system-access": "2020.9.8",
     "@xinra/prettier-config": "2.0.0",
     "antd": "4.24.16",
     "antd-button-color": "1.0.4",
