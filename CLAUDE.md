@@ -43,6 +43,10 @@ When adding/changing a property on any item type (issues, risks, improvements, d
 - `packages/scope42-data/`: Jest + ts-jest (Node environment)
 - Setup file: `app/src/setupTests.ts`
 
+## Commits
+
+Use [Conventional Commits](https://www.conventionalcommits.org/): `feat:`, `fix:`, `chore:`, `refactor:`, `docs:`. Scope is optional, e.g. `feat(data):`.
+
 ## Tasks
 
 - Consider the current task and wether the information learned can be suggested in a CLAUDE.md
