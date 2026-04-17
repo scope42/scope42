@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { WorkspaceSelection } from './features/workspace'
 import { useStore } from './data/store'
-import { Error404 } from './features/ui'
+import { DiscontinuationBanner, Error404 } from './features/ui'
 import ImprovementsTablePage from './pages/improvements-table'
 import IssuesTablePage from './pages/issues-table'
 import IssueDetailsPage from './pages/issue-details'
@@ -20,7 +20,12 @@ const App: React.FC = () => {
   const workspacePresent = useStore(state => state.workspace.present)
 
   if (!workspacePresent) {
-    return <WorkspaceSelection />
+    return (
+      <>
+        <DiscontinuationBanner />
+        <WorkspaceSelection />
+      </>
+    )
   }
 
   return (

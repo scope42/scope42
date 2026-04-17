@@ -2,7 +2,7 @@ import { GithubOutlined } from '@ant-design/icons'
 import { Divider, Layout } from 'antd'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { ExternalLink } from '../ui'
+import { DiscontinuationBanner, ExternalLink } from '../ui'
 import { ItemEditor } from '../items'
 import { Header } from './Header'
 import { SideNav } from './SideNav'
@@ -12,6 +12,7 @@ export const DefaultLayout: React.FC<{ children: React.ReactNode }> = props => {
     <Layout style={{ minHeight: '100%' }} hasSider>
       <SideNav />
       <Layout style={{ marginLeft: 200 }}>
+        <DiscontinuationBanner />
         <Header />
         <ItemEditor />
         <Layout.Content
