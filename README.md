@@ -15,6 +15,8 @@
 
 This tool helps you to keep track of issues, arising risks and possible improvements of your existing architecture. The terminology and concepts are based on [aim42, the Architecture Improvement Method](https://www.aim42.org/).
 
+⚠️⚠️⚠️ We are currently pivoting to a new, AI-ready approach. The web app will be discontinued. See #430 for more details. ⚠️⚠️⚠️
+
 scope42 is a Progressive Web App that runs entirely inside your browser. Click the link below to access the app.
 
 <h3 align="center">🔗 <a href="https://app.scope42.org">app.scope42.org</a></h3>
