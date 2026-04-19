@@ -1,3 +1,8 @@
+/**
+ * Abstract IO interface (DirectoryHandle, FileHandle) that all adapters
+ * implement. The workspace loader is written against this interface so it
+ * can run on any backing filesystem representation.
+ */
 export interface DirectoryHandle {
   readonly kind: 'directory'
   readonly name: string
