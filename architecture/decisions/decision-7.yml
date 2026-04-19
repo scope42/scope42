@@ -20,7 +20,7 @@ context: >-
   One particular point of interest is the versioning and releasing of packages. Currently, we use semantic-release to automatically create releases based on commit messages. This does not work seamlessly in a monorepo. There is https://github.com/pmowrer/semantic-release-monorepo but it is not considered a robust solution. Also, the meaning of a version bump of an internal package for its dependents is not always derivable automatically. Such relationships are only considered by tooling that is specifically made for monorepos.
 options:
   - title: Multiple standalone repositories
-    description: Create a repository for each packge. Automate releases and updates
+    description: Create a repository for each package. Automate releases and updates
       with semantic-release and Renovate.
     pros: |-
       * Simple setup, no additional monorepo tooling is required.
