@@ -243,8 +243,10 @@ export type RelationType = typeof RELATION_TYPES[number]
 
 export const RELATION_TYPE_PATTERNS: Record<RelationType, RegExp> = {
   'markdown-link': /^\[[^\]]*\]\(([^)]+)\)$/,
-  'asciidoc-link': /^<<([^,>]+)(?:,[^>]*)?>>$/,
-  'obsidian-link': /^\[\[([^|\]]+)(?:\|[^\]]+)?\]\]$/
+  // Target must start with a non-whitespace char to reject `<< >>`.
+  'asciidoc-link': /^<<(\S[^,>]*)(?:,[^>]*)?>>$/,
+  // Alias (after `|`) must not contain another `|`, to reject `[[a|b|c]]`.
+  'obsidian-link': /^\[\[([^|\]]+)(?:\|[^|\]]+)?\]\]$/
 }
 ```
 
@@ -262,19 +264,21 @@ import {
 
 // Parses a regex string and exposes a compiled RegExp. Invalid syntax is
 // reported as a Zod issue at parse time.
-const RegexString = z.string().transform((val, ctx) => {
-  try {
-    return new RegExp(val)
-  } catch (e) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      message: `Invalid regex: ${(e as Error).message}`
-    })
-    return z.NEVER
-  }
-})
+const RegexString = z
+  .string()
+  .transform((val: string, ctx: z.RefinementCtx) => {
+    try {
+      return new RegExp(val)
+    } catch (e) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `Invalid regex: ${(e as Error).message}`
+      })
+      return z.NEVER
+    }
+  })
 
-const ValidationConfig = z
+const ValidationConfigBase = z
   .object({
     fileNamePattern: RegexString.optional().describe(
       'Regex that every item file name (without extension) must match. ' +
@@ -294,19 +298,30 @@ const ValidationConfig = z
       )
   })
   .strict()
-  .refine(v => !(v.relationPattern && v.relationType), {
+
+// Zod's refine/transform callbacks lose precise type inference after `.strict()`
+// under `noImplicitAny`, so we annotate the callback parameter explicitly.
+interface ValidationConfigInput {
+  fileNamePattern?: RegExp
+  relationPattern?: RegExp
+  relationType?: (typeof RELATION_TYPES)[number]
+}
+
+const ValidationConfig = ValidationConfigBase.refine(
+  (v: ValidationConfigInput) => !(v.relationPattern && v.relationType),
+  {
     message: 'relationPattern and relationType are mutually exclusive',
     path: ['relationType']
-  })
-  .transform(v => ({
-    fileNamePattern: v.fileNamePattern,
-    // After transform, only relationPattern is exposed as a compiled RegExp.
-    // The user's original intent (pattern or type) is collapsed into a single
-    // effective RegExp.
-    relationPattern:
-      v.relationPattern ??
-      (v.relationType ? RELATION_TYPE_PATTERNS[v.relationType] : undefined)
-  }))
+  }
+).transform((v: ValidationConfigInput) => ({
+  fileNamePattern: v.fileNamePattern,
+  // After transform, only relationPattern is exposed as a compiled RegExp.
+  // The user's original intent (pattern or type) is collapsed into a single
+  // effective RegExp.
+  relationPattern:
+    v.relationPattern ??
+    (v.relationType ? RELATION_TYPE_PATTERNS[v.relationType] : undefined)
+}))
 
 export const WorkspaceConfigSchema = z
   .object({
