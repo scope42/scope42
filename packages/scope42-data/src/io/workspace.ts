@@ -1,142 +1,136 @@
-import {
-  DecisionSchema,
-  DecisionId,
-  ImprovementSchema,
-  ImprovementId,
-  IssueSchema,
-  IssueId,
-  Item,
-  ItemId,
-  IndexedItems,
-  ItemType,
-  RiskSchema,
-  RiskId,
-  WorkspaceConfig
-} from '../model'
-import { getItemTypeFromId } from '../utils'
-import { DirectoryHandle, FileHandle } from './adapters/api'
+import matter from 'gray-matter'
+import picomatch from 'picomatch'
 import YAML from 'yaml'
+import {
+  DecisionFrontmatterSchema,
+  ImprovementFrontmatterSchema,
+  IssueFrontmatterSchema,
+  Item,
+  ItemType,
+  RiskFrontmatterSchema,
+  WorkspaceConfig,
+  WorkspaceConfigSchema
+} from '../model'
+import { DirectoryHandle, FileHandle } from './adapters/api'
 
-const WORKSPACE_CONFIG_FILE = 'scope42.yml'
+const WORKSPACE_CONFIG_FILE = 'scope42.yaml'
 
-const ITEM_DIRECTORIES: Record<ItemType, string> = {
-  issue: 'issues',
-  improvement: 'improvements',
-  risk: 'risks',
-  decision: 'decisions'
+type FrontmatterSchema =
+  | typeof IssueFrontmatterSchema
+  | typeof RiskFrontmatterSchema
+  | typeof ImprovementFrontmatterSchema
+  | typeof DecisionFrontmatterSchema
+
+const SCHEMA_BY_TYPE: Record<ItemType, FrontmatterSchema> = {
+  issue: IssueFrontmatterSchema,
+  risk: RiskFrontmatterSchema,
+  improvement: ImprovementFrontmatterSchema,
+  decision: DecisionFrontmatterSchema
 }
 
 export class Workspace {
   constructor(public readonly rootDirectory: DirectoryHandle) {}
 
   async readConfig(): Promise<WorkspaceConfig> {
-    const file = await this.rootDirectory.resolveFile(WORKSPACE_CONFIG_FILE)
-    const fileContent = await file.readText()
-    return WorkspaceConfig.parse(YAML.parse(fileContent))
-  }
-
-  async writeConfig(config: WorkspaceConfig) {
-    const file = await this.rootDirectory.resolveOrCreateFile(
-      WORKSPACE_CONFIG_FILE
-    )
-    return file.writeText(YAML.stringify(config))
+    let file: FileHandle
+    try {
+      file = await this.rootDirectory.resolveFile(WORKSPACE_CONFIG_FILE)
+    } catch (e) {
+      throw new Error(
+        `Could not find ${WORKSPACE_CONFIG_FILE} in workspace root`
+      )
+    }
+    const text = await file.readText()
+    const raw = YAML.parse(text)
+    const result = WorkspaceConfigSchema.safeParse(raw)
+    if (!result.success) {
+      throw new Error(
+        `Invalid ${WORKSPACE_CONFIG_FILE}: ${result.error.message}`
+      )
+    }
+    return result.data
   }
 
   async readItems(): Promise<Item[]> {
-    const items: Item[][] = await Promise.all([
-      parseItemsInDirectory(
-        this.rootDirectory,
-        ITEM_DIRECTORIES.issue,
-        IssueId,
-        IssueSchema
-      ),
-      parseItemsInDirectory(
-        this.rootDirectory,
-        ITEM_DIRECTORIES.improvement,
-        ImprovementId,
-        ImprovementSchema
-      ),
-      parseItemsInDirectory(
-        this.rootDirectory,
-        ITEM_DIRECTORIES.risk,
-        RiskId,
-        RiskSchema
-      ),
-      parseItemsInDirectory(
-        this.rootDirectory,
-        ITEM_DIRECTORIES.decision,
-        DecisionId,
-        DecisionSchema
-      )
-    ])
+    const config = await this.readConfig()
+    const isIncluded = makeFilter(config.include, config.exclude)
+    const items: Item[] = []
 
-    return items.flat(1)
-  }
-
-  async readItemsIndexed(): Promise<IndexedItems> {
-    const items = await this.readItems()
-
-    return items.reduce(
-      (acc, curr) => ({ ...acc, [curr.id]: curr }),
-      {} as IndexedItems
-    )
-  }
-
-  async writeItem(item: Item) {
-    const type = getItemTypeFromId(item.id)
-    const dir = await this.rootDirectory.resolveOrCreateDirectory(
-      ITEM_DIRECTORIES[type]
-    )
-    const file = await dir.resolveOrCreateFile(item.id + '.yml')
-    const existingContent = await file.readText()
-    const merged =
-      existingContent === ''
-        ? item
-        : { ...YAML.parse(existingContent), ...item }
-    return file.writeText(YAML.stringify(merged))
-  }
-}
-
-interface Parser<T> {
-  parse(data: unknown): T
-}
-
-async function parseItemsInDirectory<ITEM extends Item, ID extends ItemId>(
-  workspaceDir: DirectoryHandle,
-  itemDirName: string,
-  idParser: Parser<ID>,
-  itemParser: Parser<ITEM>
-): Promise<ITEM[]> {
-  let dir: DirectoryHandle
-  try {
-    dir = await workspaceDir.resolveDirectory(itemDirName)
-  } catch (e) {
-    return [] // if the directory does not exist, that's okay
-  }
-  const promises: Promise<ITEM>[] = []
-
-  for await (const entry of dir.getContent()) {
-    if (entry.kind !== 'file' || !entry.name.endsWith('.yml')) {
-      break
+    for (const [type, path] of Object.entries(config.items) as [
+      ItemType,
+      string | undefined
+    ][]) {
+      if (!path) continue
+      const dir = await resolveDirByPath(this.rootDirectory, path)
+      for await (const entry of dir.getContent()) {
+        if (entry.kind !== 'file') continue
+        if (!isIncluded(entry.name)) continue
+        const filePath = `${path}/${entry.name}`
+        items.push(await parseItem(entry, type, filePath))
+      }
     }
-    promises.push(parseItemFile(entry, idParser, itemParser))
-  }
 
-  return Promise.all(promises)
+    return items
+  }
 }
 
-async function parseItemFile<ITEM extends Item, ID extends ItemId>(
-  file: FileHandle,
-  idParser: Parser<ID>,
-  itemParser: Parser<ITEM>
-): Promise<ITEM> {
-  try {
-    const id = idParser.parse(file.name.slice(0, -4)) // omit ".yml"
-    const type = getItemTypeFromId(id)
-    const fileContent = YAML.parse(await file.readText())
-    const item = itemParser.parse({ id, type, ...fileContent })
-    return item
-  } catch (error) {
-    throw new Error(`Parsing '${file.name}' failed: ${error}`)
+function makeFilter(
+  include: string[],
+  exclude: string[]
+): (name: string) => boolean {
+  const includeMatch = picomatch(include)
+  const excludeMatch = exclude.length > 0 ? picomatch(exclude) : () => false
+  return name => includeMatch(name) && !excludeMatch(name)
+}
+
+async function resolveDirByPath(
+  root: DirectoryHandle,
+  relPath: string
+): Promise<DirectoryHandle> {
+  const segments = relPath.split('/').filter(Boolean)
+  let current = root
+  for (const segment of segments) {
+    try {
+      current = await current.resolveDirectory(segment)
+    } catch (e) {
+      throw new Error(`Configured path does not exist: ${relPath}`)
+    }
   }
+  return current
+}
+
+async function parseItem(
+  file: FileHandle,
+  type: ItemType,
+  filePath: string
+): Promise<Item> {
+  const text = await file.readText()
+  const parsed = matter(text)
+  // gray-matter returns `data: {}` when the file has no frontmatter block at
+  // all; that's an authoring error for a configured item directory.
+  if (Object.keys(parsed.data).length === 0) {
+    throw new Error(`No frontmatter in ${filePath}`)
+  }
+  const schema = SCHEMA_BY_TYPE[type]
+  const result = schema.safeParse(parsed.data)
+  if (!result.success) {
+    throw new Error(
+      `Invalid frontmatter in ${filePath}: ${result.error.message}`
+    )
+  }
+  const id = stripExtension(file.name)
+  // The cast below is safe because schema selection is keyed by `type`; each
+  // branch produces the correctly-typed frontmatter for that item type.
+  return {
+    id,
+    type,
+    frontmatter: result.data,
+    body: parsed.content,
+    filePath
+  } as Item
+}
+
+function stripExtension(name: string): string {
+  const dot = name.lastIndexOf('.')
+  return dot > 0 ? name.slice(0, dot) : name
 }
