@@ -73,10 +73,12 @@ const RegexString = z.string().transform((val, ctx) => {
 
 const RELATION_TYPES = ['markdown-link', 'asciidoc-link', 'obsidian-link'] as const
 
+// Patterns are anchored: a relation value must match the pattern in full.
+// Capture group 1 contains the relation target.
 const RELATION_TYPE_PATTERNS: Record<typeof RELATION_TYPES[number], RegExp> = {
-  'markdown-link': /\]\(([^)]+)\)/,
-  'asciidoc-link': /<<([^,>]+)[,>]/,
-  'obsidian-link': /\[\[([^|\]]+)(?:\|[^\]]+)?\]\]/
+  'markdown-link': /^\[[^\]]*\]\(([^)]+)\)$/,
+  'asciidoc-link': /^<<([^,>]+)(?:,[^>]*)?>>$/,
+  'obsidian-link': /^\[\[([^|\]]+)(?:\|[^\]]+)?\]\]$/
 }
 
 const ValidationConfig = z.object({
@@ -87,9 +89,10 @@ const ValidationConfig = z.object({
     ),
   relationPattern: RegexString.optional()
     .describe(
-      'Regex used by the linter to extract relation targets from relation ' +
-      'values. Mutually exclusive with relationType. Capture group 1 must ' +
-      'contain the relation target.'
+      'Anchored regex that every relation value must match in full. ' +
+      'Capture group 1 must contain the relation target. Mutually exclusive ' +
+      'with relationType. The pattern is matched against whole values, not ' +
+      'substrings — include ^ and $ as appropriate.'
     ),
   relationType: z.enum(RELATION_TYPES).optional()
     .describe(
@@ -266,13 +269,13 @@ All under `packages/scope42-data/src/**/*.test.ts`. Jest + Node environment, as 
    - `relationType` produces the matching built-in `RegExp` on the parsed `relationPattern` field.
    - `relationPattern` string is exposed as a compiled `RegExp`.
    - Invalid regex in `fileNamePattern` / `relationPattern` rejected with a clear message.
-2. **`model/relation-patterns.test.ts`** — each built-in pattern:
+2. **`model/relation-patterns.test.ts`** — each built-in pattern. The whole input must match (patterns are anchored).
    - Matches the expected link forms and captures the target.
-   - Rejects malformed inputs.
+   - Rejects malformed inputs, substrings, and values with trailing/leading noise.
    - Cases:
-     - `markdown-link`: `[x](foo.md)` → `foo.md`; `[x](../a/b.md)` → `../a/b.md`; `[x]` → no match; plain text → no match.
-     - `asciidoc-link`: `<<foo>>` → `foo`; `<<foo,Text>>` → `foo`; `<< >>` → no match.
-     - `obsidian-link`: `[[issue-1]]` → `issue-1`; `[[issue-1|Alias]]` → `issue-1`; `[[a/b/c]]` → `a/b/c`; `[[]]` → no match; `[[a|b|c]]` → no match.
+     - `markdown-link`: `[x](foo.md)` → `foo.md`; `[](foo.md)` → `foo.md`; `[x](../a/b.md)` → `../a/b.md`; `[x]` → no match; `[x](foo)tail` → no match (trailing text); `head[x](foo)` → no match (leading text); plain text → no match.
+     - `asciidoc-link`: `<<foo>>` → `foo`; `<<foo,Text>>` → `foo`; `<<foo>>tail` → no match; `<< >>` → no match; `<<foo` → no match.
+     - `obsidian-link`: `[[issue-1]]` → `issue-1`; `[[issue-1|Alias]]` → `issue-1`; `[[a/b/c]]` → `a/b/c`; `[[]]` → no match; `[[a|b|c]]` → no match; `[[a]]tail` → no match.
 3. **`model/frontmatter-schemas.test.ts`** — per type:
    - Minimal valid frontmatter parses.
    - Defaults materialize (`tags`, relation arrays).
