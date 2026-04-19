@@ -59,21 +59,24 @@ Filename changes from `scope42.yml` to `scope42.yaml`.
 ### Zod schema
 
 ```ts
-const RegexString = z.string().superRefine((val, ctx) => {
-  try { new RegExp(val) } catch (e) {
+// Parses a regex string and exposes a compiled RegExp. Invalid syntax is
+// reported as a Zod issue at parse time.
+const RegexString = z.string().transform((val, ctx) => {
+  try { return new RegExp(val) } catch (e) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       message: `Invalid regex: ${(e as Error).message}`
     })
+    return z.NEVER
   }
 })
 
 const RELATION_TYPES = ['markdown-link', 'asciidoc-link', 'obsidian-link'] as const
 
-const RELATION_TYPE_PATTERNS: Record<typeof RELATION_TYPES[number], string> = {
-  'markdown-link': String.raw`\]\(([^)]+)\)`,
-  'asciidoc-link': String.raw`<<([^,>]+)[,>]`,
-  'obsidian-link': String.raw`\[\[([^|\]]+)(?:\|[^\]]+)?\]\]`
+const RELATION_TYPE_PATTERNS: Record<typeof RELATION_TYPES[number], RegExp> = {
+  'markdown-link': /\]\(([^)]+)\)/,
+  'asciidoc-link': /<<([^,>]+)[,>]/,
+  'obsidian-link': /\[\[([^|\]]+)(?:\|[^\]]+)?\]\]/
 }
 
 const ValidationConfig = z.object({
@@ -98,8 +101,9 @@ const ValidationConfig = z.object({
   { message: 'relationPattern and relationType are mutually exclusive', path: ['relationType'] }
 ).transform(v => ({
   fileNamePattern: v.fileNamePattern,
-  // After transform, only relationPattern is exposed. The user's original
-  // intent is collapsed into a single effective pattern.
+  // After transform, only relationPattern is exposed as a compiled RegExp.
+  // The user's original intent (pattern or type) is collapsed into a single
+  // effective RegExp.
   relationPattern:
     v.relationPattern ??
     (v.relationType ? RELATION_TYPE_PATTERNS[v.relationType] : undefined)
@@ -145,7 +149,7 @@ validation:
 - `include` is mandatory with at least one glob. Explicit is better than an implicit catch-all default.
 - `exclude` defaults to `[]`.
 - `validation` defaults to `{}` (all sub-fields undefined). `relationPattern` and `relationType` are mutually exclusive.
-- Regex fields store raw strings; syntax is validated at parse time via `superRefine`. The library does not compile them — consumers do when they need to.
+- Regex fields are compiled to `RegExp` at parse time (the transform surfaces Zod issues on invalid syntax). Consumers receive ready-to-use `RegExp` objects. For diagnostics, the source is available via `pattern.source`.
 
 ## Frontmatter Schemas
 
@@ -157,8 +161,7 @@ Located under `packages/scope42-data/src/model/`. All schemas use `.passthrough(
 // commons.ts
 const CommonFrontmatter = {
   status: /* per type */,
-  tags: z.array(z.string().min(1)).default([]),
-  ticket: z.string().min(1).optional()
+  tags: z.array(z.string().min(1)).default([])
 }
 
 const RelationList = z.array(z.string().min(1)).default([])
@@ -173,7 +176,6 @@ const RelationList = z.array(z.string().min(1)).default([])
 export const IssueFrontmatterSchema = z.object({
   status: z.enum(['current', 'resolved', 'discarded']),
   tags: z.array(z.string().min(1)).default([]),
-  ticket: z.string().min(1).optional(),
   causedBy: RelationList
 }).passthrough()
 export type IssueFrontmatter = z.infer<typeof IssueFrontmatterSchema>
@@ -182,7 +184,6 @@ export type IssueFrontmatter = z.infer<typeof IssueFrontmatterSchema>
 export const RiskFrontmatterSchema = z.object({
   status: z.enum(['potential', 'current', 'mitigated', 'discarded']),
   tags: z.array(z.string().min(1)).default([]),
-  ticket: z.string().min(1).optional(),
   causedBy: RelationList
 }).passthrough()
 
@@ -190,7 +191,6 @@ export const RiskFrontmatterSchema = z.object({
 export const ImprovementFrontmatterSchema = z.object({
   status: z.enum(['proposed', 'accepted', 'implemented', 'discarded']),
   tags: z.array(z.string().min(1)).default([]),
-  ticket: z.string().min(1).optional(),
   resolves: z.array(z.string().min(1)).min(1),
   modifies: RelationList,
   creates: RelationList
@@ -200,12 +200,13 @@ export const ImprovementFrontmatterSchema = z.object({
 export const DecisionFrontmatterSchema = z.object({
   status: z.enum(['proposed', 'accepted', 'deprecated', 'superseded', 'discarded']),
   tags: z.array(z.string().min(1)).default([]),
-  ticket: z.string().min(1).optional(),
   supersededBy: z.string().min(1).optional(),
   assesses: RelationList,
   decided: z.coerce.date().optional()
 }).passthrough()
 ```
+
+`ticket` is **not** part of the schemas. Workspaces that currently carry it (e.g. the migrated `example/`) keep it in the frontmatter via the `.passthrough()` rule, which preserves unknown keys on the parsed object.
 
 ### Dropped
 
@@ -262,7 +263,8 @@ All under `packages/scope42-data/src/**/*.test.ts`. Jest + Node environment, as 
    - Unknown key inside `items` rejected (`strict`).
    - Empty `include` rejected.
    - `relationPattern` and `relationType` together rejected.
-   - `relationType` transforms to the matching built-in `relationPattern`.
+   - `relationType` produces the matching built-in `RegExp` on the parsed `relationPattern` field.
+   - `relationPattern` string is exposed as a compiled `RegExp`.
    - Invalid regex in `fileNamePattern` / `relationPattern` rejected with a clear message.
 2. **`model/relation-patterns.test.ts`** — each built-in pattern:
    - Matches the expected link forms and captures the target.
@@ -276,7 +278,7 @@ All under `packages/scope42-data/src/**/*.test.ts`. Jest + Node environment, as 
    - Defaults materialize (`tags`, relation arrays).
    - Invalid status enum rejected.
    - Missing required field rejected (e.g. `status`; improvement's `resolves` min 1).
-   - Unknown fields **pass through** and appear on the parsed object.
+   - Unknown fields (including `ticket`) **pass through** and appear on the parsed object.
    - Decision's `decided` accepts ISO string and round-trips to `Date`.
 4. **`io/workspace.test.ts`** (rewrite, reusing the existing `testWs(content)` helper):
    - Workspace without `scope42.yaml` throws.
@@ -296,7 +298,7 @@ New file describing the scope42 format and workspace config. Sections:
 1. **Intro** — scope42 prescribes only frontmatter + workspace config. File format and directory layout are open.
 2. **Workspace config (`scope42.yaml`)** — schema with mandatory/optional annotations, example, per-field semantics (`items`, `include`, `exclude`, `validation`).
 3. **Item files** — frontmatter fence + body. Format-agnostic examples (`.md`, `.adoc`). ID = filename without extension. Type = configured path.
-4. **Frontmatter — common fields** — `status`, `tags`, `ticket`. Passthrough rule.
+4. **Frontmatter — common fields** — `status`, `tags`. Passthrough rule for any additional user-defined fields.
 5. **Frontmatter per type** — one subsection each for issue / risk / improvement / decision, listing status enums and relation fields with allowed target types (e.g. improvement `resolves` → issue or risk). Note that target *types* are conventional, not enforced by the library.
 6. **Body** — free text. H1 title convention. Relations may appear as inline links or wikilinks; not validated by this library.
 7. **Validation hints** — how tools like the linter use `validation.fileNamePattern` and `validation.relationPattern` / `validation.relationType`.
@@ -348,7 +350,7 @@ validation:
 For each existing `app/example/**/*.yml` file:
 
 - **Filename:** `<type>-<n>.yml` → `<zero-padded 3-digit n> <title>.md`. Example: `issue-1.yml` with `title: Frontend is hard to maintain` becomes `001 Frontend is hard to maintain.md`.
-- **Frontmatter keeps:** `status`, `tags` (if any), `ticket` (if any), and all relation arrays (`causedBy`, `resolves`, `modifies`, `creates`, `supersededBy`, `assesses`). Decision-only: `decided`.
+- **Frontmatter keeps:** `status`, `tags` (if any), and all relation arrays (`causedBy`, `resolves`, `modifies`, `creates`, `supersededBy`, `assesses`). Decision-only: `decided`. `ticket` is kept **as an extra passthrough field** (not part of the library schema) for every migrated file that has one.
 - **Frontmatter drops:** `title`, `created`, `modified`, `comments`, `description`, `context`, `drivers`, `options`, `outcome`, `deciders`.
 - **Relations rewritten as Markdown links:** each bare ID in a relation array is replaced with `[<target title>](<target new filename>)`. Example:
   ```yaml
