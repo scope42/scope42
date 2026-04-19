@@ -9,6 +9,6 @@ export type RelationType = typeof RELATION_TYPES[number]
 
 export const RELATION_TYPE_PATTERNS: Record<RelationType, RegExp> = {
   'markdown-link': /^\[[^\]]*\]\(([^)]+)\)$/,
-  'asciidoc-link': /^<<([^,>]+)(?:,[^>]*)?>>$/,
-  'obsidian-link': /^\[\[([^|\]]+)(?:\|[^\]]+)?\]\]$/
+  'asciidoc-link': /^<<(\S[^,>]*)(?:,[^>]*)?>>$/,
+  'obsidian-link': /^\[\[([^|\]]+)(?:\|[^|\]]+)?\]\]$/
 }
