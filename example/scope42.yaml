@@ -1,0 +1,10 @@
+items:
+  issue: docs/issues
+  risk: docs/risks
+  improvement: docs/improvements
+  decision: docs/decisions
+include: ["*.md"]
+exclude: ["README.md"]
+validation:
+  fileNamePattern: "[0-9]{3} .+"
+  relationType: markdown-link
