@@ -6,7 +6,7 @@ export const RiskStatuses = [
   'mitigated',
   'discarded'
 ] as const
-export type RiskStatus = typeof RiskStatuses[number]
+export type RiskStatus = (typeof RiskStatuses)[number]
 
 export const RiskFrontmatterSchema = z
   .object({

@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 export const IssueStatuses = ['current', 'resolved', 'discarded'] as const
-export type IssueStatus = typeof IssueStatuses[number]
+export type IssueStatus = (typeof IssueStatuses)[number]
 
 export const IssueFrontmatterSchema = z
   .object({

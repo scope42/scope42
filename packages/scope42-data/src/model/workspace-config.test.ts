@@ -80,9 +80,7 @@ describe('WorkspaceConfigSchema', () => {
       validation: { relationType: 'markdown-link' }
     })
     expect(parsed.validation.relationPattern).toBeInstanceOf(RegExp)
-    expect(
-      parsed.validation.relationPattern!.test('[x](foo.md)')
-    ).toBe(true)
+    expect(parsed.validation.relationPattern!.test('[x](foo.md)')).toBe(true)
   })
 
   test('rejects relationPattern and relationType together', () => {

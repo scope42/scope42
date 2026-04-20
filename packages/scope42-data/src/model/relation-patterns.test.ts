@@ -16,15 +16,12 @@ describe('markdown-link pattern', () => {
     expect(m![1]).toBe(target)
   })
 
-  test.each([
-    '[x]',
-    '[x](foo)tail',
-    'head[x](foo)',
-    'plain text',
-    '(foo.md)'
-  ])('rejects %s', input => {
-    expect(md.test(input)).toBe(false)
-  })
+  test.each(['[x]', '[x](foo)tail', 'head[x](foo)', 'plain text', '(foo.md)'])(
+    'rejects %s',
+    input => {
+      expect(md.test(input)).toBe(false)
+    }
+  )
 })
 
 describe('asciidoc-link pattern', () => {

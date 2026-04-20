@@ -6,7 +6,7 @@ export const ImprovementStatuses = [
   'implemented',
   'discarded'
 ] as const
-export type ImprovementStatus = typeof ImprovementStatuses[number]
+export type ImprovementStatus = (typeof ImprovementStatuses)[number]
 
 export const ImprovementFrontmatterSchema = z
   .object({

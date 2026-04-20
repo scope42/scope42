@@ -4,8 +4,12 @@
  * the relation target. These are consumed by the linter (see #433); this
  * library does not apply them.
  */
-export const RELATION_TYPES = ['markdown-link', 'asciidoc-link', 'obsidian-link'] as const
-export type RelationType = typeof RELATION_TYPES[number]
+export const RELATION_TYPES = [
+  'markdown-link',
+  'asciidoc-link',
+  'obsidian-link'
+] as const
+export type RelationType = (typeof RELATION_TYPES)[number]
 
 export const RELATION_TYPE_PATTERNS: Record<RelationType, RegExp> = {
   'markdown-link': /^\[[^\]]*\]\(([^)]+)\)$/,

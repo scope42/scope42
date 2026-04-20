@@ -7,7 +7,7 @@ export const DecisionStatuses = [
   'superseded',
   'discarded'
 ] as const
-export type DecisionStatus = typeof DecisionStatuses[number]
+export type DecisionStatus = (typeof DecisionStatuses)[number]
 
 export const DecisionFrontmatterSchema = z
   .object({

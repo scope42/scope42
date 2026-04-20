@@ -12,9 +12,7 @@ describe('IssueFrontmatterSchema', () => {
   })
 
   test('rejects invalid status', () => {
-    expect(() =>
-      IssueFrontmatterSchema.parse({ status: 'bogus' })
-    ).toThrow()
+    expect(() => IssueFrontmatterSchema.parse({ status: 'bogus' })).toThrow()
   })
 
   test('rejects missing status', () => {
@@ -106,8 +104,6 @@ describe('DecisionFrontmatterSchema', () => {
   })
 
   test('rejects invalid status', () => {
-    expect(() =>
-      DecisionFrontmatterSchema.parse({ status: 'bogus' })
-    ).toThrow()
+    expect(() => DecisionFrontmatterSchema.parse({ status: 'bogus' })).toThrow()
   })
 })
