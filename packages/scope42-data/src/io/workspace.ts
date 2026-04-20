@@ -11,7 +11,7 @@ import {
   WorkspaceConfig,
   WorkspaceConfigSchema
 } from '../model'
-import { DirectoryHandle, FileHandle } from './adapters/api'
+import { DirectoryHandle, FileHandle } from './adapters'
 
 const WORKSPACE_CONFIG_FILE = 'scope42.yaml'
 

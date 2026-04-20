@@ -3,7 +3,7 @@
  * tree as a plain object — no real filesystem access — so tests can build
  * fixture workspaces inline.
  */
-import { DirectoryHandle, FileHandle } from './api'
+import { DirectoryHandle, FileHandle } from '.'
 
 export type VirtualFileContent = string
 export type VirtualDirectoryContent = {

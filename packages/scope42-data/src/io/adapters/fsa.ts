@@ -3,7 +3,7 @@
  * potential future browser-based consumers; not used by the current tooling
  * but kept as a stable extension point.
  */
-import { DirectoryHandle, FileHandle } from './api'
+import { DirectoryHandle, FileHandle } from '.'
 
 export class FsaDirectoryHandle implements DirectoryHandle {
   readonly kind = 'directory' as const
