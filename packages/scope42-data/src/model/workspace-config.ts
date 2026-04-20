@@ -1,9 +1,6 @@
 /* eslint-disable @typescript-eslint/no-redeclare */
 import { z } from 'zod'
-import {
-  RELATION_TYPES,
-  RELATION_TYPE_PATTERNS
-} from './relation-patterns'
+import { RELATION_TYPES, RELATION_TYPE_PATTERNS } from './relation-patterns'
 
 // Parses a regex string and exposes a compiled RegExp. Invalid syntax is
 // reported as a Zod issue at parse time.
@@ -90,9 +87,7 @@ export const WorkspaceConfigSchema = z
           .describe('Path to the decision directory, workspace-relative.')
       })
       .strict()
-      .describe(
-        'Mapping of item types to workspace-relative directory paths.'
-      ),
+      .describe('Mapping of item types to workspace-relative directory paths.'),
     include: z
       .array(z.string().min(1))
       .min(1)

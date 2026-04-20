@@ -1,7 +1,4 @@
-import {
-  VirtualDirectoryContent,
-  VirtualDirectoryHandle
-} from './adapters'
+import { VirtualDirectoryContent, VirtualDirectoryHandle } from './adapters'
 import { Workspace } from './workspace'
 
 function testWs(content: VirtualDirectoryContent) {
