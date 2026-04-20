@@ -1,8 +1,8 @@
 items:
-  issue: docs/issues
-  risk: docs/risks
-  improvement: docs/improvements
-  decision: docs/decisions
+  issue: issues
+  risk: risks
+  improvement: improvements
+  decision: decisions
 include: ["*.md"]
 exclude: ["README.md"]
 validation:
