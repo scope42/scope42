@@ -4,6 +4,9 @@ tags:
   - frontend
 supersededBy: "[Frontend type checking (revisited)](004 Frontend type checking (revisited).md)"
 assesses: []
+deciders:
+  - John Doe
+  - Jane Doe
 ---
 
 # Frontend type checking
@@ -38,8 +41,3 @@ Should we use static type checking for the frontend JavaScript code?
 **Chosen option:** Use vanilla JavaScript
 
 Based on the schedule for delivering the first prototype of the system and the fact that developers already need to learn JavaScript as a new language, we decide to go with vanilla JavaScript for now.
-
-## Deciders
-
-* John Doe
-* Jane Doe

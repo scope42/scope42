@@ -15,7 +15,8 @@ export const DecisionFrontmatterSchema = z
     tags: z.array(z.string().min(1)).default([]),
     supersededBy: z.string().min(1).optional(),
     assesses: z.array(z.string().min(1)).default([]),
-    decided: z.coerce.date().optional()
+    decided: z.coerce.date().optional(),
+    deciders: z.array(z.string().min(1)).default([])
   })
   .passthrough()
 

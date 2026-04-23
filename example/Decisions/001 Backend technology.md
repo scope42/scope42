@@ -4,6 +4,9 @@ tags:
   - backend
 decided: 2022-05-01T13:52:12.262Z
 assesses: []
+deciders:
+  - John Doe
+  - Jane Doe
 ---
 
 # Backend technology
@@ -16,12 +19,12 @@ Skill matrix of the development team:
 
 |        | Java | Kotlin | Go | JavaScript |
 |--------|:----:|:------:|:--:|:----------:|
-| Amelia |   ✔  |    ✔   |  ❌ |      ✔     |
-| Noah   |   ✔  |    ❌   |  ✔ |      ❌     |
-| Emma   |   ✔  |    ❌   |  ❌ |      ✔     |
-| James  |   ✔  |    ✔   |  ❌ |      ❌     |
-| Olivia |   ✔  |    ❌   |  ❌ |      ❌     |
-| Liam   |   ✔  |    ✔   |  ❌ |      ❌     |
+| Amelia |  ✔   |   ✔    | ❌  |     ✔      |
+| Noah   |  ✔   |   ❌    | ✔  |     ❌      |
+| Emma   |  ✔   |   ❌    | ❌  |     ✔      |
+| James  |  ✔   |   ✔    | ❌  |     ❌      |
+| Olivia |  ✔   |   ❌    | ❌  |     ❌      |
+| Liam   |  ✔   |   ✔    | ❌  |     ❌      |
 
 For the frontend, JavaScript is used as per [Frontend paradigm](002 Frontend paradigm.md).
 
@@ -87,8 +90,3 @@ Combining the experience of developers with the JVM and Spring boot with a moder
 **Negative consequences**
 * We have to conduct basic Kotlin training
 * We have to setup a project structure with Kotlin for the backend and JavaScript for the frontend
-
-## Deciders
-
-* John Doe
-* Jane Doe

@@ -4,6 +4,9 @@ tags:
   - frontend
 decided: 2022-05-01T07:26:30.261Z
 assesses: []
+deciders:
+  - John Doe
+  - Jane Doe
 ---
 
 # Frontend paradigm
@@ -55,8 +58,3 @@ sequenceDiagram
 **Negative consequences**
 * Some developers need to be trained with JavaScript
 * We have to implement an API for communication between frontend and backend
-
-## Deciders
-
-* John Doe
-* Jane Doe
