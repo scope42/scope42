@@ -13,8 +13,7 @@ describe('WorkspaceConfigSchema', () => {
     expect(parsed.exclude).toEqual([])
     expect(parsed.validation).toEqual({
       fileNamePattern: undefined,
-      relationPattern: undefined,
-      relationType: undefined
+      relationPattern: undefined
     })
   })
 
@@ -77,12 +76,13 @@ describe('WorkspaceConfigSchema', () => {
     expect(parsed.validation.relationPattern!.test('x')).toBe(true)
   })
 
-  test('relationType is preserved as-is', () => {
+  test('relationType produces the matching built-in pattern', () => {
     const parsed = WorkspaceConfigSchema.parse({
       ...minimal,
       validation: { relationType: 'markdown-link' }
     })
-    expect(parsed.validation.relationType).toBe('markdown-link')
+    expect(parsed.validation.relationPattern).toBeInstanceOf(RegExp)
+    expect(parsed.validation.relationPattern!.test('[x](foo.md)')).toBe(true)
   })
 
   test('rejects relationPattern and relationType together', () => {
