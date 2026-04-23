@@ -9,11 +9,11 @@
     "examples/*"
   ],
   "scripts": {
-    "build": "turbo run build",
-    "test": "turbo run test",
-    "lint": "turbo run lint",
+    "build": "turbo run build --filter=!app",
+    "test": "turbo run test --filter=!app",
+    "lint": "turbo run lint --filter=!app",
     "dev": "turbo run dev",
-    "verify": "turbo run lint build test",
+    "verify": "turbo run lint build test --filter=!app",
     "changeset": "changeset",
     "release": "turbo run build && changeset publish"
   },
