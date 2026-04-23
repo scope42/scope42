@@ -1,3 +1,8 @@
+/**
+ * In-memory IO adapter used for unit tests. Holds a synthetic directory
+ * tree as a plain object — no real filesystem access — so tests can build
+ * fixture workspaces inline.
+ */
 import { DirectoryHandle, FileHandle } from './api'
 
 export type VirtualFileContent = string

@@ -1,3 +1,8 @@
+/**
+ * IO adapter backed by the browser's File System Access API. Retained for
+ * potential future browser-based consumers; not used by the current tooling
+ * but kept as a stable extension point.
+ */
 import { DirectoryHandle, FileHandle } from './api'
 
 export class FsaDirectoryHandle implements DirectoryHandle {

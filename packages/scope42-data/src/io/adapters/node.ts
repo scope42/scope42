@@ -1,3 +1,8 @@
+/**
+ * IO adapter backed by Node.js' `fs` / `path` APIs. Used by Node consumers
+ * such as the linter CLI, tests running outside a browser, and the example
+ * in `examples/data-processing`.
+ */
 import { DirectoryHandle, FileHandle } from './api'
 import { promisify } from 'util'
 import fs from 'fs'
