@@ -6,6 +6,7 @@ function testWs(content: VirtualDirectoryContent) {
 }
 
 const CONFIG = `
+version: 2
 items:
   issue: docs/issues
   risk: docs/risks
@@ -68,6 +69,7 @@ test('happy path: loads items across all four types', async () => {
 test('include/exclude filters apply to file names', async () => {
   const items = await testWs({
     'scope42.yaml': `
+version: 2
 items:
   issue: docs/issues
 include: ["*.md"]
@@ -113,6 +115,7 @@ test('invalid frontmatter reports file path', async () => {
 test('multi-format: .md and .adoc parse identically', async () => {
   const items = await testWs({
     'scope42.yaml': `
+version: 2
 items:
   issue: docs/issues
 include: ["*.md", "*.adoc"]
@@ -134,6 +137,7 @@ include: ["*.md", "*.adoc"]
 test('non-configured types are skipped', async () => {
   const items = await testWs({
     'scope42.yaml': `
+version: 2
 items:
   issue: docs/issues
 include: ["*.md"]

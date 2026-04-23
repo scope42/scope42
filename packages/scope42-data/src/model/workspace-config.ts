@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-redeclare */
 import { z } from 'zod'
-import { RELATION_TYPES, RELATION_TYPE_PATTERNS } from './relation-patterns'
+import { RELATION_TYPES } from './relation-patterns'
 
 // Parses a regex string and exposes a compiled RegExp. Invalid syntax is
 // reported as a Zod issue at parse time.
@@ -51,18 +51,11 @@ const ValidationConfig = ValidationConfigBase.refine(
     message: 'relationPattern and relationType are mutually exclusive',
     path: ['relationType']
   }
-).transform((v: ValidationConfigInput) => ({
-  fileNamePattern: v.fileNamePattern,
-  // After transform, only relationPattern is exposed as a compiled RegExp.
-  // The user's original intent (pattern or type) is collapsed into a single
-  // effective RegExp.
-  relationPattern:
-    v.relationPattern ??
-    (v.relationType ? RELATION_TYPE_PATTERNS[v.relationType] : undefined)
-}))
+)
 
 export const WorkspaceConfigSchema = z
   .object({
+    version: z.literal(2),
     items: z
       .object({
         issue: z

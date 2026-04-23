@@ -7,6 +7,7 @@ scope42 prescribes two things: a small **YAML frontmatter** on each item file, a
 A single file at the workspace root. Tools refuse to operate without it.
 
 ```yaml
+version: 2
 items:
   issue: docs/issues
   risk: docs/risks
@@ -21,6 +22,7 @@ validation:
 
 ### Fields
 
+- **`version`** (required) — must be `2`. Tools reject configs with a missing or different version.
 - **`items`** (required) — mapping of item types to workspace-relative directory paths. Valid keys: `issue`, `risk`, `improvement`, `decision`. All are individually optional; unknown keys are rejected.
 - **`include`** (required, non-empty) — array of globs matched against **file names** (not full paths) inside the configured directories. Only matching files are considered scope42 items.
 - **`exclude`** (optional, default `[]`) — globs applied after `include` to drop files.
@@ -81,6 +83,7 @@ Additional keys are preserved on the parsed object (passthrough). Tools may atta
 - `supersededBy` (optional): single relation string. Convention: another decision.
 - `assesses` (optional, default `[]`): array of relation strings. Convention: improvements.
 - `decided` (optional): ISO date string; exposed to consumers as a `Date`.
+- `deciders` (optional, default `[]`): array of strings naming the people or groups who made the decision.
 
 Target *types* for relations are conventional — `@scope42/data` stores relation values as plain strings and does not validate the target. The linter (when present) uses the workspace's `validation` config to check link syntax and resolve targets.
 

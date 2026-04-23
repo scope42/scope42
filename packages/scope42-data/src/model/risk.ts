@@ -8,6 +8,7 @@ export const RiskStatuses = [
 ] as const
 export type RiskStatus = (typeof RiskStatuses)[number]
 
+// In the original aim42 model, risk inherits from issue. We treat it as an independent item type.
 export const RiskFrontmatterSchema = z
   .object({
     status: z.enum(RiskStatuses),

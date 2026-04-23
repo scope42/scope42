@@ -1,6 +1,7 @@
 import { WorkspaceConfigSchema } from './workspace-config'
 
 const minimal = {
+  version: 2 as const,
   items: { issue: 'docs/issues' },
   include: ['*.md']
 }
@@ -12,7 +13,8 @@ describe('WorkspaceConfigSchema', () => {
     expect(parsed.exclude).toEqual([])
     expect(parsed.validation).toEqual({
       fileNamePattern: undefined,
-      relationPattern: undefined
+      relationPattern: undefined,
+      relationType: undefined
     })
   })
 
@@ -39,6 +41,7 @@ describe('WorkspaceConfigSchema', () => {
 
   test('accepts all four item-type keys', () => {
     const parsed = WorkspaceConfigSchema.parse({
+      version: 2 as const,
       items: {
         issue: 'i',
         risk: 'r',
@@ -74,13 +77,12 @@ describe('WorkspaceConfigSchema', () => {
     expect(parsed.validation.relationPattern!.test('x')).toBe(true)
   })
 
-  test('relationType produces the matching built-in pattern', () => {
+  test('relationType is preserved as-is', () => {
     const parsed = WorkspaceConfigSchema.parse({
       ...minimal,
       validation: { relationType: 'markdown-link' }
     })
-    expect(parsed.validation.relationPattern).toBeInstanceOf(RegExp)
-    expect(parsed.validation.relationPattern!.test('[x](foo.md)')).toBe(true)
+    expect(parsed.validation.relationType).toBe('markdown-link')
   })
 
   test('rejects relationPattern and relationType together', () => {

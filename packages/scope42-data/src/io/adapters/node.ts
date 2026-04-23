@@ -3,7 +3,7 @@
  * such as the linter CLI, tests running outside a browser, and the example
  * in `examples/data-processing`.
  */
-import { DirectoryHandle, FileHandle } from '.'
+import { DirectoryHandle, FileHandle } from './api'
 import { promisify } from 'util'
 import fs from 'fs'
 import { basename } from 'path'
