@@ -6,6 +6,24 @@
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./node": {
+      "import": "./dist/io/adapters/node.mjs",
+      "require": "./dist/io/adapters/node.js",
+      "types": "./dist/io/adapters/node.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      ".": ["./dist/index.d.ts"],
+      "node": ["./dist/io/adapters/node.d.ts"]
+    }
+  },
   "files": [
     "dist/**"
   ],
