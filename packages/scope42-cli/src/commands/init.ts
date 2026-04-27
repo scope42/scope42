@@ -26,7 +26,7 @@ export async function runInit(
     out('Created scope42.yaml')
     return 0
   } catch (e) {
-    out(`Error: ${(e as Error).message}`)
+    out(`Error: ${e instanceof Error ? e.message : String(e)}`)
     return 1
   }
 }

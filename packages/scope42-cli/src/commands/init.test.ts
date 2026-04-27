@@ -25,4 +25,8 @@ test('returns 0 with --force even when file exists', async () => {
   const root = ws({ 'scope42.yaml': 'old: content\n' })
   const exitCode = await runInit(root, { force: true }, () => {})
   expect(exitCode).toBe(0)
+  const file = await root.resolveFile('scope42.yaml')
+  const text = await file.readText()
+  expect(text).toContain('version: 2')
+  expect(text).not.toContain('old: content')
 })
