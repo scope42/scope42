@@ -27,7 +27,7 @@ export async function initWorkspace(
       // file does not exist — proceed
     }
     if (exists) {
-      throw new Error(`${CONFIG_FILE} already exists. Use --force to overwrite.`)
+      throw new Error(`${CONFIG_FILE} already exists. Pass { force: true } to overwrite.`)
     }
   }
   const file = await rootDirectory.resolveOrCreateFile(CONFIG_FILE)
