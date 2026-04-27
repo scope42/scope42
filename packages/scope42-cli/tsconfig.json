@@ -1,0 +1,5 @@
+{
+  "extends": "@scope42/tsconfig/library.json",
+  "include": ["."],
+  "exclude": ["dist", "build", "node_modules"]
+}
