@@ -13,15 +13,15 @@
       "types": "./dist/index.d.ts"
     },
     "./node": {
-      "import": "./dist/io/adapters/node.mjs",
-      "require": "./dist/io/adapters/node.js",
-      "types": "./dist/io/adapters/node.d.ts"
+      "import": "./dist/node.mjs",
+      "require": "./dist/node.js",
+      "types": "./dist/node.d.ts"
     }
   },
   "typesVersions": {
     "*": {
       ".": ["./dist/index.d.ts"],
-      "node": ["./dist/io/adapters/node.d.ts"]
+      "node": ["./dist/node.d.ts"]
     }
   },
   "files": [
@@ -34,11 +34,11 @@
     "test": "jest"
   },
   "tsup": {
-    "entry": [
-      "src/index.ts",
-      "src/io/adapters/node.ts",
-      "src/io/adapters/fsa.ts"
-    ],
+    "entry": {
+      "index": "src/index.ts",
+      "node": "src/io/adapters/node.ts",
+      "fsa": "src/io/adapters/fsa.ts"
+    },
     "format": [
       "esm",
       "cjs"
