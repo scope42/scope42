@@ -43,7 +43,8 @@
       "esm",
       "cjs"
     ],
-    "dts": true
+    "dts": true,
+    "clean": true
   },
   "prettier": "@xinra/prettier-config",
   "devDependencies": {
