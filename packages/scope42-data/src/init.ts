@@ -27,9 +27,19 @@ export async function initWorkspace(
       // file does not exist — proceed
     }
     if (exists) {
-      throw new Error(`${CONFIG_FILE} already exists. Pass { force: true } to overwrite.`)
+      throw new Error(
+        `${CONFIG_FILE} already exists. Pass { force: true } to overwrite.`
+      )
     }
   }
   const file = await rootDirectory.resolveOrCreateFile(CONFIG_FILE)
   await file.writeText(YAML.stringify(DEFAULT_CONFIG))
+
+  for (const dirPath of Object.values(DEFAULT_CONFIG.items)) {
+    const segments = dirPath.split('/').filter(Boolean)
+    let current: DirectoryHandle = rootDirectory
+    for (const segment of segments) {
+      current = await current.resolveOrCreateDirectory(segment)
+    }
+  }
 }
