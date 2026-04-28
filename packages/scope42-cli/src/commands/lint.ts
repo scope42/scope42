@@ -12,7 +12,7 @@ export function makeLintCommand(): Command {
       const absPath = path.resolve(workspacePath)
       const rootDir = new NodeDirectoryHandle(absPath)
       const exitCode = await runLint(rootDir, options.format as 'text' | 'json')
-      process.exit(exitCode)
+      if (exitCode !== 0) process.exit(exitCode)
     })
 }
 

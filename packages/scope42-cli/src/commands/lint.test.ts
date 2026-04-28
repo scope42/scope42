@@ -104,3 +104,11 @@ include: ["*.md"]
   expect(parsed).toHaveProperty('diagnostics')
   expect(Array.isArray(parsed.diagnostics)).toBe(true)
 })
+
+test('returns 2 and reports error when workspace config is missing', async () => {
+  const root = ws({}) // no scope42.yaml → lintWorkspace throws
+  const lines: string[] = []
+  const exitCode = await runLint(root, 'text', (s: string) => lines.push(s))
+  expect(exitCode).toBe(2)
+  expect(lines.some(l => l.startsWith('Error:'))).toBe(true)
+})
