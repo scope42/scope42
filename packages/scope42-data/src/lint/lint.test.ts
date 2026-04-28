@@ -51,7 +51,9 @@ test('error: invalid status value', async () => {
   const result = await lintWorkspace(
     ws({
       'scope42.yaml': CFG,
-      docs: { issues: { 'issue-1.md': '---\nstatus: bogus\n---\n# Title\n\nBody.\n' } }
+      docs: {
+        issues: { 'issue-1.md': '---\nstatus: bogus\n---\n# Title\n\nBody.\n' }
+      }
     })
   )
   const errors = result.diagnostics.filter(d => d.severity === 'error')
@@ -116,7 +118,9 @@ test('no heading error for Markdown # heading', async () => {
   const result = await lintWorkspace(
     ws({ 'scope42.yaml': CFG, docs: { issues: { 'issue-1.md': issue() } } })
   )
-  expect(result.diagnostics.filter(d => d.message.includes('heading'))).toHaveLength(0)
+  expect(
+    result.diagnostics.filter(d => d.message.includes('heading'))
+  ).toHaveLength(0)
 })
 
 test('no heading error for AsciiDoc = heading', async () => {
@@ -135,7 +139,9 @@ include: ["*.adoc"]
       }
     })
   )
-  expect(result.diagnostics.filter(d => d.message.includes('heading'))).toHaveLength(0)
+  expect(
+    result.diagnostics.filter(d => d.message.includes('heading'))
+  ).toHaveLength(0)
 })
 
 // ── Relation existence ────────────────────────────────────────

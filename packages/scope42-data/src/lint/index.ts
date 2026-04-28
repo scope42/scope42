@@ -74,7 +74,11 @@ export async function lintWorkspace(
       let item: Item | null = null
 
       if (Object.keys(rawFrontmatter).length === 0) {
-        diagnostics.push({ filePath, severity: 'error', message: 'No frontmatter found' })
+        diagnostics.push({
+          filePath,
+          severity: 'error',
+          message: 'No frontmatter found'
+        })
       } else {
         const schema = SCHEMAS_BY_TYPE[type]
         const parseResult = schema.safeParse(rawFrontmatter)
@@ -88,11 +92,20 @@ export async function lintWorkspace(
             })
           }
         } else {
-          item = { id, type, frontmatter: parseResult.data, body, filePath } as Item
+          item = {
+            id,
+            type,
+            frontmatter: parseResult.data,
+            body,
+            filePath
+          } as Item
         }
       }
 
-      if (config.validation.fileNamePattern && !config.validation.fileNamePattern.test(id)) {
+      if (
+        config.validation.fileNamePattern &&
+        !config.validation.fileNamePattern.test(id)
+      ) {
         diagnostics.push({
           filePath,
           severity: 'error',
@@ -104,7 +117,11 @@ export async function lintWorkspace(
       if (headingDiag) diagnostics.push(headingDiag)
 
       if (body.trim() === '') {
-        diagnostics.push({ filePath, severity: 'warning', message: 'Empty body' })
+        diagnostics.push({
+          filePath,
+          severity: 'warning',
+          message: 'Empty body'
+        })
       }
 
       const relations = item
@@ -125,7 +142,11 @@ export async function lintWorkspace(
     const hasOutgoing = relations.length > 0
     const hasIncoming = referencedIds.has(id)
     if (!hasOutgoing && !hasIncoming) {
-      diagnostics.push({ filePath, severity: 'warning', message: 'No relations (orphaned item)' })
+      diagnostics.push({
+        filePath,
+        severity: 'warning',
+        message: 'No relations (orphaned item)'
+      })
     }
 
     for (const targetId of relations) {
@@ -145,11 +166,13 @@ export async function lintWorkspace(
 function checkHeading(body: string, filePath: string): LintDiagnostic | null {
   const firstNonBlank = body.split('\n').find(l => l.trim() !== '')
   if (!firstNonBlank) return null // empty body is a separate warning
-  if (/^#\s+\S/.test(firstNonBlank) || /^=\s+\S/.test(firstNonBlank)) return null
+  if (/^#\s+\S/.test(firstNonBlank) || /^=\s+\S/.test(firstNonBlank))
+    return null
   return {
     filePath,
     severity: 'error',
-    message: 'Body does not start with a heading (expected Markdown # or AsciiDoc =)'
+    message:
+      'Body does not start with a heading (expected Markdown # or AsciiDoc =)'
   }
 }
 
@@ -175,17 +198,23 @@ function extractRelations(item: Item, relationPattern?: RegExp): string[] {
   if (!relationPattern) return raw
   return raw.flatMap(v => {
     const match = v.match(relationPattern)
-    return match ? [match[1]] : []
+    return match && match[1] ? [match[1]] : []
   })
 }
 
-function makeFilter(include: string[], exclude: string[]): (name: string) => boolean {
+function makeFilter(
+  include: string[],
+  exclude: string[]
+): (name: string) => boolean {
   const includeMatch = picomatch(include)
   const excludeMatch = exclude.length > 0 ? picomatch(exclude) : () => false
   return name => includeMatch(name) && !excludeMatch(name)
 }
 
-async function resolveDirByPath(root: DirectoryHandle, relPath: string): Promise<DirectoryHandle> {
+async function resolveDirByPath(
+  root: DirectoryHandle,
+  relPath: string
+): Promise<DirectoryHandle> {
   const segments = relPath.split('/').filter(Boolean)
   let current = root
   for (const segment of segments) {
@@ -214,8 +243,26 @@ function stripExtension(name: string): string {
 function fixYamlBackslashes(text: string): string {
   // Characters that are valid YAML double-quote escape sequences
   const validYamlEscapeChars = new Set([
-    '0', 'a', 'b', 't', 'n', 'v', 'f', 'r', 'e', '"', '/', '\\', 'N', '_', 'L', 'P',
-    ' ', 'x', 'u', 'U'
+    '0',
+    'a',
+    'b',
+    't',
+    'n',
+    'v',
+    'f',
+    'r',
+    'e',
+    '"',
+    '/',
+    '\\',
+    'N',
+    '_',
+    'L',
+    'P',
+    ' ',
+    'x',
+    'u',
+    'U'
   ])
   // Match double-quoted YAML strings, handling embedded escaped quotes
   return text.replace(/"((?:[^"\\]|\\[\s\S])*)"/g, (match, inner: string) => {
