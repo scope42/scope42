@@ -1,5 +1,5 @@
 import { Workspace } from '@scope42/data'
-import { NodeDirectoryHandle } from '@scope42/data/dist/io/adapters/node'
+import { NodeDirectoryHandle } from '@scope42/data/node'
 import superjson from 'superjson'
 import fs from 'fs'
 
